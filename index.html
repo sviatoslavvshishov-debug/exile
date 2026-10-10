@@ -73,6 +73,11 @@ body:before{content:"";position:fixed;inset:-30% -20%;pointer-events:none;backgr
 @media(max-width:1050px){.community-columns{grid-template-columns:1fr}.community-account{grid-template-columns:1fr}.community-chat{height:330px}}
 @media(max-width:600px){.community-hero{padding:25px 19px}.community-hero h1{font-size:48px}.community-account{padding:18px}.community-account form{align-items:stretch;flex-direction:column}.community-account form button{width:100%}.community-panel-head{padding:16px}.community-compose{padding:12px;flex-direction:column}.community-chat{height:280px}.community-intro{align-items:flex-start;flex-direction:column}.community-intro button{margin-left:0}}
 
+/* EXILE artwork overlap: game covers extend over the detail panels. */
+.poster-card .art { z-index:2; margin-bottom:-18px; border-radius:0 0 13px 13px; box-shadow:0 11px 22px #0007; }
+.poster-card .card-meta { position:relative; z-index:1; padding-top:32px; }
+@media(max-width:590px) { .poster-card .card-meta { padding-top:28px; } }
+
 /* EXILE editorial verification: independent of host availability or school/network filtering. */
 .verification-badge{position:absolute;z-index:3;top:12px;right:11px;display:inline-flex;align-items:center;gap:5px;border:1px solid #64736d;border-radius:5px;background:#0b100fe8;color:#b6c2bb;font-size:9px;font-weight:900;letter-spacing:.055em;padding:6px 7px;line-height:1;white-space:nowrap}
 .verification-badge.verified{border-color:#83ef38;background:#1d3615f2;color:#aaff75;box-shadow:0 0 14px #83ef3820}
