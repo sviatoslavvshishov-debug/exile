@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b0b">
+<meta name="description" content="EXILE GAME HUB — discover real browser game ports, playable demos, open-source engines and classic games.">
+<title>EXILE GAME HUB — Play in your browser</title>
+<style>
+
+:root{--bg:#090b0b;--base:#111415;--card:#171a1b;--card2:#1c2120;--stroke:#2b322f;--muted:#979f9d;--white:#f4f7f5;--green:#83ef38;--green2:#bcff78;--nav:228px;--top:76px;--radius:15px;--shadow:0 26px 90px #000b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font-family:Manrope,Inter,system-ui,-apple-system,'Segoe UI',sans-serif;min-width:320px}button,input,a{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}::selection{color:#0b1606;background:var(--green)}.hide{display:none!important}
+body:before{content:"";position:fixed;inset:-30% -20%;pointer-events:none;background:radial-gradient(ellipse at 60% 0,#2e532018,transparent 40%);z-index:-1}
+/* SIDEBAR */
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--nav);z-index:30;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#384d30 transparent;background:#0e1111;border-right:1px solid #29302c;padding:25px 14px 20px}
+.brand{display:flex;align-items:center;gap:11px;padding:2px 12px 34px}.brand-mark{height:35px;width:35px;display:grid;place-items:center;background:var(--green);color:#111;font-weight:900;font-size:26px;line-height:1;clip-path:polygon(0 0,100% 0,100% 66%,66% 100%,0 100%)}.brand-text{font-family:Rajdhani,Arial,sans-serif;letter-spacing:.05em;font-size:25px;font-weight:700;line-height:.85}.brand-text small{font:700 9px Manrope,sans-serif;color:#87948c;letter-spacing:.24em;display:block;margin-top:7px}
+.nav-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#68746d;padding:13px 17px 10px;margin-top:7px}.navbtn{width:100%;display:flex;align-items:center;gap:13px;text-align:left;border:0;background:none;color:#9ca5a0;font-size:12px;font-weight:800;padding:13px 16px;border-radius:9px;transition:all .18s;margin-bottom:4px}.navbtn:hover{color:var(--white);background:#202720}.navbtn.active{background:#273822;color:var(--green)}.navbtn svg{width:19px;height:19px;flex:0 0 auto}.navbtn span{flex:1}.navbtn em{font-style:normal;font-size:10px;background:#263027;color:#9da9a0;padding:3px 6px;border-radius:5px}.navbtn.active em{background:#3d5230;color:#c1fc86}
+.side-spacer{flex:1}.side-bottom{padding:17px 10px 0;border-top:1px solid #272e2a}.tiny-head{font-size:11px;color:var(--white);font-weight:800;margin-bottom:7px}.tiny-p{font-size:11px;color:#929b94;line-height:1.6}.side-bottom a{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--green);font-weight:800;margin-top:6px}
+/* TOP / MAIN */
+.content{margin-left:var(--nav);min-height:100vh}.topbar{height:var(--top);display:flex;align-items:center;gap:22px;padding:0 35px;position:sticky;top:0;z-index:24;background:#090b0bef;border-bottom:1px solid #242a28;backdrop-filter:blur(20px)}.top-title{font-size:12px;color:#d5ded6;letter-spacing:.08em;font-weight:800;white-space:nowrap}.search{margin-left:auto;display:flex;align-items:center;gap:10px;background:#1a1f1d;border:1px solid #353d38;border-radius:8px;max-width:390px;min-width:180px;width:34%;padding:0 14px;color:#94a19a}.search svg{flex-shrink:0;width:17px;height:17px}.search input{background:none;border:0;outline:none;color:white;min-width:0;width:100%;height:39px;font-size:12px}.search input::placeholder{color:#7c8780}.search input:focus-visible{outline:none}.search:focus-within{border-color:#9edf66}.kbd{border:1px solid #49514c;padding:2px 5px;border-radius:4px;font-size:10px;white-space:nowrap;color:#a2aaa4}.profile{width:34px;height:34px;border:1px solid #588343;background:#294724;color:var(--green);display:grid;place-items:center;font-weight:900;font-size:13px;border-radius:7px}.online{font:800 10px Manrope,sans-serif;color:#9faea3;display:flex;align-items:center;gap:7px;white-space:nowrap}.online i{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px #80f63892}
+.main{padding:30px clamp(22px,3.6vw,56px) 80px;max-width:1900px;margin:auto}.crumb{display:flex;gap:12px;align-items:center;color:#8c9b91;font:800 10px Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;margin:7px 0 18px}.crumb span:last-child{color:var(--green)}.mobmenu{display:none}
+/* FEATURED */
+.hero{position:relative;overflow:hidden;isolation:isolate;min-height:390px;border:1px solid #33422e;background:#151d17;border-radius:14px;margin-bottom:39px;box-shadow:0 20px 70px #0007}.hero:before{content:"";position:absolute;inset:0;z-index:-3;background:radial-gradient(ellipse at 78% 18%,var(--glow,#73be3560),transparent 40%),radial-gradient(ellipse at 75% 86%,#3e642d88,transparent 40%),linear-gradient(110deg,#101813 0,#172017 44%,#293a1c 100%)}.hero:after{content:"";z-index:-1;position:absolute;inset:0;background:linear-gradient(90deg,#0c110ef9 0%,#101711ef 32%,#0d120c45 64%,#111b1000 100%)}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.95fr);align-items:center;height:100%;min-height:390px}.hero-info{padding:42px 0 66px clamp(25px,4vw,62px);z-index:2;position:relative}.eyebrow{font-size:10px;color:var(--green);font-weight:900;letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;gap:10px}.eyebrow i{width:25px;height:2px;background:var(--green)}.hero h1{font-family:Rajdhani,Manrope,sans-serif;font-size:clamp(52px,5.6vw,94px);font-weight:700;letter-spacing:-.03em;line-height:.82;max-width:680px;margin:25px 0}.hero h1 span{color:var(--green)}.hero-desc{max-width:465px;line-height:1.8;font-size:13px;color:#c5d0c8;margin-bottom:25px}.hero-flags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:25px}.flag{border:1px solid #516449aa;background:#1d2c1d99;padding:7px 10px;font-size:10px;font-weight:800;color:#ccdeca;letter-spacing:.02em}.flag.green{border-color:#92df5c;color:var(--green);background:#1e3215}.actions{display:flex;gap:11px;flex-wrap:wrap}.btn{border:1px solid #52614c;border-radius:5px;background:#242d25;color:white;padding:12px 18px;min-height:43px;display:inline-flex;align-items:center;gap:10px;justify-content:center;font-size:12px;font-weight:900;transition:transform .2s,background .2s,box-shadow .2s}.btn:hover{transform:translateY(-2px);background:#394537}.btn.primary{color:#102006;background:var(--green);border-color:var(--green);box-shadow:0 0 22px #80ef3927}.btn.primary:hover{background:#b5ff77;box-shadow:0 0 35px #80ef3948}.btn svg{height:15px;width:15px}.hero-art{align-self:stretch;position:relative;min-height:280px;overflow:hidden}.hero-art:before{content:"";width:430px;height:430px;position:absolute;right:6%;top:-6%;border:1px solid #bcff7833;border-radius:50%;box-shadow:0 0 0 36px #91ce2820,0 0 0 95px #8bae1c10,inset 0 0 76px #99e26021}.hero-art:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 13px,#e5ff6d09 14px),repeating-linear-gradient(90deg,transparent 0 47px,#a8ef6a08 48px);transform:perspective(300px) rotateX(30deg) scale(1.8)}.hero-figure{z-index:1;position:absolute;inset:0;display:grid;place-items:center;transform:rotate(-10deg);filter:drop-shadow(16px 23px 5px #0008)}.figure-core{font:900 clamp(115px,20vw,300px)/1 Rajdhani,sans-serif;color:#c6efb5;letter-spacing:-.1em;text-shadow:-12px 12px 0 #263829,0 0 55px #c3ff8c69;opacity:.95}.hero-art .tech{position:absolute;z-index:2;bottom:25px;right:30px;color:#d7ffac;font-size:10px;font-weight:900;letter-spacing:.2em;text-shadow:0 3px 10px black}.hero-controls{position:absolute;bottom:21px;left:clamp(25px,4vw,62px);display:flex;gap:7px;z-index:3}.dot{width:26px;height:4px;background:#80927b77;border:0;border-radius:0;padding:0}.dot.active{width:48px;background:var(--green)}
+/* SECTIONS */
+.section{margin-bottom:45px;scroll-margin-top:100px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:0 0 19px}.sect-title{margin:0;font-size:21px;font-weight:900;letter-spacing:-.055em}.sect-title span{color:var(--green)}.sect-sub{font-size:11px;color:#8f9f93;margin-top:7px}.sect-link{color:var(--green);font-weight:800;font-size:11px;border:0;background:none;padding:8px 0;white-space:nowrap}.sect-link:hover{text-decoration:underline}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.chip{background:#161b18;color:#a7b1a9;border:1px solid #333d34;padding:9px 14px;font-size:11px;font-weight:800;border-radius:7px;transition:.2s}.chip:hover{border-color:#7b9d61;color:white}.chip.active{background:#23391a;color:var(--green);border-color:#83d34d}.count{color:#7f8d83;font-size:11px}.row-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px}.row-cards.featured-row{grid-template-columns:repeat(4,minmax(0,1fr))}.poster-card{border:1px solid #2b342f;border-radius:10px;overflow:hidden;background:#171b19;min-width:0;transition:transform .2s,border-color .2s,box-shadow .2s;display:flex;flex-direction:column}.poster-card:hover{transform:translateY(-5px);border-color:#83bb63;box-shadow:0 16px 26px #0008}.art{height:190px;position:relative;display:flex;align-items:center;justify-content:center;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 75% 30%,var(--c2,#657861),transparent 58%),linear-gradient(138deg,var(--c1,#263a35),#0b1110)}.art:before{content:"";z-index:-1;position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 25px,#d0ffba09 26px),linear-gradient(150deg,transparent 5%,#ffffff0a 50%,transparent 52%)}.art:after{content:"";position:absolute;inset:auto -50% -72% -50%;height:170px;transform:rotate(-12deg);background:#06090788;filter:blur(21px)}.art-mark{font:800 clamp(78px,10vw,138px)/1 Rajdhani,sans-serif;letter-spacing:-.08em;color:var(--ink,#d8edcb);transform:rotate(-9deg);text-shadow:5px 8px 0 #0008,0 0 45px #ffffff25;z-index:1;opacity:.93;user-select:none}.art-tag{position:absolute;left:12px;top:13px;font-size:9px;font-weight:900;color:#f3fff1;letter-spacing:.13em;background:#07100caa;border:1px solid #ffffff24;padding:5px 7px;z-index:2}.art-corner{position:absolute;right:12px;bottom:11px;color:#ffffffb6;font:800 9px Manrope,sans-serif;z-index:2;letter-spacing:.08em}.card-meta{padding:14px 13px 13px;flex:1;display:flex;flex-direction:column;gap:7px}.card-title{font-size:13px;font-weight:900;color:#eff6f0;letter-spacing:-.025em;line-height:1.4;min-height:36px}.card-foot{font-size:10px;color:#a4b0a6;display:flex;align-items:center;gap:6px;line-height:1.4;min-height:23px}.status-dot{height:6px;width:6px;border-radius:50%;background:#9fe45b;flex-shrink:0}.status-dot.amber{background:#ffc681}.status-dot.gray{background:#929b93}.card-btns{display:flex;gap:6px;margin-top:auto;padding-top:7px}.card-play{flex:1;font:900 10px Manrope,sans-serif;padding:10px 7px;min-width:0;border:1px solid #4b6a36;background:#263b1d;color:var(--green);border-radius:5px}.card-play:hover{background:#426025;color:#f1ffde}.heart{border:1px solid #3b453d;background:#222924;color:#a4afa5;padding:0;width:36px;border-radius:5px;font-size:18px}.heart.selected{color:var(--green);border-color:#619446}
+/* BANNERS */
+.discover{border:1px solid #34412f;background:linear-gradient(110deg,#1e3021,#132019 60%,#0e1310);padding:26px 30px;border-radius:11px;display:flex;gap:25px;align-items:center;justify-content:space-between;margin-bottom:44px;position:relative;overflow:hidden}.discover:after{content:"✦";position:absolute;right:26%;top:-84px;font-size:280px;color:#99ff4b0b;pointer-events:none}.discover h3{font:800 28px Rajdhani,sans-serif;margin:0 0 7px}.discover p{font-size:12px;line-height:1.7;max-width:740px;color:#adc0ac;margin:0}.empty{display:none;text-align:center;padding:75px 20px;border:1px solid #2d3931;background:#111714;border-radius:12px}.empty h3{font-size:23px}.empty p{font-size:12px;color:#aebcae}.footer{border-top:1px solid #263029;margin-top:40px;padding-top:23px;display:flex;gap:20px;justify-content:space-between;align-items:center;color:#85958b;font-size:10px;line-height:1.8}.footer a{color:#d7ebd5}.offbadge{display:inline-block;border:1px solid #78887a66;border-radius:5px;padding:5px 9px;color:#9eaea1;background:#1d2520;font-size:10px;font-weight:800}
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:80;background:#020605e9;backdrop-filter:blur(15px);display:none;align-items:center;justify-content:center;padding:22px}.modal.show{display:flex}.modal-inner{width:min(1240px,100%);height:min(92vh,840px);min-height:480px;background:#111615;border:1px solid #455c41;border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}.modal-top{min-height:67px;display:flex;align-items:center;gap:12px;justify-content:space-between;padding:13px 18px;border-bottom:1px solid #2e3b31}.modal-name{font-size:16px;font-weight:900}.modal-sub{font-size:10px;color:#8d9c8f;margin-top:4px}.modal-actions{display:flex;align-items:center;gap:7px;flex-shrink:0}.smallbtn{border:1px solid #415241;background:#263128;color:#dbefda;border-radius:6px;padding:9px 12px;font-size:11px;font-weight:800;display:inline-flex;align-items:center;gap:6px}.smallbtn:hover{background:#354b32}.smallbtn.close{font-size:22px;padding:3px 12px}.game-area{flex:1;position:relative;background:#090d0b;min-height:0;display:grid;place-items:center}.game-area iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#111;z-index:1}.frame-intro{z-index:2;position:relative;text-align:center;max-width:490px;padding:24px}.frame-logo{font:800 94px Rajdhani,sans-serif;color:var(--green);text-shadow:0 0 55px #8afd5d53}.frame-intro h2{font:800 28px Rajdhani,sans-serif;margin:2px 0 10px}.frame-intro p{font-size:12px;color:#a2b0a5;line-height:1.85}.frame-intro .btn{margin-top:15px}.frame-foot{padding:12px 18px;background:#151d18;border-top:1px solid #334333;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:10px;color:#9fb29f}.frame-foot strong{color:#d4e6d1}.warning{max-width:680px}.warning b{color:#b0ef75}.frame-loading{display:none;position:absolute;z-index:3;bottom:22px;left:24px;background:#0d1a13de;padding:12px 15px;font-size:11px;color:#d7efce;border:1px solid #4c7044;max-width:min(460px,90%)}.spinner{width:13px;height:13px;border:2px solid #5a7e4e;border-top-color:var(--green);border-radius:50%;display:inline-block;vertical-align:middle;margin-right:8px;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+/* MOBILE */
+@media(max-width:1450px){.row-cards{grid-template-columns:repeat(4,minmax(0,1fr))}.row-cards.featured-row{grid-template-columns:repeat(4,minmax(0,1fr))}.art{height:175px}}
+@media(max-width:1100px){:root{--nav:190px}.sidebar{padding:22px 9px}.hero h1{font-size:64px}.row-cards{grid-template-columns:repeat(3,minmax(0,1fr))}.row-cards.featured-row{grid-template-columns:repeat(3,minmax(0,1fr))}.topbar{padding:0 23px}.hero-info{padding-left:28px}.hero-controls{left:28px}}
+@media(max-width:800px){:root{--nav:0px;--top:66px}.sidebar{transform:translateX(-101%);transition:transform .23s;width:245px;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.mobmenu{display:grid;place-items:center;background:#182019;color:var(--green);border:1px solid #40513c;border-radius:6px;width:36px;height:36px;font-size:23px}.top-title{display:none}.online{display:none}.search{width:100%;max-width:none}.topbar{padding:0 16px;gap:12px}.kbd{display:none}.main{padding:20px 17px 55px}.hero-grid{grid-template-columns:1fr}.hero{min-height:445px}.hero-info{z-index:4;padding:33px 25px 55px;max-width:570px}.hero-art{position:absolute;inset:0;opacity:.3}.hero h1{font-size:clamp(57px,11vw,88px)}.hero:after{background:linear-gradient(90deg,#0c110ef7,#0d140ce0 54%,#13191330)}.row-cards,.row-cards.featured-row{grid-template-columns:repeat(3,minmax(0,1fr))}.modal{padding:0}.modal-inner{height:100dvh;min-height:0;border-radius:0}.modal-top{padding:10px}.modal-name{font-size:13px}.smallbtn{padding:8px;font-size:10px}.smallbtn.relaunch{display:none}}
+@media(max-width:590px){.row-cards,.row-cards.featured-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.art{height:165px}.card-meta{padding:10px}.card-title{font-size:12px;min-height:32px}.sect-title{font-size:19px}.discover{padding:22px;align-items:flex-start;flex-direction:column}.hero h1{font-size:clamp(34px,10vw,47px)}.hero-desc{font-size:12px}.crumb{font-size:9px}.footer{display:block}.footer>*{display:block;margin:8px 0}.modal-top{flex-wrap:wrap}.modal-actions{width:100%;justify-content:flex-end}.frame-foot{display:block}.frame-foot span{display:block;padding:4px 0}.section-head{gap:10px}.sect-sub{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+
+/* EXILE PLAYER ACADEMY */
+.top-help{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border:1px solid #466732;background:#192719;color:var(--green);border-radius:7px;font-size:10px;font-weight:900;letter-spacing:.055em;padding:11px 12px;transition:background .2s,transform .2s}.top-help:hover{background:#304f1d;transform:translateY(-2px)}
+.guide-nav{border:1px solid #42632d;background:linear-gradient(110deg,#1b2c1a,#132118);color:#cbf6a7}.guide-nav em{color:#101c0c;background:var(--green)}
+.learn-feature{display:flex;align-items:center;gap:26px;position:relative;isolation:isolate;padding:25px 27px;margin:-10px 0 40px;overflow:hidden;border-radius:12px;border:1px solid #48653e;background:linear-gradient(112deg,#15241a 0%,#15261b 47%,#0d1512 100%);box-shadow:0 20px 60px #0003}
+.learn-feature-sheen{position:absolute;z-index:-1;inset:0;opacity:.7;background:radial-gradient(circle at 9% 40%,#83ef3840,transparent 18%),linear-gradient(115deg,transparent 60%,#aaf9630c 60%,#aaf9630c 63%,transparent 63%)}
+.learn-icon{width:95px;height:90px;flex:0 0 auto;position:relative;display:grid;place-items:center}.learn-screen{width:77px;height:57px;border:2px solid #83ef38;border-radius:8px;background:#21391a;box-shadow:0 0 30px #83ef382a,inset 0 0 27px #83ef3824;display:grid;place-items:center;transform:perspective(160px) rotateY(-9deg);animation:learnfloat 3s ease-in-out infinite}.learn-screen:after{content:'';width:26px;height:5px;position:absolute;bottom:-12px;border-radius:3px;background:#8ac768}.learn-screen b{font-size:24px;color:var(--green)}.learn-spark{position:absolute;top:0;right:0;color:var(--green);font-size:23px;animation:twinkle 2.3s infinite alternate}
+@keyframes learnfloat{50%{transform:perspective(160px) rotateY(2deg) translateY(-6px)}}@keyframes twinkle{50%{opacity:.2;transform:scale(.7)}}
+.learn-copy{flex:1;min-width:0}.learn-eyebrow{font-size:9px;font-weight:900;letter-spacing:.17em;color:var(--green);margin-bottom:10px}.learn-copy h2{font:800 clamp(23px,2.1vw,32px)/1.06 Rajdhani,system-ui,sans-serif;margin:0 0 7px}.learn-copy h2 span{color:var(--green)}.learn-copy p{font-size:11px;line-height:1.65;color:#afbcac;margin:0;max-width:650px}.learn-tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:12px;font-size:10px;color:#c8dec0;font-weight:700}.learn-tags span::first-letter{color:var(--green)}.learn-actions{display:flex;align-items:stretch;flex-direction:column;gap:10px;min-width:208px;position:relative;z-index:1}.learn-actions .btn{font-size:10px}.learn-textbtn{background:none;border:0;color:#ccf8b3;font-weight:900;font-size:10px;letter-spacing:.07em;text-align:center;padding:8px}.learn-textbtn:hover{text-decoration:underline}.learn-textbtn span{margin-left:5px}
+.guide-backdrop{position:fixed;inset:0;z-index:140;display:none;align-items:center;justify-content:center;background:#030804ea;padding:20px;backdrop-filter:blur(20px)}.guide-backdrop.show{display:flex}.guide-shell{width:min(1060px,100%);height:min(720px,92dvh);min-height:520px;max-height:96dvh;border:1px solid #64864b;border-radius:17px;background:linear-gradient(155deg,#151e19,#0d1411 54%,#141c18);box-shadow:0 34px 120px #000b,0 0 65px #83ef3815;display:flex;flex-direction:column;overflow:hidden;animation:guideenter .32s ease-out}.guide-head{display:flex;align-items:center;gap:20px;min-height:71px;padding:0 26px;border-bottom:1px solid #354c36}.guide-brand{font:900 19px Rajdhani,system-ui,sans-serif;letter-spacing:.035em;color:#f4fff0}.guide-brand b{font-size:12px;color:#98b899}.guide-symbol{margin-right:12px;color:var(--green);font-size:27px}.guide-est{font:800 10px Manrope,sans-serif;letter-spacing:.16em;color:#739179;margin-left:auto}.guide-close{border:1px solid #435846;background:#1d2a21;border-radius:8px;color:#eaffdf;font-size:27px;line-height:1;width:37px;height:37px}.guide-close:hover{background:#334e33}
+.guide-track{display:flex;gap:6px;padding:18px 26px 0}.guide-track button{height:5px;background:#334533;border:0;border-radius:12px;flex:1;transition:background .3s,box-shadow .3s;padding:0}.guide-track button.active{background:var(--green);box-shadow:0 0 14px #83ef3860}.guide-track button.done{background:#659647}.guide-track button:hover{background:#a4ec75}
+.guide-content{display:grid;grid-template-columns:1fr .92fr;gap:22px;flex:1;min-height:0;padding:32px 30px 25px}.guide-copy{padding:22px 10px 10px 8px;overflow-y:auto;scrollbar-color:#416444 transparent}.guide-index{font:900 10px Manrope,sans-serif;color:var(--green);letter-spacing:.2em;margin-bottom:22px}.guide-copy h2{font:800 clamp(36px,3.65vw,58px)/.98 Rajdhani,system-ui,sans-serif;letter-spacing:-.035em;margin:0 0 24px;max-width:480px}.guide-copy p{color:#b5c3b8;line-height:1.9;font-size:13px;max-width:460px;margin:0 0 24px}.guide-callout{border-left:3px solid var(--green);background:#1a2d1d;padding:15px 17px;color:#c5e7ba;line-height:1.8;font-size:12px;max-width:445px}.guide-callout strong{color:var(--green)}.guide-game-note{font-size:11px;line-height:1.7;color:#f7dab1;border:1px solid #685736;background:#2a2419;border-radius:7px;padding:12px 15px;margin-top:13px}.guide-stage{border:1px solid #4b6942;background:radial-gradient(ellipse at 50% 36%,#23462c,#111d17 70%);border-radius:12px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:290px}.guide-ambient{position:absolute;inset:0;opacity:.5;background:linear-gradient(0deg,#aaff6410 1px,transparent 1px),linear-gradient(90deg,#aaff6410 1px,transparent 1px);background-size:29px 29px;transform:perspective(300px) rotateX(55deg) scale(1.6);animation:plane 9s linear infinite}@keyframes plane{to{background-position:0 58px,58px 0}}.guide-stage-caption{position:absolute;left:18px;bottom:17px;color:#7b9e7d;font:900 9px Manrope,sans-serif;letter-spacing:.14em}.guide-visual{position:relative;z-index:2;width:100%;height:100%;min-height:240px;display:flex;align-items:center;justify-content:center}.guide-bottom{padding:16px 25px 21px;min-height:83px;border-top:1px solid #354936;display:flex;align-items:center;gap:20px;justify-content:space-between}.guide-footnote{font-size:10px;line-height:1.7;color:#839987;max-width:425px}.guide-controls{display:flex;gap:10px}.guide-secondary,.guide-primary{font:900 11px Manrope,sans-serif;border-radius:6px;padding:13px 18px;min-width:100px;border:1px solid #53684d;background:#202c22;color:#d7e9d1}.guide-secondary:hover{background:#304231}.guide-primary{background:var(--green);border-color:var(--green);color:#112208;min-width:156px}.guide-primary:hover{background:#b9ff7e}.guide-secondary:disabled{opacity:.35;cursor:not-allowed}
+/* Animated visual scenes inside the guide */
+.v-screen{height:200px;width:min(290px,84%);border:6px solid #47674a;border-bottom-width:17px;border-radius:13px;background:#101a15;box-shadow:0 23px 0 -15px #4b5e4d,0 27px 0 -15px #394c3c,0 25px 55px #0009;position:relative;overflow:hidden;animation:popin .45s both}.v-screen-head{height:30px;padding:9px 11px;background:#253529;display:flex;gap:5px}.v-screen-head i{width:7px;height:7px;border-radius:50%;background:#83ef38}.v-game-grid{padding:14px;display:flex;gap:8px}.v-game-grid span{height:88px;flex:1;background:linear-gradient(145deg,#365834,#101f15);border:1px solid #6b9760;border-radius:6px;position:relative}.v-game-grid span:nth-child(2){background:linear-gradient(145deg,#4c4133,#1c2016)}.v-game-grid span:nth-child(3){background:linear-gradient(145deg,#394462,#171f28)}.v-game-grid span:after{content:'▶';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#d6ffad;font-size:27px}.v-cursor{position:absolute;width:22px;height:30px;left:47%;top:58%;background:#f3ffe6;clip-path:polygon(0 0,0 100%,26% 76%,43% 100%,55% 95%,39% 69%,76% 67%);filter:drop-shadow(1px 2px 1px #000);animation:cursorTravel 3.3s ease-in-out infinite}.v-screen .v-playline{position:absolute;bottom:12px;left:12px;right:12px;height:10px;background:#3f633d;border-radius:4px}.v-screen .v-playline:before{content:'';display:block;width:36%;height:100%;background:var(--green);border-radius:4px;animation:barpulse 2.4s infinite alternate}
+@keyframes cursorTravel{0%,100%{transform:translate(65px,20px)}55%{transform:translate(-12px,-20px)}}@keyframes barpulse{to{width:85%}}@keyframes popin{from{opacity:0;transform:translateY(24px) scale(.93)}to{opacity:1;transform:translateY(0) scale(1)}}
+.v-choice-wrap{display:flex;gap:13px;padding:20px;max-width:100%;align-items:center}.v-choice{width:155px;height:172px;border-radius:11px;border:1px solid #638659;background:linear-gradient(155deg,#294b2b,#152219);padding:20px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:17px;animation:popin .4s both;box-shadow:0 15px 32px #0006}.v-choice:nth-child(2){border-color:#99794e;background:linear-gradient(155deg,#423724,#1d1d16);animation-delay:.15s}.v-choice-icon{font-size:44px;color:#b8fa86}.v-choice:nth-child(2) .v-choice-icon{color:#ffd49a}.v-choice span{font:900 11px Manrope,sans-serif;letter-spacing:.07em;color:#ecffdc}.v-choice small{font-size:9px;color:#b0c9b2}.v-choice:nth-child(1){animation:choiceglow 2.5s ease-in-out infinite alternate}@keyframes choiceglow{to{box-shadow:0 0 32px #83ef3840}}
+.v-files{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:center;padding:20px}.v-box{width:95px;min-height:112px;border:1px solid #637958;background:#192b1d;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;box-shadow:0 8px 21px #0005;animation:popin .5s both}.v-box:nth-child(2){animation-delay:.12s}.v-box:nth-child(3){animation-delay:.24s}.v-box b{font-size:40px;color:var(--green);line-height:1}.v-box span{font-size:9px;font-weight:900;letter-spacing:.06em;color:#d6edcf;white-space:nowrap}.v-box:nth-child(2) b{color:#f0c58d}.v-box:nth-child(3) b{color:#b1ccf7}
+.v-transfer{width:min(350px,90%);display:flex;justify-content:space-between;align-items:center;position:relative}.v-device{width:119px;height:130px;border:1px solid #618951;background:#182a1d;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;box-shadow:0 12px 30px #0008}.v-device b{font-size:50px;color:var(--green)}.v-device span{font-size:10px;color:#e5f9df;font-weight:900}.v-transfer .v-moving{position:absolute;left:26%;top:36%;background:var(--green);border-radius:5px;color:#102006;font-size:19px;font-weight:900;width:39px;height:39px;display:grid;place-items:center;animation:transferfile 2.5s ease-in-out infinite;box-shadow:0 0 30px #9cf96b88}.v-arrow{position:absolute;left:47%;font-size:26px;color:#b5fa8c}@keyframes transferfile{0%{transform:translateX(0);opacity:0}18%{opacity:1}75%{opacity:1}100%{transform:translateX(120px);opacity:0}}
+.v-upload{width:min(330px,86%);height:200px;border:2px dashed #83ef3887;border-radius:12px;background:#172a1d;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;position:relative;box-shadow:inset 0 0 43px #87ee2f10;animation:popin .4s both}.v-upload-icon{font-size:50px;color:var(--green)}.v-upload-text{font-size:12px;color:#d5e7cf;font-weight:900}.v-upload-file{position:absolute;right:15px;top:-20px;font-size:29px;border:1px solid #a0d779;padding:9px;border-radius:6px;background:#314c2b;animation:dropfile 3.4s infinite ease-in-out}@keyframes dropfile{0%{transform:translate(55px,-45px) rotate(25deg);opacity:0}22%{opacity:1}68%{transform:translate(-95px,105px) rotate(0deg);opacity:1}90%,100%{transform:translate(-95px,105px);opacity:0}}
+.v-success{width:195px;height:195px;border-radius:50%;border:3px solid #83ef3877;background:#244a24;display:grid;place-items:center;box-shadow:0 0 0 23px #83ef3814,0 0 0 46px #83ef380a,0 0 50px #83ef3822;animation:successpulse 2.1s ease-in-out infinite}.v-success span{font-size:95px;color:var(--green)}@keyframes successpulse{50%{transform:scale(1.08);box-shadow:0 0 0 30px #83ef3810,0 0 0 54px #83ef3808,0 0 65px #83ef3846}}
+@media(max-width:1200px){.learn-feature{gap:15px}.learn-icon{width:72px}.learn-actions{min-width:180px}.top-help span{display:none}}
+@media(max-width:800px){.guide-backdrop{padding:0}.guide-shell{height:100dvh;max-height:none;min-height:0;border-radius:0}.guide-content{grid-template-columns:1fr;gap:8px;overflow-y:auto;padding:12px 22px}.guide-copy{padding:14px 0 0;overflow:visible}.guide-copy h2{font-size:39px;margin:0 0 12px}.guide-copy p{margin:0 0 13px;font-size:12px}.guide-callout{padding:10px 13px;font-size:11px}.guide-stage{min-height:200px}.guide-visual{min-height:185px}.guide-est{display:none}.learn-feature{align-items:flex-start}.learn-icon{display:none}.learn-actions{min-width:170px}.top-help{padding:10px}}
+@media(max-width:590px){.guide-head{min-height:60px;padding:0 17px}.guide-brand{font-size:17px}.guide-brand b{font-size:9px}.guide-track{padding:12px 18px 0}.guide-content{padding:9px 15px}.guide-copy h2{font-size:36px}.guide-index{margin-bottom:12px}.guide-stage{min-height:170px}.guide-visual{min-height:160px}.v-screen{height:140px}.v-game-grid span{height:46px}.v-choice{height:125px;width:120px;gap:8px;padding:10px}.v-choice-icon{font-size:30px}.v-box{width:70px;min-height:87px}.v-box b{font-size:29px}.v-files{gap:8px}.v-device{width:90px;height:100px}.v-device b{font-size:35px}.v-success{width:118px;height:118px}.v-success span{font-size:55px}.v-upload{height:150px}.guide-bottom{flex-direction:column;align-items:stretch;padding:12px 14px;gap:8px}.guide-footnote{font-size:9px}.guide-controls{justify-content:flex-end}.guide-primary,.guide-secondary{padding:12px;min-width:94px}.guide-copy p{line-height:1.6}.guide-stage-caption{font-size:7px}.learn-feature{padding:19px;flex-direction:column;margin-bottom:30px}.learn-actions{width:100%}.learn-tags{gap:8px}.top-help{font-size:14px}.profile{display:none}}
+@media(prefers-reduced-motion:reduce){.guide-shell,.learn-screen,.learn-spark,.v-screen,.v-box,.v-choice,.v-cursor,.v-transfer .v-moving,.v-upload-file,.v-success{animation:none!important}}
+
+.poster-card[data-id="cncweb"] .art-tag{background:#2d2515;color:#ffcf8d;border-color:#7d6033}.poster-card[data-id="cncweb"] .card-play{background:#c9a96c;color:#16100b}
+#newports .sect-title span{color:#c7ff86} .poster-card[data-id="heroes2"] .status-dot,.poster-card[data-id="caesar3"] .status-dot{background:#e8bd5c}
+
+/* EXILE COMMUNITY: auth, nicknames, global chat, daily polls */
+.sidebar .navbtn>span:first-child{flex:0 0 19px;text-align:center}
+.community-page{animation:appsIn .25s ease-out}.community-hero{padding:35px clamp(22px,4vw,50px);border-radius:15px;border:1px solid #4c643c;background:radial-gradient(ellipse at 85% 15%,#72c43f28,transparent 40%),linear-gradient(115deg,#17251a,#0f1713);margin-bottom:24px;position:relative;overflow:hidden}
+.community-hero:after{content:'//';font:900 230px/.7 Rajdhani,Arial,sans-serif;position:absolute;right:25px;top:6px;color:#80ed3112;pointer-events:none}.community-eyebrow{font-size:10px;font-weight:900;letter-spacing:.19em;color:var(--green)}.community-hero h1{font:900 clamp(45px,5.5vw,76px)/.9 Rajdhani,Arial,sans-serif;letter-spacing:-.02em;margin:20px 0}.community-hero h1 span{color:var(--green)}.community-hero p{max-width:620px;color:#b6c6b7;font-size:12px;line-height:1.85;margin:0 0 22px}.community-status{display:inline-flex;gap:9px;align-items:center;color:#b1c6b4;font-size:10px;font-weight:900;border:1px solid #476449;padding:9px 12px;background:#1b2b1e;border-radius:6px}.community-status b{width:8px;height:8px;border-radius:50%;background:#f3c074}.community-status.connected b{background:var(--green)}
+.community-account{display:grid;grid-template-columns:1.1fr 1fr;gap:25px;align-items:center;margin-bottom:21px;background:#141b17;border:1px solid #354736;border-radius:12px;padding:24px}.community-account-title{font:800 25px Rajdhani,sans-serif;margin:0 0 8px}.community-account-title span{color:var(--green)}.community-muted{color:#9caf9c;font-size:11px;line-height:1.8}.community-label{font-size:10px;color:#aec3ab;display:block;font-weight:800;letter-spacing:.05em;margin:0 0 7px}.community-field{width:100%;min-width:0;height:42px;padding:0 12px;border-radius:7px;background:#0e1510;border:1px solid #405443;color:#f2fff0;font-size:12px;outline:none}.community-field:focus{border-color:#85e948}.community-account form{display:flex;align-items:end;gap:8px}.community-account form>div{flex:1}.community-account button,.community-send,.community-vote,.community-logout{font:900 11px Manrope,system-ui,sans-serif;background:var(--green);border:1px solid var(--green);color:#102006;padding:12px 14px;min-height:42px;border-radius:6px}.community-account button:hover,.community-send:hover,.community-vote:hover{background:#b1ff73}.community-account button:disabled,.community-send:disabled,.community-vote:disabled{cursor:not-allowed;opacity:.4}.community-msg{font-size:11px;color:#c3e1ba;line-height:1.65;margin-top:8px;min-height:17px}.community-msg.error{color:#ffab9f}.community-privacy{font-size:10px;color:#a0b0a1;line-height:1.65;margin-top:11px}.community-private-mail{font-size:10px;color:#d1e1d3;word-break:break-all}
+.community-columns{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(285px,.88fr);gap:21px}.community-panel{border:1px solid #334737;background:#121916;border-radius:12px;overflow:hidden}.community-panel-head{padding:19px 20px;border-bottom:1px solid #2e402f;display:flex;justify-content:space-between;align-items:center;gap:15px}.community-panel-head h2{font:900 25px Rajdhani,Arial,sans-serif;margin:0}.community-panel-head h2 span{color:var(--green)}.community-panel-head small{font-size:9px;font-weight:900;letter-spacing:.09em;color:#8ea995}.community-chat{height:365px;overflow:auto;padding:19px;display:flex;flex-direction:column;gap:14px;scrollbar-color:#4a6648 transparent}.community-chat-empty{display:grid;place-items:center;text-align:center;flex:1;min-height:250px;color:#97ae97;font-size:12px;line-height:1.8}.community-chat-row{display:flex;gap:11px;align-items:start}.community-avatar{width:34px;height:34px;border-radius:7px;flex:0 0 auto;display:grid;place-items:center;background:#29392d;color:#b5ff80;font-weight:900;font-size:13px}.community-chat-author{font-weight:900;font-size:11px;color:#aeef84}.community-chat-time{font-size:9px;color:#79907e;margin-left:9px}.community-chat-body{font-size:12px;line-height:1.65;color:#d8e7d9;white-space:pre-wrap;overflow-wrap:anywhere;margin:5px 0 0}.community-chat-row .report-btn{border:0;background:transparent;color:#74927b;font-size:10px;text-decoration:underline;padding:3px 4px;margin-left:8px}.community-chat-row .report-btn:hover{color:#ecbf90}.community-compose{display:flex;gap:8px;padding:15px 18px;border-top:1px solid #304031}.community-compose .community-field{flex:1}.community-compose-note{padding:0 18px 16px;font-size:10px;color:#849a85;line-height:1.5}
+.community-poll{padding:20px}.community-poll-title{font-size:17px;font-weight:900;margin:0 0 9px}.community-poll-note{font-size:11px;line-height:1.7;color:#9db09f;margin:0 0 19px}.community-poll-options{display:flex;flex-direction:column;gap:11px}.community-vote-option{border:1px solid #3a4e3a;background:#1d291f;color:#deeddb;border-radius:8px;padding:12px;text-align:left;display:flex;flex-direction:column;gap:8px}.community-vote-option:hover:not(:disabled){border-color:#9ee576}.community-vote-option:disabled{cursor:default;opacity:.85}.community-vote-option.picked{border-color:#83ef38}.community-vote-row{display:flex;justify-content:space-between;gap:10px;font-size:11px;font-weight:850}.community-vote-bar{height:5px;background:#101a10;border-radius:10px;overflow:hidden}.community-vote-fill{height:100%;background:var(--green);display:block;transition:width .35s}.community-poll-foot{border-top:1px solid #344735;margin-top:20px;padding-top:16px;color:#9db49d;font-size:10px;line-height:1.8}.community-pill{border:1px solid #3e5a3e;background:#203021;padding:5px 8px;color:#a9f58c;border-radius:5px;font-size:9px;font-weight:900}.community-preview{border:1px solid #596340;background:#272b1d;color:#dbcda8;padding:12px 14px;border-radius:8px;font-size:11px;line-height:1.75;margin-top:15px}.community-auth-only{display:none}.community-user-only{display:none}.community-avatar.big{width:55px;height:55px;font-size:23px}.community-identity{display:flex;gap:14px;align-items:center}.community-identity strong{font-size:15px}.community-identity .community-logout{min-height:32px;padding:6px 12px;font-size:10px;background:#283526;color:#c8dfc4;border-color:#475b43;margin-top:7px}
+.community-intro{border:1px solid #314332;border-radius:10px;background:#18221a;padding:20px;margin-bottom:19px;display:flex;align-items:center;gap:18px}.community-intro h3{font:800 23px Rajdhani,sans-serif;margin:0}.community-intro h3 span{color:var(--green)}.community-intro p{margin:6px 0 0;color:#9bb39d;font-size:11px;line-height:1.65}.community-intro button{margin-left:auto;white-space:nowrap}
+.community-account .community-google{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:#f4f6f3;color:#1c271e;border:1px solid #bbc5bb;border-radius:8px;min-height:45px;padding:11px 16px;transition:background .15s,transform .15s}.community-account .community-google:hover{background:white;transform:translateY(-1px)}.community-account .community-google:disabled{opacity:.5;transform:none}.community-google svg{flex-shrink:0}.community-auth-divider{display:flex;align-items:center;gap:12px;color:#879889;font-size:9px;font-weight:900;letter-spacing:.09em;margin:15px 0}.community-auth-divider:before,.community-auth-divider:after{content:"";height:1px;background:#364b37;flex:1}
+@media(max-width:1050px){.community-columns{grid-template-columns:1fr}.community-account{grid-template-columns:1fr}.community-chat{height:330px}}
+@media(max-width:600px){.community-hero{padding:25px 19px}.community-hero h1{font-size:48px}.community-account{padding:18px}.community-account form{align-items:stretch;flex-direction:column}.community-account form button{width:100%}.community-panel-head{padding:16px}.community-compose{padding:12px;flex-direction:column}.community-chat{height:280px}.community-intro{align-items:flex-start;flex-direction:column}.community-intro button{margin-left:0}}
+
+/* EXILE editorial verification: independent of host availability or school/network filtering. */
+.verification-badge{position:absolute;z-index:3;top:12px;right:11px;display:inline-flex;align-items:center;gap:5px;border:1px solid #64736d;border-radius:5px;background:#0b100fe8;color:#b6c2bb;font-size:9px;font-weight:900;letter-spacing:.055em;padding:6px 7px;line-height:1;white-space:nowrap}
+.verification-badge.verified{border-color:#83ef38;background:#1d3615f2;color:#aaff75;box-shadow:0 0 14px #83ef3820}
+.verification-badge.not-tested{border-color:#58605b;background:#17201ce8;color:#b6beb7}
+.verification-badge.broken{border-color:#c86669;background:#391b20ed;color:#ffb5b5}
+.verification-badge.partial{border-color:#dfa962;background:#352717ed;color:#ffdda0}
+.poster-card.is-partial .status-dot{background:#f2b65f}
+.card-report{color:#e9be78;font-size:10px;line-height:1.5;border-left:2px solid #9a7546;padding:4px 7px;background:#2b2419;border-radius:0 4px 4px 0}
+.card-report.good{color:#a0dba0;border-color:#5a9250;background:#1d2b1d}
+.poster-card[data-id="halflife"]{border-color:#83d54c;box-shadow:0 0 0 1px #537d3328,0 14px 28px #0003}
+.poster-card[data-id="halflife"] .art-tag{background:#29451e;color:#adff79;border-color:#8cef57}
+.card-load{display:inline-flex;align-items:center;gap:6px;color:#baf29b;border:1px solid #41653b;background:#1b2b1c;padding:6px 8px;border-radius:5px;font-size:10px;font-weight:800;line-height:1.35;align-self:flex-start}
+.card-load::before{content:'◷';font-size:13px}
+.poster-card.is-broken .status-dot{background:#ef7373}
+.poster-card.is-broken .card-play{background:#37272a;border-color:#855256;color:#ffb5b5}
+.verification-legend .broken-text{color:#ffb5b5}
+.test-information{font-size:10px;color:#b9e6a7;background:#19261d;border-left:2px solid #8fdf5c;padding:9px 11px;line-height:1.65;margin:7px 0 12px}
+.test-information.broken{color:#ffc1c1;background:#291b1c;border-left-color:#ef7272}
+
+.verification-legend{display:flex;flex-wrap:wrap;gap:9px 18px;align-items:center;margin:-3px 0 17px;color:#9baa9f;font-size:10px;line-height:1.65}
+.verification-legend strong{font-size:10px;color:#b8fb95}
+.verification-legend .unverified-text{color:#c4cdc4}
+@media(max-width:590px){.verification-badge{top:10px;right:8px;font-size:8px;padding:5px 6px}.verification-legend{font-size:10px}}
+
+/* EXILE GAME LAUNCHER · native shell around existing game hosts */
+.launcher-trigger{white-space:nowrap;border:1px solid #5b8e3b;background:#24381e;color:#baff8a;padding:11px 13px;border-radius:7px;font-size:10px;letter-spacing:.065em;font-weight:900;transition:.2s}
+.launcher-trigger:hover{background:#35542a;transform:translateY(-1px)}
+.launcher-nav{border:1px solid #425a37;background:linear-gradient(90deg,#1d2e1a,#15201b)}
+.launcher-nav em{background:#8fee4b;color:#111f0b}
+.launcher-shell{width:min(1400px,100%);height:min(94dvh,940px);min-height:540px;border:1px solid #456542;background:#0e1411}
+.launcher-shell .modal-top{padding:12px 18px;background:linear-gradient(90deg,#18251b,#111912);gap:14px}
+.launcher-kicker{font-size:9px;font-weight:900;letter-spacing:.18em;color:#87db59;margin-bottom:4px}
+.launcher-shell .modal-sub{font-size:10px;line-height:1.4}
+.launcher-layout{min-height:0;flex:1;display:grid;grid-template-columns:minmax(300px,340px) minmax(0,1fr)}
+.launcher-config{padding:18px;min-height:0;overflow-y:auto;border-right:1px solid #324531;background:#101812;scrollbar-color:#567046 #141b15}
+.launcher-cover{min-height:132px;padding:17px;border:1px solid #446740;border-radius:10px;position:relative;overflow:hidden;background:radial-gradient(circle at 92% 14%,var(--coverGlow,#426d37a0),transparent 60%),linear-gradient(135deg,#172a19,#111714);display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.launcher-cover:before{content:'';position:absolute;inset:0;background-image:linear-gradient(#91f45608 1px,transparent 1px),linear-gradient(90deg,#91f45608 1px,transparent 1px);background-size:18px 18px;pointer-events:none}
+.launcher-cover-meta{position:relative;z-index:1;min-width:0}.launcher-eyebrow{font-size:9px;color:#b4ef8e;font-weight:900;letter-spacing:.15em;margin-bottom:8px}
+.launcher-cover-name{font:900 27px/1 Rajdhani,Manrope,sans-serif;text-transform:uppercase;margin:0;overflow-wrap:anywhere}
+.launcher-cover-type{font-size:10px;color:#acbaa8;margin-top:10px;line-height:1.4}.launcher-cover-icon{font:900 62px/.95 Rajdhani,Manrope,sans-serif;color:#cfffab88;letter-spacing:-.08em;flex-shrink:0;position:relative}
+.launcher-badges{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 18px}.launcher-badge{padding:6px 8px;border-radius:5px;font-size:9px;font-weight:900;letter-spacing:.045em;border:1px solid #384d37;color:#afbea7;background:#1d2920}.launcher-badge.ok{border-color:#5e994c;color:#aafa80;background:#203820}.launcher-badge.warn{color:#e5c994;border-color:#695e3f;background:#2c291d}
+.launcher-section-title{font-size:10px;letter-spacing:.13em;font-weight:900;color:#a6e88a;display:flex;align-items:center;justify-content:space-between;margin:17px 0 9px}.launcher-section-title small{font-size:9px;font-weight:600;color:#8e9e91;letter-spacing:0}
+.launcher-toggle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.launcher-toggle button,.launcher-preset button{border-radius:7px;padding:10px 7px;background:#1a251e;color:#aebfa9;border:1px solid #354738;text-align:center;font-size:10px;font-weight:900;transition:.15s}.launcher-toggle button.selected,.launcher-preset button.selected{background:#2b491f;border-color:#87d458;color:#d5ffbd;box-shadow:inset 0 0 0 1px #72a94850}.launcher-toggle button:hover,.launcher-preset button:hover{border-color:#79a266}
+.launcher-preset{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.launcher-preset button span{display:block;font-size:8px;color:#8b9c8e;font-weight:600;margin-top:4px;letter-spacing:0}.launcher-preset button.selected span{color:#c3e4ad}
+.launcher-explain{font-size:10px;line-height:1.65;color:#95a493;margin-top:9px}.launcher-system{display:grid;grid-template-columns:1fr 1fr;gap:7px}.launcher-stat{padding:10px;border:1px solid #303e32;border-radius:7px;background:#18231b;display:flex;flex-direction:column;gap:6px;min-width:0}.launcher-stat span{font-size:9px;color:#92a391}.launcher-stat b{font-size:11px;color:#d6e7d2;overflow-wrap:anywhere}
+.launcher-boot{margin-top:16px;padding:13px;border:1px solid #324635;border-radius:9px;background:#0a110e}.launcher-boot-head{display:flex;align-items:center;justify-content:space-between;gap:5px;color:#a1b79c;font-size:9px;font-weight:900;letter-spacing:.06em}.launcher-boot-head strong{color:var(--green);font-size:9px}.launcher-boot-log{display:flex;flex-direction:column;gap:7px;margin-top:11px;max-height:120px;overflow:auto}.launcher-boot-log div{font:10px/1.4 ui-monospace,Menlo,Consolas,monospace;color:#a2c99d;overflow-wrap:anywhere}.launcher-boot-log div:before{content:'›';color:var(--green);margin-right:7px}.launcher-boot-log .warn{color:#f1cb8c}
+.launcher-side-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:17px}.launcher-side-actions .btn{width:100%;justify-content:center;text-align:center;padding:14px 10px;font-size:11px}.launcher-side-actions .smallbtn{justify-content:center;text-align:center}
+.launcher-stage{display:flex;min-width:0;min-height:0;flex-direction:column;background:#070d0a}.launcher-stage .game-area{min-height:0;flex:1;background:radial-gradient(circle at 53% 35%,#1a2e1c 0,#0b130f 35%,#070d0a 72%)}.launcher-stage .frame-intro{max-width:570px;width:100%}.launcher-stage .frame-intro h2{font-size:clamp(27px,3.5vw,43px);line-height:1.1}.launcher-stage .frame-intro p{max-width:460px;margin:12px auto 0}.launcher-stage .frame-intro p.bundle-text{white-space:pre-line;text-align:left;font-size:11px;line-height:1.55;max-height:36vh;overflow-y:auto;padding:2px 8px}.launcher-frame-id{font:900 10px ui-monospace,monospace;color:#5a8258;letter-spacing:.22em}.launcher-stage .frame-logo{font-size:100px;line-height:1.15}.launcher-stage .frame-loading{left:18px;right:18px;bottom:18px;max-width:none;border-radius:7px;line-height:1.5;background:#0f2118ed}.launcher-stage-bar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #283a2b;background:#111c15}.launcher-stage-state{display:flex;gap:8px;align-items:center;color:#bcd0b9;font-size:10px;font-weight:800}.launcher-status-dot{width:7px;height:7px;border-radius:50%;background:#a2ab9f;box-shadow:0 0 12px #9fb79c55}.launcher-status-dot.ready{background:#83ef38;box-shadow:0 0 14px #83ef3890}.launcher-status-dot.warning{background:#e1b165;box-shadow:0 0 14px #e1b16588}.launcher-stage-bar button{padding:6px 9px;border:1px solid #405641;border-radius:5px;background:#19271d;color:#cce8c5;font-size:10px;font-weight:800}
+.launcher-shell .frame-foot{font-size:10px;line-height:1.5;gap:10px}
+.launcher-hub{position:fixed;inset:0;z-index:75;display:none;align-items:center;justify-content:center;padding:20px;background:#030804df;backdrop-filter:blur(16px)}.launcher-hub.show{display:flex}.launcher-hub-inner{width:min(800px,100%);max-height:min(800px,92dvh);overflow:auto;background:#111912;border:1px solid #4e7548;border-radius:14px;padding:24px;box-shadow:0 30px 90px #000c}.launcher-hub-head{display:flex;align-items:start;gap:16px;justify-content:space-between;margin-bottom:20px}.launcher-hub-eyebrow{font-size:10px;letter-spacing:.17em;color:var(--green);font-weight:900}.launcher-hub h2{font:900 clamp(28px,4vw,45px) Rajdhani,sans-serif;letter-spacing:-.025em;margin:3px 0 8px}.launcher-hub p{font-size:12px;color:#abbdab;line-height:1.65;max-width:590px;margin:0}.launcher-hub-close{font-size:24px;color:#e6f6df;background:#1f3123;border:1px solid #4a6647;width:36px;height:36px;border-radius:7px}.launcher-hub-label{font-size:10px;font-weight:900;color:#8ddb64;letter-spacing:.16em;margin:20px 0 10px}.launcher-hub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.launcher-hub-game{display:flex;min-height:102px;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;padding:13px;border:1px solid #354934;border-radius:9px;background:#19271d;color:#eff9ea;font-weight:900;font-size:12px}.launcher-hub-game:hover{border-color:#8ade56;background:#253b24}.launcher-hub-game span{font-size:9px;font-weight:700;color:#90a78f}.launcher-hub-game b{font-size:21px;color:#8ff35b;align-self:flex-end}.launcher-hub-foot{border-top:1px solid #30422f;padding-top:15px;margin-top:22px;font-size:11px;color:#a3b5a1}
+@media(max-width:1100px){.launcher-trigger{padding:10px}.launcher-trigger .launcher-trigger-label{display:none}}
+@media(max-width:800px){.launcher-shell{width:100%;height:100dvh;min-height:0;border-radius:0}.launcher-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(300px,1fr);overflow:auto}.launcher-config{padding:12px 14px;max-height:280px;border-right:0;border-bottom:1px solid #334b34}.launcher-cover{min-height:76px;padding:12px}.launcher-cover-icon{font-size:40px}.launcher-cover-name{font-size:24px}.launcher-cover-type{margin-top:5px}.launcher-badges{margin:7px 0}.launcher-shell .modal-top{padding:8px 11px}.launcher-section-title{margin:9px 0}.launcher-boot{display:none}.launcher-system{display:none}.launcher-stage{min-height:300px}.launcher-shell .frame-foot{padding:7px 10px;font-size:9px}.launcher-side-actions{margin-top:10px}.launcher-hub-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.launcher-hub{padding:9px}.launcher-hub-inner{padding:16px}.launcher-shell .modal-actions .guide-mini{display:none}.launcher-shell .modal-actions .smallbtn{padding:7px;font-size:10px}.launcher-shell .modal-actions .smallbtn.close{font-size:20px}.launcher-hub-grid{grid-template-columns:1fr 1fr}.launcher-hub-game{min-height:90px}}
+
+
+.launcher-side-actions{position:sticky;bottom:-18px;padding-top:12px;padding-bottom:5px;background:linear-gradient(0deg,#101812 82%,#101812eb);z-index:2}
+#startFrameStage{margin-top:23px;padding:14px 23px;min-width:200px;justify-content:center}
+@media(max-width:800px){.launcher-side-actions{position:static;padding:0;background:transparent}#startFrameStage{margin-top:16px}}
+
+/* EXILE GAME PEEK — Steam-style six-second trailers, lazy-loaded on hover */
+.peek-trigger{position:absolute;z-index:5;left:11px;bottom:10px;min-width:30px;height:30px;padding:0 9px;display:flex;align-items:center;justify-content:center;border:1px solid #cfff9c91;border-radius:6px;background:#07120be8;color:#d6ffb6;font-weight:900;font-size:14px;transition:background .17s,border-color .17s;box-shadow:0 3px 9px #0009}
+.peek-trigger:hover,.peek-trigger:focus-visible{background:#365d28;border-color:var(--green);outline-offset:2px}
+.poster-card:hover .peek-trigger{border-color:var(--green)}
+.game-peek{position:fixed;z-index:65;width:360px;max-width:calc(100vw - 20px);max-height:calc(100dvh - 24px);background:#121915;border:1px solid #527342;border-radius:13px;box-shadow:0 26px 75px #000e,0 0 0 1px #a1f8590a;overflow:hidden;opacity:0;pointer-events:none;transform:translateY(8px) scale(.988);transition:opacity .16s ease,transform .16s ease;display:flex;flex-direction:column}
+.game-peek.is-visible{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.game-peek[hidden]{display:none!important}
+.peek-media{height:195px;flex:0 0 auto;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(circle at 75% 25%,var(--peek-c2,#3b5b38),transparent 55%),linear-gradient(140deg,var(--peek-c1,#122015),#101712);display:grid;place-items:center}
+.peek-media::after{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(0deg,#0a120cdc,transparent 45%);z-index:2}
+.peek-backmark{font:900 112px/1 Rajdhani,sans-serif;color:var(--peek-ink,#d8f5c2);opacity:.18;letter-spacing:-.08em;user-select:none}
+.peek-cover,.peek-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.peek-cover{z-index:1;opacity:.94}
+.peek-video{z-index:2;display:none}
+.peek-video.is-playing{display:block}
+.peek-video[src]{background:#090c0a}
+.peek-media-label{position:absolute;z-index:4;left:14px;bottom:12px;font:900 9px Manrope,sans-serif;letter-spacing:.13em;background:#07100bdc;border:1px solid #426037;color:#bcff8c;padding:7px 9px;border-radius:4px}
+.peek-x{position:absolute;z-index:5;right:10px;top:10px;border:1px solid #66865b;background:#0b170eea;color:#ecffe5;border-radius:6px;width:30px;height:30px;font-size:21px;line-height:1}
+.peek-x:hover{background:#38552b}
+.peek-content{padding:18px 18px 16px;overflow-y:auto}
+.peek-overline{color:var(--green);font:900 9px Manrope,sans-serif;letter-spacing:.18em;margin-bottom:7px}
+.peek-title{font:800 25px/1.04 Rajdhani,Manrope,sans-serif;margin:0 24px 9px 0;letter-spacing:.01em;overflow-wrap:anywhere}
+.peek-stats{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.peek-stats span{font:800 9px Manrope,sans-serif;color:#b9c7b9;background:#1f2c21;border:1px solid #344738;border-radius:5px;padding:5px 8px}
+.peek-section{color:#9fef76;font:900 9px Manrope,sans-serif;letter-spacing:.16em;margin-bottom:7px}
+.peek-story{font:500 11px/1.65 Manrope,system-ui,sans-serif;margin:0;color:#d7e3d7}.peek-story.bundle-text{white-space:pre-line}
+.peek-bottom{display:flex;gap:8px;align-items:center;margin-top:15px}
+.peek-play{padding:10px 16px;flex:1;border-radius:5px;border:1px solid #8bf04a;background:var(--green);color:#10210b;font:900 11px Manrope,sans-serif}
+.peek-play:hover{background:#bdff85}
+.peek-footnote{font:700 9px Manrope,sans-serif;color:#91a593;text-align:right;max-width:120px;line-height:1.5}
+@media(max-width:750px), (hover:none){.game-peek{top:auto!important;left:0!important;bottom:0!important;width:100%;max-width:100%;max-height:80dvh;border-radius:16px 16px 0 0;box-shadow:0 -18px 70px #000e}.peek-media{height:clamp(135px,34vh,205px)}.peek-content{padding:14px 17px 18px}.peek-story{font-size:12px}.peek-trigger{min-width:35px;height:35px;font-size:17px}}
+@media(prefers-reduced-motion:reduce){.game-peek{transition:none!important}}
+
+
+/* === EXILE PLATFORM V2 — PROFILE / RELEASES / GAME PAGES / ADMIN === */
+.v2-view{min-height:calc(100vh - 95px);padding-bottom:45px}
+.v2-eyebrow{font-size:10px;font-weight:900;letter-spacing:2.2px;color:#9bef58;margin-bottom:12px}
+.v2-title{font-size:clamp(28px,4.2vw,49px);font-weight:900;line-height:1.05;letter-spacing:-1.8px;color:#eff9eb;margin:0 0 10px}
+.v2-title em{font-style:normal;color:var(--green)}
+.v2-sub{color:#9fae9c;font-size:13px;line-height:1.7;max-width:680px;margin:0 0 24px}
+.v2-box{background:linear-gradient(145deg,#182219,#121912);border:1px solid #354b32;border-radius:12px;padding:20px;min-width:0}
+.v2-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:16px}
+.v2-btn{border:1px solid #445b3b;background:#23311f;color:#e4fbe3;padding:11px 15px;border-radius:7px;font-size:11px;letter-spacing:.4px;font-weight:900;cursor:pointer;transition:background .2s}
+.v2-btn:hover{background:#36502b}
+.v2-btn.primary{background:#9ced56;color:#162214;border-color:#9ced56}
+.v2-btn.primary:hover{background:#b7fa8a}
+.v2-btn.danger{background:#361d1d;border-color:#7c3838;color:#ffb1a7}
+.v2-btn:disabled{opacity:.45;cursor:not-allowed}
+.v2-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.v2-input,.v2-select,.v2-textarea{display:block;width:100%;box-sizing:border-box;background:#0d140e;border:1px solid #3b5036;border-radius:7px;padding:11px 12px;color:#f0fff0;font:500 12px Manrope,Arial,sans-serif;outline:none}
+.v2-input:focus,.v2-select:focus,.v2-textarea:focus{border-color:#9bec59}
+.v2-textarea{resize:vertical;min-height:85px}
+.v2-field{display:grid;gap:7px;margin-bottom:13px;font-size:10px;letter-spacing:1px;color:#afc5aa;font-weight:900}
+.v2-msg{color:#b0d693;font-size:12px;line-height:1.6;min-height:17px;margin-top:12px;white-space:pre-line}
+.v2-muted{color:#8b9e87;font-size:12px;line-height:1.65}
+.v2-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;font-size:9px;font-weight:900;letter-spacing:.7px;border-radius:4px;border:1px solid #507344;background:#233620;color:#b2f88c}
+.v2-pill.neutral{color:#c7d0c4;border-color:#41503e;background:#202b21}
+.v2-pill.warning{color:#ffc49c;border-color:#a46e38;background:#352515}
+.v2-ribbon{height:174px;position:relative;border:1px solid #36533a;background:linear-gradient(110deg,#213b24 10%,#0d140f 55%,#365a29 100%);border-radius:12px;overflow:hidden}
+.v2-ribbon img{position:absolute;width:100%;height:100%;object-fit:cover}
+.v2-ribbon:after{content:'EXILE // 2000s WEB';position:absolute;bottom:12px;right:14px;color:#cee9c6;font-size:9px;letter-spacing:2px;font-weight:900;text-shadow:0 2px 10px #000}
+.v2-identity{display:flex;align-items:end;gap:18px;margin:-45px 17px 23px;position:relative;z-index:1}
+.v2-avatar{width:99px;height:99px;border-radius:11px;border:4px solid #0b130d;background:#284328;object-fit:cover;display:grid;place-items:center;color:#c7ffad;font-weight:900;font-size:44px;overflow:hidden;flex-shrink:0}
+.v2-avatar img{width:100%;height:100%;object-fit:cover}
+.v2-profile-info{padding-bottom:9px}
+.v2-profile-info h2{font-size:23px;color:#f2fff0;margin:0 0 7px;overflow-wrap:anywhere}
+.v2-badges{display:flex;flex-wrap:wrap;gap:6px}
+.v2-profile-body{padding:0 19px 20px}
+.v2-profile-body p{white-space:pre-wrap;overflow-wrap:anywhere;color:#cad8c7;font-size:13px;line-height:1.75}
+.v2-upload{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.v2-file{font-size:11px;color:#accba4;width:100%;max-width:250px}
+.v2-entry{padding:16px;border:1px solid #374c32;border-radius:10px;background:#131a14;margin-bottom:11px}
+.v2-entry-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+.v2-entry p{font-size:12px;color:#c6d7c1;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.v2-entry small{font-size:10px;color:#8c9f89}
+.v2-feature-cover{border:1px solid #435c35;border-radius:12px;min-height:220px;background:linear-gradient(125deg,var(--feature-a,#192c1f),var(--feature-b,#426b33));position:relative;overflow:hidden;display:flex;align-items:end;padding:24px;box-sizing:border-box}
+.v2-feature-cover img,.v2-feature-cover video{position:absolute;width:100%;height:100%;inset:0;object-fit:cover}
+.v2-feature-cover:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#0c110e 0%,transparent 85%);pointer-events:none}
+.v2-feature-cover .v2-cover-title{font-size:clamp(30px,4.3vw,58px);font-weight:1000;letter-spacing:-2px;color:#f5fff1;position:relative;z-index:1;text-shadow:0 3px 14px #000}
+.v2-kv{display:grid;grid-template-columns:145px minmax(0,1fr);gap:9px 16px;border-bottom:1px solid #354333;padding:10px 0;font-size:12px}
+.v2-kv span:first-child{color:#8da487}
+.v2-kv span:last-child{color:#e3f8dc;overflow-wrap:anywhere}
+.v2-admin-row{display:grid;grid-template-columns:1fr 150px 1fr 1.2fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #364532}
+.v2-admin-row strong{font-size:11px;min-width:0;overflow-wrap:anywhere}
+.v2-admin-row input,.v2-admin-row select{margin:0;font-size:11px}
+.v2-admin-row button{white-space:nowrap}
+.v2-admin-list{max-height:590px;overflow:auto}
+.v2-guestbook{max-height:360px;overflow:auto;margin:12px 0}
+.v2-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 16px}
+.v2-admin-note{background:#24301f;border:1px solid #4e7241;border-radius:8px;padding:13px;color:#cde5c3;font-size:12px;line-height:1.65}
+@media(max-width:850px){.v2-grid{grid-template-columns:1fr}.v2-admin-row{grid-template-columns:1fr 110px}.v2-admin-row>*:last-child{grid-column:span 2}.v2-ribbon{height:138px}}
+@media(max-width:500px){.v2-box{padding:14px}.v2-identity{gap:11px}.v2-avatar{width:78px;height:78px;font-size:33px}.v2-profile-info h2{font-size:19px}.v2-feature-cover{min-height:195px;padding:16px}.v2-kv{grid-template-columns:100px 1fr}}
+
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar" aria-label="Main navigation">
+<a class="brand" href="#home" id="brand"><span class="brand-mark">E</span><span class="brand-text">EXILE<span style="color:var(--green)">.</span><small>GAME HUB // WEB</small></span></a>
+<div class="nav-label">LIBRARY</div>
+<button class="navbtn active" data-route="home"><span>▦</span><span>Home</span></button>
+<button class="navbtn" type="button" data-route="community" aria-controls="communityPage"><span aria-hidden="true">☷</span><span>Community</span><em>NEW</em></button>
+<div class="nav-label">PLATFORM</div>
+<button class="navbtn" type="button" data-route="profile"><span>◉</span><span>My Profile</span><em>2.0</em></button>
+<button class="navbtn" type="button" data-route="updates"><span>✧</span><span>Update Center</span><em>NEW</em></button>
+<button class="navbtn hide" type="button" id="exileAdminNav" data-route="admin"><span>⚙</span><span>Admin Panel</span><em>OWNER</em></button>
+<button class="navbtn" data-route="all"><span>▤</span><span>All games</span><em id="totalMini">34</em></button>
+<button class="navbtn" data-route="RTS"><span>⌖</span><span>Real-time strategy</span></button>
+<button class="navbtn" data-route="Strategy"><span>♜</span><span>Turn-based strategy</span></button>
+<button class="navbtn" data-route="Action"><span>✚</span><span>Action / FPS</span></button>
+<button class="navbtn" data-route="Horror"><span>☾</span><span>Horror</span></button>
+<button class="navbtn" data-route="Adventure"><span>✦</span><span>Adventure</span></button>
+<button class="navbtn" data-route="Sandbox"><span>⬡</span><span>Sandbox</span></button>
+<button class="navbtn" data-route="Classic"><span>◈</span><span>Classics</span></button>
+<button class="navbtn" data-route="Factory"><span>⌘</span><span>Building & factory</span></button>
+<div class="nav-label">HOW IT WORKS</div><button class="navbtn guide-nav" data-guide="0" type="button"><span>✦</span><span>Getting started</span><em>NEW</em></button><div class="nav-label">MY EXILE</div>
+<button class="navbtn launcher-nav" id="launcherNav" type="button"><span>▣</span><span>Game Launcher</span><em>NEW</em></button>
+ <button class="navbtn" data-route="favorites"><span>♡</span><span>Favorites</span></button>
+ <a class="navbtn" href="/minidayz.html"><span>☣</span><span>Mini DAYZ</span></a>
+<a class="navbtn" href="/story.html"><span>◎</span><span>Our story</span></a>
+<div class="side-spacer"></div>
+<div class="side-bottom"><div class="tiny-head">BROWSER FIRST</div><div class="tiny-p">Not cloud streaming. Games run on developer sites, use your own game files, or link to source projects.</div><a href="https://codeberg.org/SS16295929/pages" target="_blank" rel="noopener noreferrer">View source ↗</a></div>
+</aside>
+<div class="content">
+<header class="topbar"><button class="mobmenu" id="mobmenu" aria-label="Open navigation">☰</button><span class="top-title">GAME LIBRARY <span style="color:#586b5b">/</span> CHROME EDITION</span><label class="search" for="searchInput"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.7" cy="10.7" r="6.7"/><path d="m16 16 5 5"/></svg><input id="searchInput" placeholder="Search games, genres, engines..." autocomplete="off" spellcheck="false" aria-label="Search games"><span class="kbd">/</span></label><span class="online"><i></i> BROWSER READY</span><button class="launcher-trigger" id="launcherTop" type="button" aria-label="Open EXILE Game Launcher">▣ <span class="launcher-trigger-label">LAUNCHER</span></button><button class="top-help" id="topHelp" type="button" aria-label="Open how to play guide">✦ <span>HOW TO PLAY</span></button><div class="profile" title="EXILE">EX</div></header>
+
+
+<main class="main community-page hide" id="communityPage" aria-label="EXILE Community">
+  <div class="crumb"><span>EXILE NETWORK</span><span>/</span><span>COMMUNITY</span></div>
+  <section class="community-hero">
+    <div class="community-eyebrow">EXILE NETWORK // LIVE COMMUNITY</div>
+    <h1>YOUR PEOPLE.<br><span>YOUR EXILE.</span></h1>
+    <p>Choose a nickname, join the global chat and vote in community polls. Emails stay private. The live community requires a configured authentication service.</p>
+    <div class="community-status" id="communityStatus"><b></b><span id="communityMode">PREVIEW MODE · BACKEND NOT CONNECTED</span></div>
+  </section>
+  <section class="community-account" aria-label="EXILE account">
+    <div>
+      <h2 class="community-account-title">EXILE <span>ACCOUNT</span></h2>
+      <p class="community-muted" style="margin:0">Continue with Google, or sign in through a link sent to your email. Choose a unique nickname to join the shared chat and polls. Your email is never publicly displayed.</p>
+      <div class="community-privacy">Use Google or an email link. School Google accounts may require administrator approval. Email addresses are private and are never shown in chat. For users under 13, parental consent and an appropriate privacy setup are required before real accounts can be offered. Don't post personal information in chat.</div>
+    </div>
+    <div>
+      <div id="communityGuest">
+        <button class="community-google" id="communityGoogleButton" type="button" aria-label="Continue with Google"><svg aria-hidden="true" viewBox="0 0 48 48" width="18" height="18"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.25 5.48-4.75 7.18l7.73 6C44.43 38.03 46.98 31.88 46.98 24.55z"/><path fill="#FBBC05" d="M10.53 28.59A14.41 14.41 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.2A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span>CONTINUE WITH GOOGLE</span></button>
+        <div class="community-auth-divider"><span>OR USE AN EMAIL LINK</span></div>
+        <form id="communityEmailForm">
+          <div><label for="communityEmail" class="community-label">EMAIL ADDRESS</label><input class="community-field" id="communityEmail" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254"></div>
+          <button id="communityEmailButton" type="submit">SEND SIGN-IN LINK →</button>
+        </form>
+        <div id="communityEmailNote" class="community-msg" role="status"></div>
+        <div class="community-preview"><strong>Preview only:</strong> Google and email sign-in need a connected Supabase project and a published HTTPS site.</div>
+      </div>
+      <div class="community-user-only" id="communityUser">
+        <div class="community-identity"><div class="community-avatar big" id="communityUserAvatar">E</div><div><strong id="communityUserNick">CHOOSE A NICKNAME</strong><div class="community-private-mail" id="communityPrivateMail"></div><button class="community-logout" id="communityLogout" type="button">SIGN OUT</button></div></div>
+        <form id="communityNickForm" style="margin-top:14px"><div><label for="communityNick" class="community-label">YOUR UNIQUE NICKNAME (3–20 LETTERS, NUMBERS, _)</label><input class="community-field" id="communityNick" type="text" pattern="[A-Za-z0-9_]{3,20}" minlength="3" maxlength="20" autocomplete="off" placeholder="Ghost_777" required></div><button type="submit">SAVE NICK →</button></form>
+        <div class="community-msg" id="communityNickNote" role="status"></div>
+      </div>
+    </div>
+  </section>
+  <div class="community-columns">
+    <section class="community-panel" aria-label="Global chat">
+      <header class="community-panel-head"><h2>GLOBAL <span>CHAT</span></h2><small id="communityChatLabel">PREVIEW</small></header>
+      <div class="community-chat" id="communityChat" role="log" aria-live="polite"><div class="community-chat-empty">Real messages will appear here once the community backend is connected.<br>EXILE doesn't simulate other users' messages.</div></div>
+      <form class="community-compose" id="communityChatForm"><input class="community-field" id="communityChatInput" type="text" maxlength="500" aria-label="Chat message" placeholder="Sign in and choose a nickname to chat..." disabled><button class="community-send" type="submit" id="communitySend" disabled>SEND ↗</button></form>
+      <div class="community-compose-note" id="communityChatNote">Global chat is for respectful conversation. Messages can be reported and moderated.</div>
+    </section>
+    <section class="community-panel" aria-label="Daily poll">
+      <header class="community-panel-head"><h2>DAILY <span>POLLS</span></h2><span class="community-pill" id="communityPollStatus">PREVIEW</span></header>
+      <div class="community-poll"><h3 class="community-poll-title" id="communityPollQuestion">Which EXILE feature should we build next?</h3><p class="community-poll-note" id="communityPollNote">Polls are shared across the community after the backend is connected. One vote per account per poll.</p><div class="community-poll-options" id="communityPollOptions">
+        <button class="community-vote-option" disabled><span class="community-vote-row">More games</span></button>
+        <button class="community-vote-option" disabled><span class="community-vote-row">Pixel Studio</span></button>
+        <button class="community-vote-option" disabled><span class="community-vote-row">Beat Lab</span></button>
+        <button class="community-vote-option" disabled><span class="community-vote-row">Challenges</span></button>
+      </div><div class="community-poll-foot" id="communityPollFoot">No votes have been collected in this preview.</div></div>
+    </section>
+  </div>
+  <footer class="footer"><span>EXILE Community · Email addresses are private · Respect school policies</span><span>Independent community project · Moderation required before public launch</span></footer>
+</main>
+
+<main class="main" id="home">
+<div class="crumb"><span>EXILE NETWORK</span><span>/</span><span>PLAY WITHOUT INSTALLING</span></div>
+<section class="community-intro" aria-label="Join EXILE Community"><div style="font-size:29px;color:var(--green)">☷</div><div><h3>JOIN THE <span>COMMUNITY.</span></h3><p>Global chat, daily polls, email sign-in and your own nickname.</p></div><button class="btn primary" type="button" data-show="community">OPEN COMMUNITY ↗</button></section>
+<section class="hero" id="hero" style="--glow:#82bd3580" aria-label="Featured game"><div class="hero-grid"><div class="hero-info"><div class="eyebrow"><i></i><span id="heroTag">EDITOR'S PICK / 001</span></div><h1 id="heroTitle">TOTAL<br><span>ANNIHILATION</span></h1><div class="hero-flags" id="heroFlags"><span class="flag green">RTS</span><span class="flag">WASM PORT</span></div><p class="hero-desc" id="heroDesc">A classic real-time strategy experience, brought to the browser. Play three original Total Annihilation demo missions without installing a client.</p><div class="actions"><button class="btn primary" id="heroPlay">▶&nbsp; PLAY NOW</button><button class="btn" id="heroInfo">ⓘ&nbsp; DETAILS</button></div></div><div class="hero-art"><div class="hero-figure"><div class="figure-core" id="heroMark">TA</div></div><div class="tech" id="heroTech">TOTAL ANNIHILATION / BROWSER EDITION</div></div></div><div class="hero-controls" id="heroDots" aria-label="Select featured game"></div></section>
+<section class="learn-feature" id="learnFeature" aria-label="Beginner guide">
+  <div class="learn-feature-sheen" aria-hidden="true"></div>
+  <div class="learn-icon" aria-hidden="true"><span class="learn-screen"><b>▶</b></span><span class="learn-spark">✦</span></div>
+  <div class="learn-copy"><div class="learn-eyebrow">NEW TO BROWSER PORTS? // START HERE</div><h2>From <span>game library</span> to playing.</h2><p>Some games are one click away. Others ask for original game files; developer projects require separate setup. Learn the difference in a short, animated walkthrough made for Chromebook.</p>
+  <div class="learn-tags"><span>✓ No coding</span><span>✓ Works on Chromebook</span><span>✓ Safe file setup basics</span></div></div>
+  <div class="learn-actions"><button type="button" class="btn primary" data-guide="0">▶ START THE WALKTHROUGH</button><button type="button" class="learn-textbtn" data-guide="2">I NEED GAME FILES <span>↗</span></button></div>
+</section>
+<section class="section" id="newports"><div class="section-head"><div><h2 class="sect-title">New <span>arrivals</span></h2><div class="sect-sub">Fresh additions: real browser games, shareware, ports &amp; research projects</div></div><button class="sect-link" data-show="all">See all 34 →</button></div><div class="row-cards featured-row" id="newRow"></div></section>
+<section class="section" id="spotlight"><div class="section-head"><div><h2 class="sect-title">Featured <span>picks</span></h2><div class="sect-sub">Real browser game ports and playable demos</div></div><button class="sect-link" data-show="all">Browse all →</button></div><div class="row-cards featured-row" id="spotlightRow"></div></section>
+<section class="section" id="rts"><div class="section-head"><div><h2 class="sect-title">Strategy <span>command</span></h2><div class="sect-sub">Real-time and turn-based strategy · Bases · Armies · Empires</div></div><button class="sect-link" data-show="Strategy">Turn-based games →</button></div><div class="row-cards" id="rtsRow"></div></section>
+<section class="discover"><div><h3>ONE LAUNCHER. MANY GAMES.</h3><p>EXILE Launcher gives you one place to manage launches, pick embed or a separate tab, view device checks and resume recent launch attempts. Games still run on their original hosts unless EXILE self-hosts them.</p></div><button class="btn primary" data-show="all">BROWSE GAMES &nbsp;↗</button></section>
+<section class="section" id="library"><div class="section-head"><div><h2 class="sect-title" id="libraryHeading">The <span>library</span></h2><div class="sect-sub" id="libraryHint">34 browser ports and projects · Live manual test reports · ★ Half-Life top pick</div></div><span class="count" id="resultsCount">0 games</span></div><div class="verification-legend" aria-label="Game verification legend"><span><strong>✓ VERIFIED</strong> — tested by EXILE</span><span><strong class="unverified-text">◌ NOT TESTED</strong> — awaiting manual testing</span><span><strong class="broken-text">✕ NOT WORKING</strong> — reported failure on tested device</span><span>Load times come from one user test, not a guarantee.</span></div><div class="chips" id="chips"><button class="chip active" data-filter="all">All games</button><button class="chip" data-filter="verified">✓ Verified</button><button class="chip" data-filter="RTS">RTS</button><button class="chip" data-filter="Strategy">Turn-based</button><button class="chip" data-filter="Action">Shooters & action</button><button class="chip" data-filter="Horror">Horror</button><button class="chip" data-filter="Adventure">Adventure</button><button class="chip" data-filter="Sandbox">Sandbox</button><button class="chip" data-filter="Classic">Classics</button><button class="chip" data-filter="Factory">Simulators / factory</button><button class="chip" data-filter="ready">No game files needed</button><button class="chip" data-filter="owned">Game files required</button><button class="chip" data-filter="project">Dev projects</button><button class="chip" data-filter="favorites">♡ Favorites</button></div><div class="row-cards" id="libraryGrid"></div><div class="empty" id="empty"><h3>No games found</h3><p>Try a different search or category.</p><button class="btn primary" id="clearSearch">RESET FILTERS</button></div></section>
+<footer class="footer"><span>© 2026 EXILE GAME HUB · Independent fan-made directory. Not affiliated with NVIDIA, Valve, Rockstar or game publishers.</span><span>Games and projects belong to their creators · <a href="/story.html">EXILE story ↗</a></span></footer>
+</main>
+<main class="main v2-view hide" id="exileProfilePage" aria-label="EXILE profiles">
+ <div class="crumb"><span>EXILE NETWORK</span><span>/</span><span>PROFILES 2.0</span></div>
+ <div class="v2-eyebrow">EXILE COMMUNITY // PROFILE CUSTOMIZATION</div><h1 class="v2-title">YOUR PROFILE. <em>YOUR LEGACY.</em></h1>
+ <p class="v2-sub">Animated avatars, custom banners, retro-web identity and earned roles. Never upload private photos or personal information.</p>
+ <div id="exileProfileNotice" class="v2-msg"></div>
+ <div class="v2-grid"><div>
+  <div class="v2-ribbon" id="exileProfileBanner"></div>
+  <div class="v2-identity"><div class="v2-avatar" id="exileProfileAvatar">E</div><div class="v2-profile-info"><h2 id="exileProfileName">EXILE MEMBER</h2><div class="v2-badges" id="exileProfileBadges"><span class="v2-pill neutral">GUEST</span></div></div></div>
+  <div class="v2-profile-body"><div class="v2-eyebrow">ABOUT ME // 001</div><p id="exileProfileAbout">Sign in to build your profile.</p><div class="v2-row"><span class="v2-pill neutral" id="exileProfileJoined">MEMBER SINCE —</span><button class="v2-btn" id="exileMyProfile" type="button">MY PROFILE</button></div></div>
+  <div class="v2-box"><div class="v2-eyebrow">PROFILE GUESTBOOK</div><div class="v2-guestbook" id="exileGuestbookList"><p class="v2-muted">Sign in to view the guestbook.</p></div><form id="exileGuestbookForm"><label class="v2-field">LEAVE A MESSAGE (2–280 CHARACTERS)<textarea id="exileGuestbookMessage" class="v2-textarea" maxlength="280" placeholder="Leave a nice message..." required></textarea></label><button class="v2-btn primary" type="submit">POST TO GUESTBOOK ↗</button></form><div id="exileGuestbookNote" class="v2-msg"></div></div>
+ </div><div><div class="v2-box"><div class="v2-eyebrow">PERSONALIZE // 002</div><div class="v2-muted" style="margin-bottom:16px">Sign in with Google or email on the Community page. GIF avatars and banners are publicly visible.</div>
+  <form id="exileProfileForm"><label class="v2-field">BIO<textarea id="exileProfileBio" class="v2-textarea" maxlength="280" placeholder="Write something about yourself..."></textarea></label>
+  <label class="v2-field">ANIMATED AVATAR · GIF / PNG / JPG / WEBP (MAX 3 MB)<input class="v2-file" id="exileAvatarFile" type="file" accept="image/gif,image/png,image/jpeg,image/webp"></label>
+  <label class="v2-field">PROFILE BANNER · GIF / PNG / JPG / WEBP (MAX 6 MB)<input class="v2-file" id="exileBannerFile" type="file" accept="image/gif,image/png,image/jpeg,image/webp"></label>
+  <button type="submit" class="v2-btn primary" id="exileProfileSave">SAVE PROFILE</button> <button type="button" class="v2-btn" id="exileProfileCommunity">GO TO COMMUNITY</button></form><div class="v2-msg" id="exileProfileSaveNote"></div></div>
+  <div class="v2-box" style="margin-top:14px"><div class="v2-eyebrow">EXILE ROLE SYSTEM</div><p class="v2-muted">NEWCOMER · under 7 days<br>MEMBER · 7+ days<br>REGULAR · 30+ days<br>VETERAN · 90+ days<br>OG / TESTER / MODERATOR · granted by an administrator. Roles cannot be self-assigned.</p></div>
+ </div></div>
+</main>
+<main class="main v2-view hide" id="exileUpdatesPage" aria-label="EXILE update center">
+ <div class="crumb"><span>EXILE NETWORK</span><span>/</span><span>RELEASE CENTER</span></div><div class="v2-eyebrow">PATCH NOTES / PORT REPORTS / COMING UP</div>
+ <h1 class="v2-title">UPDATE <em>CENTER.</em></h1><p class="v2-sub">Real EXILE releases, developer announcements and verified changes. New posts appear here without uploading a new HTML file once Supabase is configured.</p>
+ <div id="exileUpdatesNotice" class="v2-msg"></div><div id="exileUpdatesFeed"></div>
+</main>
+<main class="main v2-view hide" id="exileGamePage" aria-label="EXILE full game information">
+ <div class="crumb"><span>EXILE NETWORK</span><span>/</span><span>GAME DATABASE</span><span>/</span><span id="exileGameCrumb">GAME</span></div>
+ <div class="v2-eyebrow">EXILE GAME DATABASE // FULL GAME PAGE</div>
+ <div class="v2-feature-cover" id="exileGameCover"><div class="v2-cover-title" id="exileGameTitle">GAME</div></div>
+ <div class="v2-row" id="exileGameTags" style="margin:15px 0"></div>
+ <div class="v2-grid"><div class="v2-box"><div class="v2-eyebrow">THE STORY</div><p id="exileGameStory" style="color:#d4e7ce;line-height:1.85;white-space:pre-wrap;font-size:13px"></p><div class="v2-eyebrow" style="margin-top:24px">EXILE TEST REPORT</div><p id="exileGameReport" class="v2-muted"></p><div class="v2-row"><button class="v2-btn primary" id="exileGameLaunch">▶ OPEN IN GAME LAUNCHER</button><button class="v2-btn" id="exileGameFav">♡ FAVORITE</button></div></div>
+ <div class="v2-box"><div class="v2-eyebrow">GAME FILE</div><div id="exileGameSpecs"></div><div class="v2-admin-note" style="margin-top:18px">Browser ports may require original game files. Launch verified means that a tester could open the port — not that the entire campaign has been completed. Videos depict original games, not necessarily browser-port footage.</div><a id="exileGameSource" class="v2-btn" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:14px;text-decoration:none">OPEN ORIGINAL PORT ↗</a></div></div>
+</main>
+<main class="main v2-view hide" id="exileAdminPage" aria-label="EXILE administrator dashboard">
+ <div class="crumb"><span>EXILE NETWORK</span><span>/</span><span>CONTROL PANEL</span></div><div class="v2-eyebrow">SERVER-PROTECTED / OWNER ACCESS ONLY</div><h1 class="v2-title">EXILE <em>CONTROL.</em></h1>
+ <p class="v2-sub">Publish release notes, manage game verification reports and award profile badges. All changes require server-side Supabase admin permission.</p><div class="v2-admin-note" id="exileAdminGate">Checking account permissions…</div>
+ <div id="exileAdminTools" class="hide" style="margin-top:20px"><div class="v2-box"><div class="v2-eyebrow">GAME TEST DATABASE // 34 GAMES</div><p class="v2-muted">Change status, loading estimate or tester note. A change is immediately shared with all visitors through Supabase.</p><div class="v2-admin-list" id="exileAdminGames"></div></div>
+ <div class="v2-grid" style="margin-top:15px"><div class="v2-box"><div class="v2-eyebrow">PUBLISH RELEASE NOTES</div><form id="exileAdminPostForm"><label class="v2-field">TITLE<input id="exileAdminPostTitle" class="v2-input" maxlength="100" minlength="4" required></label><label class="v2-field">CATEGORY<select id="exileAdminPostTag" class="v2-select"><option>UPDATE</option><option>NEW PORT</option><option>FIX</option><option>ANNOUNCEMENT</option></select></label><label class="v2-field">WHAT CHANGED?<textarea id="exileAdminPostBody" class="v2-textarea" minlength="12" maxlength="3000" required></textarea></label><button class="v2-btn primary" type="submit">PUBLISH TO UPDATE CENTER →</button></form><div class="v2-msg" id="exileAdminPostNote"></div><div id="exileAdminRecentPosts"></div></div>
+ <div class="v2-box"><div class="v2-eyebrow">AWARD A SPECIAL ROLE</div><form id="exileAdminBadgeForm"><label class="v2-field">ACCOUNT NICKNAME<input id="exileBadgeNick" class="v2-input" placeholder="Existing EXILE nickname" maxlength="20" required></label><label class="v2-field">BADGE<select class="v2-select" id="exileBadgeCode"><option value="OG">OG / ORIGINAL</option><option value="TESTER">VERIFIED TESTER</option><option value="MODERATOR">MODERATOR</option></select></label><button class="v2-btn primary" type="submit">AWARD ROLE</button></form><div class="v2-msg" id="exileAdminBadgeNote"></div><div class="v2-eyebrow" style="margin-top:24px">GUESTBOOK MODERATION</div><div id="exileAdminGuestbook" class="v2-muted">Loading reports…</div></div></div></div>
+</main>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="EXILE Game Launcher" aria-hidden="true">
+  <div class="modal-inner launcher-shell">
+    <header class="modal-top">
+      <div><div class="launcher-kicker">EXILE NETWORK // GAME LAUNCHER v1.0</div><div class="modal-name" id="modalName">Game</div><div class="modal-sub" id="modalSub">Preparing launch environment</div></div>
+      <div class="modal-actions">
+        <button class="smallbtn guide-mini" id="modalGuide" type="button">✦ GUIDE</button>
+        <button class="smallbtn relaunch" id="reloadGame" type="button">↻ RESTART</button>
+        <a class="smallbtn" target="_blank" rel="noopener noreferrer" id="openExternal" href="#">↗ NEW TAB</a>
+        <button class="smallbtn close" id="closeModal" type="button" aria-label="Close launcher">×</button>
+      </div>
+    </header>
+    <div class="launcher-layout">
+      <aside class="launcher-config" aria-label="Game launcher settings">
+        <div class="launcher-cover" id="launcherCover"><div class="launcher-cover-meta"><div class="launcher-eyebrow">SELECTED GAME // EXILE LIBRARY</div><h2 class="launcher-cover-name" id="launcherGameName">GAME</h2><div class="launcher-cover-type" id="launcherGameType">Browser edition</div></div><div class="launcher-cover-icon" id="launcherGameIcon" aria-hidden="true">EX</div></div>
+        <div class="launcher-badges"><span id="launcherVerify" class="launcher-badge">NOT TESTED</span><span id="launcherCategory" class="launcher-badge">WEB</span><span id="launcherAccess" class="launcher-badge warn">EXTERNAL HOST</span></div>
+        <div class="launcher-section-title">LAUNCH METHOD <small>Changes where the game opens</small></div>
+        <div class="launcher-toggle" id="launcherModes" role="group" aria-label="Game launch method"><button type="button" data-launch-mode="embed" class="selected" aria-pressed="true">▣ IN EXILE</button><button type="button" data-launch-mode="tab" aria-pressed="false">↗ NEW TAB</button></div>
+        <p class="launcher-explain" id="launcherModeNote">Embedded play depends on the original host permitting iframe access. Some games require their own tab.</p>
+        <div class="launcher-section-title">PERFORMANCE PROFILE <small>For future native ports</small></div>
+        <div class="launcher-preset" id="launcherPresets" role="group" aria-label="Preferred performance profile"><button type="button" data-launch-preset="performance">LOW<span>FPS priority</span></button><button type="button" data-launch-preset="balanced" class="selected">BALANCED<span>Default</span></button><button type="button" data-launch-preset="quality">QUALITY<span>Visual priority</span></button></div>
+        <p class="launcher-explain" id="launcherProfileNote">Saved for EXILE-integrated games. External websites control their own graphics; changing this will not affect them.</p>
+        <div class="launcher-section-title">CHROMEBOOK CHECK <small id="launcherSystemLabel">Local browser</small></div>
+        <div class="launcher-system"><div class="launcher-stat"><span>WebGL 2</span><b id="launcherWebGL">CHECKING</b></div><div class="launcher-stat"><span>Logical CPU cores</span><b id="launcherCPU">UNKNOWN</b></div><div class="launcher-stat"><span>Device memory</span><b id="launcherRAM">NOT EXPOSED</b></div><div class="launcher-stat"><span>Browser storage</span><b id="launcherStorage">CHECKING</b></div></div>
+        <div class="launcher-boot"><div class="launcher-boot-head"><span>BOOT LOG // SESSION</span><strong id="launcherBootState">STANDBY</strong></div><div id="launcherLog" class="launcher-boot-log" role="log" aria-live="polite"><div>Launcher initialized.</div></div></div>
+        <div class="launcher-side-actions"><button id="startFrame" class="btn primary" type="button">▶ LAUNCH IN EXILE</button><button class="smallbtn" id="launcherGameGuide" type="button">ⓘ GAME SETUP & REQUIREMENTS</button></div>
+      </aside>
+      <section class="launcher-stage" aria-label="Game player">
+        <div class="launcher-stage-bar"><div class="launcher-stage-state"><i id="launcherStatusDot" class="launcher-status-dot"></i><span id="launcherStatusText" role="status">READY FOR LAUNCH</span></div><button type="button" id="launcherFullscreen">⛶ FULLSCREEN</button></div>
+        <div class="game-area" id="gameArea">
+          <div class="frame-intro" id="frameIntro"><div class="launcher-frame-id">EXILE // WEB RUNTIME</div><div class="frame-logo" aria-hidden="true">EX</div><h2 id="frameHeading">READY TO LAUNCH</h2><p id="frameText">Choose a launch method, then press LAUNCH.</p><button id="startFrameStage" class="btn primary" type="button">▶ LAUNCH GAME</button><p class="launcher-explain" style="margin-top:20px">A loaded external page does not prove the game itself started.</p></div>
+          <div class="frame-loading" id="frameLoading"><span class="spinner" aria-hidden="true"></span><span id="frameStatus">Connecting to the game host...</span></div>
+        </div>
+      </section>
+    </div>
+    <div class="frame-foot"><span><strong>EXILE LAUNCHER:</strong> External game hosts control loading, FPS and saves. Game data may need to come from a copy you own.</span><span>Never claims to bypass site, network or Chromebook restrictions.</span></div>
+  </div>
+</div>
+<div class="launcher-hub" id="launcherHub" role="dialog" aria-modal="true" aria-labelledby="launcherHubTitle" aria-hidden="true">
+ <div class="launcher-hub-inner">
+  <div class="launcher-hub-head"><div><div class="launcher-hub-eyebrow">EXILE NETWORK // PLAY MANAGEMENT</div><h2 id="launcherHubTitle">GAME <span style="color:var(--green)">LAUNCHER.</span></h2><p>Choose a game to open its dedicated launcher. Recent launches are saved only in this browser — not as game progress.</p></div><button type="button" class="launcher-hub-close" id="launcherHubClose" aria-label="Close launcher dashboard">×</button></div>
+  <div class="launcher-hub-label">RECENT LAUNCHES</div><div id="launcherRecent" class="launcher-hub-grid"></div>
+  <div class="launcher-hub-label">QUICK START // FEATURED GAMES</div><div id="launcherQuick" class="launcher-hub-grid"></div>
+  <div class="launcher-hub-foot">✓ Available in browser &nbsp;·&nbsp; ◌ Game ports not yet tested by EXILE are marked clearly &nbsp;·&nbsp; No fake FPS or download percentages</div>
+ </div>
+</div>
+
+<!-- EXILE Game Peek: media loads only when the card is opened -->
+<aside id="gamePeek" class="game-peek" role="dialog" aria-label="Game preview" aria-modal="false" aria-hidden="true" hidden>
+  <div class="peek-media" id="peekMedia">
+    <div class="peek-backmark" id="peekMark" aria-hidden="true"></div>
+    <img id="peekCover" class="peek-cover" alt="" loading="lazy" hidden>
+    <video id="peekVideo" class="peek-video" muted loop playsinline preload="none" aria-label="Short official game trailer"></video>
+    <span id="peekMediaLabel" class="peek-media-label">GAME INFO</span>
+    <button id="peekClose" class="peek-x" type="button" aria-label="Close preview">×</button>
+  </div>
+  <div class="peek-content">
+    <div class="peek-overline">EXILE // GAME FILE</div>
+    <h3 id="peekTitle" class="peek-title"></h3>
+    <div class="peek-stats"><span id="peekCategory"></span><span id="peekVerify"></span></div>
+    <div class="peek-section">STORY / GAMEPLAY</div>
+    <p id="peekStory" class="peek-story"></p>
+    <div class="peek-bottom"><button id="peekPlay" class="peek-play" type="button">▶ OPEN LAUNCHER</button><button class="v2-btn" id="peekGamePage" type="button" style="padding:10px 12px;font-size:10px">FULL PAGE ↗</button><span id="peekSource" class="peek-footnote">GAME INFORMATION</span></div>
+  </div>
+</aside>
+
+<script>
+(()=>{'use strict';
+const games=[
+{id:'fnaf1',name:'Five Nights at Freddy\'s 1',subtitle:'FNAF 1 · unofficial HTML5 adaptation',category:'Horror',type:'HTML5 browser port',status:'ready',url:'https://irv77.github.io/hd_fnaf/1/',tag:'FNAF 1 WEB PORT',mark:'FNAF',palette:['#342d25','#ae8e54','#ffe8bd'],desc:'Five Nights at Freddy\'s 1 in an unofficial HTML5 browser adaptation maintained outside EXILE. Try surviving the night using the security cameras and limited power. Unofficial external browser adaptation. EXILE tester reports the port opens and runs, usually after about 30 seconds to 1 minute. This is a reported loading estimate, not a speed guarantee or confirmation of full campaign completion. No game files are hosted by EXILE.',search:'five nights at freddys fnaf 1 security guard freddy bonnie chica horror night shift original game browser'},
+{"id":"fnaf2","name":"Five Nights at Freddy's 2","subtitle":"FNAF 2 · unofficial HTML5 browser adaptation","category":"Horror","type":"HTML5 browser port","status":"ready","url":"https://irv77.github.io/hd_fnaf/2/","tag":"FNAF 2 WEB PORT","mark":"FNAF 2","palette":["#342923","#bc7948","#ffe6c6"],"desc":"FNAF 2: survive the nights with redesigned surveillance and animatronic threats. An unofficial external browser adaptation, not an official Scott Cawthon release. EXILE tester confirms this browser port works, with a reported load time of 3 to 5 minutes. This does not establish completion of every night or guarantee the same speed on every device. Hosted on the original port website.","search":"five nights at freddys fnaf 2 sequel toy animatronics marionette mask survival security office horror browser"},
+{"id":"fnaf3","name":"Five Nights at Freddy's 3","subtitle":"FNAF 3 · unofficial HTML5 browser adaptation","category":"Horror","type":"HTML5 browser port","status":"ready","url":"https://irv77.github.io/hd_fnaf/3/","tag":"FNAF 3 WEB PORT","mark":"FNAF 3","palette":["#1e3627","#567f38","#e1ffbe"],"desc":"FNAF 3: return to a horror attraction and survive against Springtrap. An unofficial external HTML5 adaptation, not an official Scott Cawthon release. EXILE tester confirms this browser port works, with a reported load time of 30 seconds to 1 minute. This does not establish completion of every night or guarantee the same speed on every device. Hosted on the original port website.","search":"five nights at freddys fnaf 3 springtrap horror attraction animatronic survival browser"},
+{"id":"fnaf4","name":"Five Nights at Freddy's 4","subtitle":"FNAF 4 · unofficial HTML5 browser adaptation","category":"Horror","type":"HTML5 browser port","status":"ready","url":"https://irv77.github.io/hd_fnaf/4/","tag":"FNAF 4 WEB PORT","mark":"FNAF 4","palette":["#311b29","#8c4353","#ffe6e0"],"desc":"FNAF 4: survive a nightmarish bedroom with sound-based survival gameplay. An unofficial external HTML5 adaptation, not an official Scott Cawthon release. EXILE tester confirms this browser port works, with a reported load time of 30 seconds to 1 minute. This does not establish completion of every night or guarantee the same speed on every device. Hosted on the original port website.","search":"five nights at freddys fnaf 4 nightmare animatronics bedroom flashlight horror survival browser"},
+
+{id:'terraria',name:'Terraria',subtitle:'Terrarium · experimental WebAssembly port',category:'Sandbox',type:'WASM port · threaded runtime',status:'ready',url:'https://terraria.mercurywork.shop/',tag:'WASM EXPERIMENTAL',mark:'T',palette:['#23452b','#4ba768','#d6ffdf'],desc:'Terrarium is an experimental browser port of Terraria using WebAssembly and threads. Large game assets and browser support requirements may affect loading and performance; this build requires cross-origin isolation to self-host. EXILE tester reports this port did not work on their device. Currently marked NOT WORKING; retained for future retesting. Neither a full game nor 60 FPS has been verified. Unofficial external host.',search:'terraria terrarium wasm browser sandbox survival mining crafting digging bosses multiplayer game'},
+{id:'hollowknight',name:'Hollow Knight',subtitle:'Unofficial Unity WebGL community port',category:'Adventure',type:'Unity WebGL browser build',status:'ready',url:'https://aukak.itch.io/hollow-knight',tag:'COMMUNITY WEB PORT',mark:'HK',palette:['#1b2a3f','#7d9dc9','#eaf4ff'],desc:'Explore Hallownest in an unofficial fan-hosted Unity WebGL adaptation. It may download hundreds of megabytes; community reports describe bugs in late-game story sequences, EXILE tester reports this port did not work on their device. Currently marked NOT WORKING; retained for future retesting. The full campaign is not verified. EXILE does not host its data.',search:'hollow knight web port team cherry hallownest metroidvania indie platformer story bosses'},
+{id:'cuphead',name:'Cuphead',subtitle:'Unofficial HTML5 / WebGL fan port',category:'Action',type:'Unofficial HTML5 game build',status:'ready',url:'https://aukak.itch.io/cuphead',tag:'COMMUNITY WEB PORT',mark:'CH',palette:['#51342a','#d79d61','#fff1c9'],desc:'An unofficial Cuphead browser build listed on itch.io, hosted by its community uploader. The port is not affiliated with Studio MDHR. EXILE has NOT tested the full campaign, save support, accuracy or FPS on Chromebook; try opening the original game page in a separate tab for best compatibility.',search:'cuphead mugman 1930s cartoon platformer run and gun boss rush webgl browser port'},
+{id:'portal',name:'Portal (2007)',subtitle:'yikes.pw · experimental Source web port',category:'Action',type:'Experimental Source port',status:'ready',url:'https://yikes.pw/portal/',tag:'EXPERIMENTAL PORT',mark:'◯',palette:['#143c42','#42a8c1','#d9fdff'],desc:'Play an unofficial experimental browser adaptation of Valve\'s original Portal. Some levels, textures and mechanisms may be incomplete or buggy. This is NOT an official Valve release. The website may download substantial assets before the menu appears.',search:'portal 1 valve 2007 test chambers aperture science source engine puzzle fps web port',feature:true},
+{id:'doom3',name:'DOOM 3 (2004)',subtitle:'D3wasm · original DOOM 3 Demo',category:'Action',type:'id Tech 4 WebAssembly port',status:'ready',url:'https://wasm.continuation-labs.com/d3demo/',tag:'REAL WASM DEMO',mark:'D³',palette:['#401d1d','#b54b40','#ffd8ac'],desc:'The genuine DOOM 3 demo running on the open-source id Tech 4 engine via WebAssembly and WebGL. First-time loading fetches roughly 400 MB of demo data and needs around 850 MB RAM; use HOME instead of ESC to return to the game menu. Open in a new tab if the embedded view does not work.',search:'doom 3 original 2004 id tech four d3wasm webassembly browser fps horror demo original game',feature:true},
+{id:'nanolathe',name:'Total Annihilation',subtitle:'Nanolathe · 3 playable demo missions',category:'RTS',type:'Recreated engine',status:'ready',url:'https://nanolathe.gg/play/',tag:'REAL RTS DEMO',mark:'TA',palette:['#24391a','#709c3d','#e7fcae'],desc:'A legendary real-time strategy game rebuilt for the browser. Nanolathe includes three Total Annihilation demo missions. The full campaign requires data from a copy of Total Annihilation that you own.',search:'nanolathe total annihilation rts robot tank wasm',feature:true},
+{id:'warzone',name:'Warzone 2100',subtitle:'Official web edition',category:'RTS',type:'Original port',status:'ready',url:'https://play.wz2100.net/',tag:'WASM ORIGINAL',mark:'WZ',palette:['#263136','#597b91','#d5eeef'],desc:'Play the real Warzone 2100 in your browser: build a base, design tanks, research technologies and fight through missions. The web edition requires WebGL 2 support.',search:'warzone 2100 rts military tanks campaign strategy',feature:true},
+{id:'redalert',name:'Red Alert 2',subtitle:'Chrono Divide · Browser beta',category:'RTS',type:'Fan recreation',status:'ready',url:'https://game.chronodivide.com/',tag:'BROWSER RECREATION',mark:'RA²',palette:['#422326','#bb5a3f','#ffe0af'],desc:'Chrono Divide recreates classic Red Alert 2 for the browser. Play as the Allies or Soviets, build armies and compete online. Some modes may require additional game data.',search:'command conquer red alert 2 chrono divide soviet allies rts',feature:true},
+{id:'minidayz',name:'Mini DAYZ Plus',subtitle:'Community browser build',category:'Classic',type:'Community port',status:'ready',url:'/minidayz.html',tag:'EXILE ORIGINAL PICK',mark:'☣',palette:['#263a25','#728449','#e1eac1'],desc:'An unofficial browser build of Mini DAYZ Plus, featuring zombies, scavenging, survival and exploration. This EXILE page loads the game from a separate community site.',search:'mini dayz plus survival zombies bohemia',feature:true},
+{id:'cs16',name:'Counter-Strike 1.6',subtitle:'CSJS · Online multiplayer',category:'Action',type:'Compatible engine',status:'ready',url:'https://csjs.live/',tag:'ONLINE FPS',mark:'CS',palette:['#403729','#b18d61','#ece1c7'],desc:'Counter-Strike 1.6-style multiplayer powered by the GoldSrc-compatible Xash3D FWGS engine. This is not Counter-Strike 2.',search:'counter strike 1.6 csjs multiplayer goldsrc shooter'},
+{id:'quake3',name:'Quake III Arena',subtitle:'Q3JS · ioquake3',category:'Action',type:'Original engine',status:'ready',url:'https://q3js.com/',tag:'WASM FPS',mark:'QⅢ',palette:['#47332b','#b86d43','#e7ba80'],desc:'Fast-paced arena shooter using the ioquake3 engine in WebAssembly. Available maps, content and multiplayer servers depend on the host.',search:'quake 3 arena q3js multiplayer arena shooter'},
+{id:'diablo',name:'Diablo (1996)',subtitle:'DevilutionX · Shareware',category:'Classic',type:'Original engine',status:'ready',url:'https://devilutionx.app/',tag:'SHAREWARE INCLUDED',mark:'D',palette:['#452425','#973930','#f3bd86'],desc:'Play Diablo I using the DevilutionX engine. A shareware edition is available without original files; import your own DIABDAT.MPQ for the full game.',search:'diablo devilutionx rpg tristram shareware'},
+{id:'tomb',name:'Tomb Raider (1996)',subtitle:'OpenLara · WebGL demo',category:'Classic',type:'Open-source engine',status:'ready',url:'https://xproger.info/projects/OpenLara/',tag:'OPENLARA DEMO',mark:'TR',palette:['#344335','#647b55','#e7e0a8'],desc:'OpenLara recreates the classic Tomb Raider engine. Try the WebGL demo where hosted; it does not include the complete original game.',search:'tomb raider openlara webgl lara croft'},
+{id:'minecraft',name:'Minecraft Classic',subtitle:'Official 2009 version',category:'Classic',type:'Official classic edition',status:'ready',url:'https://classic.minecraft.net/',tag:'OFFICIAL CLASSIC',mark:'MC',palette:['#305035','#648c4d','#dafab1'],desc:'The official browser version of Minecraft Classic. Explore a very early version of creative mode; this is not modern Minecraft.',search:'minecraft classic original sandbox blocks 2009'},
+{id:'simcity',name:'SimCity / Micropolis',subtitle:'micropolisJS · Open-source',category:'Factory',type:'Open-source port',status:'ready',url:'https://www.graememcc.co.uk/micropolisJS/',tag:'CITY BUILDER',mark:'CITY',palette:['#29434b','#3f8290','#cff3e1'],desc:'A browser version of Micropolis, based on the open-source SimCity codebase. Zone districts, place roads and power plants, and manage a growing city.',search:'simcity micropolis city building simulator'},
+{id:'shapez',name:'shapez',subtitle:'Official browser demo',category:'Factory',type:'Official demo',status:'ready',url:'https://beta.shapez.io/',tag:'FACTORY DEMO',mark:'◇',palette:['#3a3458','#7761b2','#cbbaff'],desc:'Build production lines and automate shape processing in the official browser demo. This is an independent factory game, not a Factorio port.',search:'shapez factory automation belts machines factorio'},
+{id:'factorishwasm',name:'FactorishWasm',subtitle:'Factories · WebAssembly',category:'Factory',type:'Inspired-by indie game',status:'ready',url:'https://msakuta.github.io/FactorishWasm/index.html',tag:'INDIE FACTORY',mark:'F',palette:['#373b2b','#9f9757','#f1e5a7'],desc:'Independent Rust/WebAssembly factory game with belts, machines and production chains. It is inspired by automation games, not an original Factorio port.',search:'factorish wasm rust factory factorio'},
+{id:'factorishjs',name:'FactorishJS',subtitle:'HTML5 factory automation',category:'Factory',type:'Inspired-by indie game',status:'ready',url:'https://msakuta.github.io/FactorishJS/FactorishJS.html',tag:'HTML5 FACTORY',mark:'FJ',palette:['#3d382b','#b69f63','#ead9ac'],desc:'A JavaScript factory-building game with automation and production. It does not include the original Factorio engine, levels or game data.',search:'factorishjs automation factorio factory'},
+{id:'fallout',name:'Fallout 1 + Fallout 2',subtitle:'Rerun Reactor · Community Edition',category:'Classic',type:'Community engine',status:'owned',url:'https://rerunreactor.com/',tag:'OWNED FILES REQUIRED',mark:'FØ',palette:['#343a27','#81915c','#f4e5af'],desc:'Play the original Fallout 1 and 2 through browser builds of the Community Edition engines. Import files from copies of the games that you own; game assets are not included.',search:'fallout 1 fallout 2 rerun reactor RPG'},
+{id:'vice',name:'GTA: Vice City',subtitle:'reVC · WebAssembly',category:'Action',type:'Recreated engine',status:'owned',url:'https://joncodeofficial.github.io/gta-vice-city-wasm/',tag:'OWNED FILES REQUIRED',mark:'VC',palette:['#28454e','#b36381','#fbe2da'],desc:'A WebAssembly build of the reVC engine. You must prepare and import game data from your own legally obtained copy of GTA: Vice City. EXILE does not provide those files.',search:'grand theft auto gta vice city reVC wasm'},
+{id:'jedi',name:'Jedi Academy',subtitle:'OpenJK · WebAssembly',category:'Action',type:'Original engine',status:'owned',url:'https://jk.q3js.com/',tag:'OWNED FILES REQUIRED',mark:'JK',palette:['#2a334e','#617cb8','#e6ecff'],desc:'Play Star Wars Jedi Knight: Jedi Academy through a browser build of OpenJK. Requires .pk3 game assets from a copy that you own.',search:'star wars jedi knight academy openjk lightsaber'},
+
+{id:'halflife',name:'Half-Life (1998)',subtitle:'WebXash · playable demos + owned data',category:'Action',type:'Xash3D engine port',status:'ready',url:'https://x8bitrain.github.io/webXash/',tag:'★ EXILE TOP PICK',mark:'λ',palette:['#4c371b','#d17b27','#ffe0ac'],desc:'The genuine Half-Life experience powered by WebXash. Try an included demo such as Uplink, Day One or Half-Life Deathmatch, or import your own valve game folder for the full game.',search:'half life one black mesa valve fps goldsrc demo webxash'},
+{id:'heroes2',name:'Heroes of Might and Magic II',subtitle:'fheroes2 · browser WebAssembly build',category:'Strategy',type:'Open-source engine',status:'owned',url:'https://buildenginegames.online/',tag:'YOUR DATA REQUIRED',mark:'HⅡ',palette:['#2b3553','#7c80b5','#fce8b6'],desc:'A browser build of the open-source fheroes2 engine. Import your legally owned HEROES2.AGG data with MAPS and optional MUSIC, using a selected folder or ZIP archive.',search:'heroes of might magic 2 homm2 fheroes2 turn based strategy castles tactical heroes files'},
+{id:'openttd',name:'OpenTTD',subtitle:'OpenTTD Online · browser edition',category:'Factory',type:'Open-source game',status:'ready',url:'https://openttdonline.com/play/',tag:'FULL WEB GAME',mark:'TTD',palette:['#224854','#458792','#d6f3ea'],desc:'Build a transport empire with trains, roads, planes and shipping. The OpenTTD Online browser edition supports local saved-game imports and exports without needing paid game assets.',search:'open ttd transport tycoon deluxe simulator railways economy trains building'},
+{id:'doom',name:'DOOM (1993)',subtitle:'Shareware · original game via js-dos',category:'Action',type:'DOS emulation',status:'ready',url:'https://textfizz.com/play/play-doom/',tag:'ORIGINAL SHAREWARE',mark:'DM',palette:['#4f251b','#ae5b36','#f5c79e'],desc:'Run the original DOOM shareware episode in a browser-based DOS emulator. Click Play on the host page; a keyboard and mouse work best.',search:'doom 1993 shareware js dos fps shooter id software'},
+{id:'quake1',name:'Quake (1996)',subtitle:'Quake.by · shareware WebAssembly',category:'Action',type:'Original game engine',status:'ready',url:'https://quake.by/play/',tag:'ORIGINAL SHAREWARE',mark:'Q',palette:['#3a312b','#a27352','#f0d7a9'],desc:'Play the original Quake shareware episode on the WebAssembly FTEQW engine, or explore additional free Quake-based content.',search:'quake 1 quake classic shareware first person shooter wasm fteqw'},
+{id:'duke',name:'Classic FPS Bundle',subtitle:'DOOM · Quake · Wolfenstein · Duke Nukem 3D',category:'Action',type:'DOS emulation',status:'ready',url:'https://desktop98.com/duke-nukem-3d',tag:'CLASSIC FPS BUNDLE',mark:'D3D',palette:['#483827','#c28c49','#fbe0aa'],desc:"FOUR CLASSIC SHOOTERS:\n\nDOOM (1993) — Survive a demonic invasion on Mars and its moons. Fight through military bases, find keycards and uncover hidden passages.\n\nQuake (1996) — Enter dark dimensions filled with grotesque monsters. Move fast, collect powerful weapons and fight through gothic fortresses.\n\nWolfenstein 3D (1992) — Escape a Nazi fortress, navigate maze-like corridors and battle guards in one of the defining early FPS games.\n\nDuke Nukem 3D (1996) — Fight alien invaders across cities, clubs and military facilities with outrageous weapons and interactive environments.\n\nLAUNCH NOTE: This EXILE entry currently opens the external Duke Nukem 3D page on Desktop98. The other three games are listed as classics, not confirmed playable through this link.",search:'duke nukem 3d doom quake wolfenstein classic fps bundle shareware original dos'},
+{id:'caesar3',name:'Caesar III · Augustus',subtitle:'Augustus browser build · owned assets',category:'Factory',type:'Open-source engine',status:'owned',url:'https://augustus.josecadete.net/play/',tag:'YOUR DATA REQUIRED',mark:'CⅢ',palette:['#3b3230','#aa815d','#f0dabc'],desc:'Play Caesar III through a browser build of Augustus, a modernized open-source engine. Bring game assets from your legal copy of Caesar III as requested by the project.',search:'caesar 3 city builder augustus ancient roman economy browser port'},
+{id:'freeciv',name:'Freeciv Web',subtitle:'Freeciv · strategy in browser',category:'Strategy',type:'Open-source game',status:'ready',url:'https://www.freecivweb.com/',tag:'ONLINE STRATEGY',mark:'FC',palette:['#263d4a','#5e9aaf','#d5f5ea'],desc:'A free open-source turn-based civilization strategy game with single-player and multiplayer modes in your browser. Not an original Civilization port.',search:'freeciv civilization turn based empire building online strategy multiplayer'},
+{id:'cncweb',name:'Command & Conquer / Red Alert',subtitle:'cnc-web · developer project',category:'RTS',type:'Browser project source',status:'project',url:'https://github.com/pieteradejong/cnc-web',tag:'SOURCE PROJECT',mark:'C&C',palette:['#493022','#b87943','#f6d29a'],desc:'A code project for running the original Command & Conquer: Tiberian Dawn and Red Alert DOS editions using data from your own game. The linked repository is NOT a ready-to-play public site and may require a separately configured server.',search:'command and conquer original tiberian dawn red alert 1 cnc web jsdos local setup RTS'},
+];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)], byId=new Map(games.map(g=>[g.id,g]));
+let favs=new Set();try{favs=new Set(JSON.parse(localStorage.getItem('exile:favs')||'[]'))}catch(e){};
+let active='all',query='',heroIndex=0,current=null,frame=null,lastFocus=null;const featured=['halflife','fnaf1','fnaf2','fnaf3','fnaf4','portal','doom3'].map(id=>byId.get(id));
+// Change this list only when the EXILE maintainer has personally tested another port.
+const verifiedGames = new Set(['doom3','fnaf1','fnaf2','fnaf3','fnaf4','nanolathe','minidayz','quake3','minecraft','simcity','shapez','factorishwasm','factorishjs','halflife']);
+  // First-hand EXILE tester reports (October 2026), not automated benchmarks or guarantees.
+  // Device-specific manual launch reports, not a guarantee of full game completion.
+  const gameTestReports = Object.freeze({
+    fnaf1:{state:'verified',load:'30 sec - 1 min'},
+    fnaf2:{state:'verified',load:'3 - 5 min'},
+    fnaf3:{state:'verified',load:'30 sec - 1 min'},
+    fnaf4:{state:'verified',load:'30 sec - 1 min'},
+    nanolathe:{state:'verified',load:'10 - 45 sec',note:'Launch tested; browser demo works. Full Total Annihilation requires your original game files.'},
+    minidayz:{state:'verified',note:'Opens and works in the EXILE tester’s session.'},
+    quake3:{state:'verified',note:'Opens and works in the EXILE tester’s session.'},
+    minecraft:{state:'verified',note:'Minecraft Classic launches successfully; not the current full Minecraft release.'},
+    simcity:{state:'verified',note:'Micropolis/SimCity port launches successfully.'},
+    shapez:{state:'verified',note:'Playable browser demo works; not the paid complete shapez game.'},
+    factorishwasm:{state:'verified',note:'Works, but did not meet expectations. This is FactorishWasm, NOT the original Factorio.'},
+    factorishjs:{state:'verified',note:'Works, but is very limited and did not meet expectations. Not the original Factorio.'},
+    halflife:{state:'verified',note:'EXILE TOP PICK — tester’s favorite working port. Full Half-Life still needs legitimately owned game data.'},
+    terraria:{state:'broken',note:'Did not work on the tested Chromebook.'},
+    hollowknight:{state:'broken',note:'Did not work on the tested Chromebook.'},
+    warzone:{state:'broken',note:'Did not work on the tested Chromebook.'},
+    redalert:{state:'broken',note:'Red Alert 2 / Chrono Divide did not work in the tester’s session.'},
+    cncweb:{state:'broken',note:'This Red Alert / C&C link is only a GitHub source project, not a playable live port; tester could not run it.'},
+    tomb:{state:'broken',note:'Tomb Raider / OpenLara did not work on the tested Chromebook.'},
+    doom:{state:'broken',note:'This DOOM (1993) link did not work; DOOM 3 is a separate tested demo.'},
+    quake1:{state:'broken',note:'This original Quake link did not work; Quake III Arena is a separate working port.'},
+    cs16:{state:'partial',note:'Partially working in the tester’s session; some features are unreliable.'},
+    diablo:{state:'partial',note:'50/50 reliability according to EXILE tester; not consistently working.'}
+  });
+  const overrideFor=g=>window.EXILE_GAME_OVERRIDES?.[g.id]||null;
+  const isVerified = g => overrideFor(g)?overrideFor(g).verification_state==='verified':verifiedGames.has(g.id);
+  const isBroken = g => overrideFor(g)?overrideFor(g).verification_state==='broken':gameTestReports[g.id]?.state==='broken';
+  const isPartial = g => overrideFor(g)?overrideFor(g).verification_state==='partial':gameTestReports[g.id]?.state==='partial';
+  const gameNote = g => overrideFor(g)?overrideFor(g).note:(gameTestReports[g.id]?.note||'');
+  const verificationStatus = g => isBroken(g)?{css:'broken',label:'✕ NOT WORKING',detail:gameNote(g)||'Reported not working in a manual test.'}:isPartial(g)?{css:'partial',label:g.id==='diablo'?'◐ 50/50':'◐ PARTIAL',detail:gameNote(g)}:isVerified(g)?{css:'verified',label:g.id==='halflife'?'★ VERIFIED / TOP PICK':'✓ VERIFIED',detail:gameNote(g)||'EXILE tester confirmed launch. Full game completion not confirmed.'}:{css:'not-tested',label:'◌ NOT TESTED',detail:'Not yet manually tested by EXILE.'};
+  const loadTime = g => overrideFor(g)?overrideFor(g).load_time||null:gameTestReports[g.id]?.load||null;
+
+
+
+// EXILE GAME PEEK data: original game stories and optional publisher-provided Steam microtrailers.
+// Trailer footage shows the original PC game, not the unofficial browser port.
+const peekCatalog={"fnaf1":{"story":"You are the night guard at Freddy Fazbear’s Pizza. Watch the security cameras, conserve limited power and survive five increasingly dangerous nights.","video":"https://video.fastly.steamstatic.com/store_trailers/319510/24296/52d5d95dcd9546a4e48e973b368c3cbb98782f65/1750507160/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/319510/header.jpg"},"fnaf2":{"story":"A new guard joins a redesigned Freddy Fazbear’s Pizza. A Freddy mask, hallway flashlight and winding music box are your only defenses.","video":"https://video.fastly.steamstatic.com/store_trailers/332800/27365/4473bcdfc1f5da8b8ac25fa3e68f5152c981ac47/1750510026/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/332800/header.jpg"},"fnaf3":{"story":"Thirty years after the pizzeria closes, Fazbear’s Fright opens as a horror attraction. One terrifying animatronic, Springtrap, is still active.","video":"https://video.fastly.steamstatic.com/store_trailers/354140/32188/b651e2a4e5d03b0ccb2963cc6b5dcd2b5ac2135a/1750514205/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/354140/header.jpg"},"fnaf4":{"story":"A child’s bedroom becomes a nightmare. Listen for breathing at the doors, check the closet and use a flashlight to survive until 6 AM.","video":"https://video.fastly.steamstatic.com/store_trailers/388090/39464/5342cdb10559278b420dda0599042a2099ba3330/1750523485/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/388090/header.jpg"},"portal":{"story":"Wake up inside Aperture Science as Chell. Solve increasingly clever test chambers with a portal gun while the facility’s AI, GLaDOS, watches.","video":"https://video.fastly.steamstatic.com/store_trailers/400/336/858d7ae015068388644e14742bd90801fbb8a805/1750108766/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/400/header.jpg"},"doom3":{"story":"A routine assignment on Mars turns into a disaster when a research experiment opens the way for a demonic invasion of the UAC facility.","video":"https://video.fastly.steamstatic.com/store_trailers/9050/5550/0752fd2cc0559ac36d3df86fc79c81125ff259f5/1751245951/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/9050/header.jpg"},"terraria":{"story":"Dig beneath a mysterious pixel world, build shelters, craft equipment and defeat bosses. Exploration opens up increasingly dangerous biomes.","video":"https://video.fastly.steamstatic.com/store_trailers/105600/38483/f6e095fa12b129c503f70d104eb2e0d2fd106db1/1750498447/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg"},"hollowknight":{"story":"Explore the ruined insect kingdom of Hallownest as a silent wandering knight. Uncover its forgotten history and challenge the creatures within.","video":"https://video.fastly.steamstatic.com/store_trailers/367520/89922/b71b6a50e9aa2334fddca8fa2197cb26a3640832/1750517691/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg"},"cuphead":{"story":"Cuphead and Mugman lose a wager to the Devil. Travel the Inkwell Isles, face outrageous bosses and collect soul contracts to repay the debt.","video":"https://video.fastly.steamstatic.com/store_trailers/268910/140450/cb8856fab07a0d354f7fa2bfeefc3270df01ee6b/1750499390/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg"},"nanolathe":{"story":"A war between the Arm and the Core spreads across entire worlds. Construct bases, command vast robot armies and outmaneuver your opponent."},"warzone":{"story":"After a global nuclear catastrophe, lead the Project to recover lost technology, design military vehicles and rebuild a shattered world.","video":"https://video.fastly.steamstatic.com/store_trailers/1241950/265243/5619df208c117aaa906a536d4f43b7e6345baa69/1751208709/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1241950/header.jpg"},"redalert":{"story":"Command the Allies or Soviets in an alternate-history conflict. Expand your base, harvest resources and build armies of tanks, infantry and aircraft."},"minidayz":{"story":"Scavenge across a zombie-infested wilderness. Fight hunger, sickness, hostile survivors and the infected while searching for supplies."},"cs16":{"story":"Counter-terrorists and terrorists face off in tactical multiplayer rounds. Manage your economy, coordinate pushes and complete map objectives."},"quake3":{"story":"Enter a gladiatorial sci-fi arena where the only goal is victory. Master movement, powerful weapons and fast, unforgiving combat.","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2200/header.jpg"},"diablo":{"story":"Beneath the town of Tristram, a cathedral hides an ancient evil. Descend into procedurally generated dungeons and confront Diablo himself."},"tomb":{"story":"Archaeologist Lara Croft travels through forgotten tombs and ancient ruins in search of a mysterious artifact, solving traps and puzzles along the way."},"minecraft":{"story":"Explore the earliest creative version of Minecraft. Build structures out of classic blocks, experiment and share your world with friends."},"simcity":{"story":"Take charge of a growing city. Zone neighborhoods, power the streets and balance services and budgets as your population changes."},"shapez":{"story":"Turn an empty map into a sprawling automated factory. Cut, rotate, paint and combine shapes to satisfy increasingly complex orders.","video":"https://video.fastly.steamstatic.com/store_trailers/1318690/376085/42e20c29bd8b62ab0347cdf48e3e033f018d5c68/1750671895/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1318690/header.jpg"},"factorishwasm":{"story":"Build an industrial production network from raw resources to finished components, using conveyor belts and clever factory layouts."},"factorishjs":{"story":"Automate a miniature factory with machines, conveyors and production chains. Find efficient ways to keep materials moving."},"fallout":{"story":"Step into a post-nuclear wasteland as a Vault Dweller searching for survival. Explore ruined settlements, make difficult choices and meet rival factions.","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/38400/header.jpg"},"vice":{"story":"Tommy Vercetti arrives in sun-drenched Vice City and gets caught in a criminal power struggle. Explore the city and rise through its underworld.","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/12110/header.jpg"},"jedi":{"story":"Train as a Jedi apprentice, master the Force and wield a lightsaber while choosing missions across the Star Wars galaxy.","video":"https://video.fastly.steamstatic.com/store_trailers/6020/94468/04ffe06da542a92402bd5c636583d3a3aa9a3dad/1750483717/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/6020/header.jpg"},"halflife":{"story":"Scientist Gordon Freeman survives a disastrous experiment at Black Mesa. Fight alien creatures and military forces while uncovering what went wrong.","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/70/header.jpg"},"heroes2":{"story":"Raise armies of knights, wizards and mythical beasts in a fantasy war for the kingdom of Enroth. Explore the map and capture castles."},"openttd":{"story":"Build a profitable transport empire. Connect towns and industries with trains, planes, ships and trucks while the world develops around you.","video":"https://video.fastly.steamstatic.com/store_trailers/1536610/346575/e10048c04429e4dbe143ca936061790db9ab8e8b/1751000084/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1536610/header.jpg"},"doom":{"story":"A lone space marine fights through a demon-infested military base on Mars and its moons. Collect weapons, find keys and survive the invasion.","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2280/header.jpg"},"quake1":{"story":"Slip through portals into dark dimensions and battle twisted monsters. Explore labyrinthine levels filled with traps, secrets and heavy firepower.","video":"https://video.fastly.steamstatic.com/store_trailers/2310/394086/b409462c3d57b8edad02587f02f1a7792153c736/1750480948/microtrailer.mp4","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2310/header.jpg"},"duke":{"story":"DOOM (1993) — Fight a demonic invasion through Mars bases and hidden corridors.\n\nQuake (1996) — Battle monsters in dark, gothic dimensions with fast movement and devastating weapons.\n\nWolfenstein 3D (1992) — Escape a Nazi fortress and fight through maze-like enemy strongholds.\n\nDuke Nukem 3D (1996) — Defend Earth against aliens across interactive city levels.\n\nNote: EXILE currently links to Duke Nukem 3D on Desktop98. The other titles are not verified as available via this link.","image":"https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/225140/header.jpg"},"caesar3":{"story":"Build a prosperous city for the Roman Empire. Keep citizens housed, supplied and entertained while juggling trade, religion and politics."},"freeciv":{"story":"Guide a civilization from its earliest settlements into the modern age. Research technology, explore continents and negotiate with rivals."},"cncweb":{"story":"Command the Global Defense Initiative or Brotherhood of Nod in a futuristic struggle over the mysterious resource Tiberium."}};
+const peekPanel=$('#gamePeek'), peekVideo=$('#peekVideo'),peekCover=$('#peekCover');
+let peekGame=null,peekOpenTimer=null,peekCloseTimer=null,peekToken=0,peekMediaFault=false;
+const stopPeekTimer=()=>{clearTimeout(peekOpenTimer);clearTimeout(peekCloseTimer)};
+function clearPeekMedia(){peekToken++;peekVideo.pause();peekVideo.removeAttribute('src');peekVideo.load();peekVideo.classList.remove('is-playing');peekCover.removeAttribute('src');peekCover.hidden=true;peekCover.style.display='none'}
+function closePeek(){stopPeekTimer();peekPanel.classList.remove('is-visible');peekPanel.hidden=true;peekPanel.setAttribute('aria-hidden','true');peekGame=null;clearPeekMedia()}
+function positionPeek(card){
+ if(!card)return;
+ const r=card.getBoundingClientRect(), margin=12, w=360,h=peekPanel.offsetHeight||440, vw=innerWidth,vh=innerHeight;
+ if(vw<=750||matchMedia('(hover: none)').matches){peekPanel.style.top='';peekPanel.style.left='';return}
+ // Prefer outside the card, never cover the Play / Favorites buttons.
+ let left=r.right+14;
+ if(left+w>vw-margin)left=r.left-w-14;
+ if(left<margin)left=Math.max(margin,Math.min(vw-w-margin,r.left+(r.width-w)/2));
+ const top=Math.max(margin,Math.min(vh-h-margin,r.top-20));
+ peekPanel.style.left=Math.round(left)+'px';peekPanel.style.top=Math.round(top)+'px';
+}
+function openPeek(g,card){
+ if(!g||!peekCatalog[g.id]||$('#modal').classList.contains('show'))return;
+ stopPeekTimer();
+ if(peekGame===g.id&&peekPanel.classList.contains('is-visible')){positionPeek(card);return}
+ clearPeekMedia();peekGame=g.id;peekMediaFault=false;
+ const meta=peekCatalog[g.id];
+ $('#peekTitle').textContent=g.name;
+ $('#peekCategory').textContent=g.category.toUpperCase()+' / '+g.type.toUpperCase();
+ $('#peekVerify').textContent=verificationStatus(g).label+(loadTime(g)?' · LOAD '+loadTime(g):'')+(g.id==='halflife'?' · BEST GAME':'');
+ $('#peekStory').classList.toggle('bundle-text',g.id==='duke');
+ $('#peekStory').textContent=meta.story+(gameNote(g)?'  |  EXILE TEST: '+gameNote(g):'');
+ $('#peekMark').textContent=g.mark;
+ $('#peekMedia').style.setProperty('--peek-c1',g.palette[0]);$('#peekMedia').style.setProperty('--peek-c2',g.palette[1]);$('#peekMedia').style.setProperty('--peek-ink',g.palette[2]);
+ $('#peekMediaLabel').textContent=meta.video?'6-SECOND TRAILER · MUTED':'GAME ART · NO VIDEO';
+ $('#peekSource').textContent=meta.video?'STEAM TRAILER OF ORIGINAL GAME':'GAME INFO / NO CLIP';
+ peekPanel.hidden=false;peekPanel.setAttribute('aria-hidden','false');peekPanel.classList.add('is-visible');
+ positionPeek(card);
+ const ticket=++peekToken;
+ if(meta.image){peekCover.style.display='block';peekCover.hidden=false;peekCover.onerror=()=>{if(ticket===peekToken){peekCover.style.display='none';peekCover.hidden=true}};peekCover.src=meta.image}
+ if(meta.video&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  peekVideo.src=meta.video;peekVideo.load();
+  const start=peekVideo.play();
+  if(start&&start.catch)start.catch(()=>{if(ticket===peekToken){$('#peekMediaLabel').textContent='TRAILER UNAVAILABLE · GAME ART';peekVideo.classList.remove('is-playing')}});
+ }
+}
+peekVideo.addEventListener('playing',()=>{if(peekGame&&!peekMediaFault)peekVideo.classList.add('is-playing')});
+peekVideo.addEventListener('error',()=>{if(peekGame){peekMediaFault=true;peekVideo.classList.remove('is-playing');$('#peekMediaLabel').textContent='VIDEO UNAVAILABLE · GAME ART'}});
+function requestPeek(card){if(!card||!card.dataset.id)return;const game=byId.get(card.dataset.id);if(!game)return;stopPeekTimer();peekOpenTimer=setTimeout(()=>openPeek(game,card),300)}
+function requestPeekClose(){clearTimeout(peekOpenTimer);peekCloseTimer=setTimeout(closePeek,230)}
+document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const card=e.target.closest('.poster-card');if(!card||card.contains(e.relatedTarget))return;requestPeek(card)});
+document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;const card=e.target.closest('.poster-card');if(card&&!card.contains(e.relatedTarget))requestPeekClose()});
+peekPanel.addEventListener('pointerenter',()=>{clearTimeout(peekCloseTimer)});
+peekPanel.addEventListener('pointerleave',requestPeekClose);
+document.addEventListener('focusin',e=>{if(matchMedia('(hover: none)').matches)return;const card=e.target.closest('.poster-card');if(card&&e.target.matches('.peek-trigger'))openPeek(byId.get(card.dataset.id),card)});
+document.addEventListener('click',e=>{
+ const trigger=e.target.closest('[data-peek]');
+ if(trigger){e.preventDefault();e.stopPropagation();const card=trigger.closest('.poster-card');const g=byId.get(trigger.dataset.peek);openPeek(g,card);return}
+ if(!peekPanel.hidden&&!peekPanel.contains(e.target)&&!e.target.closest('.poster-card'))closePeek();
+});
+$('#peekClose').addEventListener('click',closePeek);
+$('#peekPlay').addEventListener('click',()=>{const g=byId.get(peekGame);closePeek();if(g)launch(g)});
+$('#peekGamePage').addEventListener('click',()=>{const id=peekGame;closePeek();if(id)window.EXILE_UI?.openGamePage(id)});
+window.addEventListener('scroll',()=>{if(!peekPanel.hidden&&innerWidth>750&&matchMedia('(hover: hover)').matches)closePeek()},{passive:true,capture:true});
+window.addEventListener('resize',()=>{if(!peekPanel.hidden)closePeek()},{passive:true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!peekPanel.hidden)closePeek()});
+
+const statusText=g=>isBroken(g)?'Not working in reported test':isPartial(g)?g.id==='diablo'?'Unreliable · 50/50':'Partially working':loadTime(g)?'Tested · load '+loadTime(g):isVerified(g)?'Launch verified by EXILE tester':g.id==='cuphead'?'Unofficial browser port · untested':g.status==='project'?'Project / setup only':g.status==='owned'?'Game files required':g.id==='portal'?'Experimental web port':g.id==='doom3'?'Original browser demo':g.id==='redalert'?'Browser beta':g.id==='shapez'?'Playable demo':g.id==='halflife'?'Demo + owned files':'Browser playable';
+function card(g){let color=g.palette,v=verificationStatus(g);return `<article class="poster-card ${isBroken(g)?'is-broken':isPartial(g)?'is-partial':''}" data-id="${g.id}"><div class="art" style="--c1:${color[0]};--c2:${color[1]};--ink:${color[2]}"><span class="art-tag">${g.tag}</span><span class="verification-badge ${v.css}" title="${v.detail}">${v.label}</span><div class="art-mark">${g.mark}</div><span class="art-corner">${g.category.toUpperCase()} / WEB</span><button type="button" class="peek-trigger" data-peek="${g.id}" aria-label="Preview ${g.name.replace(/\'/g,'&#39;')}" title="Story + gameplay preview">ⓘ</button></div><div class="card-meta"><div class="card-title">${g.name}</div><div class="card-foot"><span class="status-dot ${isBroken(g)||isPartial(g)?'amber':g.status!=='ready'?'amber':''}"></span>${statusText(g)}</div>${loadTime(g)?`<div class="card-load" title="EXILE user-reported loading estimate, not a guarantee">TESTED LOAD: ${loadTime(g)}</div>`:''}${gameNote(g)?`<div class="card-report ${isVerified(g)?'good':''}">${gameNote(g)}</div>`:''}<div class="card-btns"><button type="button" class="card-play" data-open="${g.id}">${isBroken(g)?'⚠ RETEST ↗':g.status==='project'?'VIEW PROJECT ↗':g.status==='owned'?'DETAILS ↗':'▶ PLAY'}</button><button type="button" class="v2-btn" style="padding:8px 9px;font-size:9px" data-game-page="${g.id}" aria-label="Game information: ${g.name.replace(/'/g,'&#39;')}">INFO</button><button type="button" class="heart ${favs.has(g.id)?'selected':''}" data-fav="${g.id}" aria-label="${favs.has(g.id)?'Remove from favorites':'Add to favorites'}" title="Favorites">${favs.has(g.id)?'♥':'♡'}</button></div></div></article>`}
+function fillHero(){const g=featured[heroIndex];$('#hero').style.setProperty('--glow',g.palette[1]+'a0');$('#heroTitle').innerHTML=({halflife:'HALF-LIFE<br><span>EXILE TOP PICK</span>',fnaf1:'FIVE NIGHTS<br><span>AT FREDDY\'S</span>',fnaf2:'FIVE NIGHTS<br><span>AT FREDDY\'S 2</span>',fnaf3:'FIVE NIGHTS<br><span>AT FREDDY\'S 3</span>',fnaf4:'FIVE NIGHTS<br><span>AT FREDDY\'S 4</span>',terraria:'TERRARIA<br><span>WEB EDITION</span>',hollowknight:'HOLLOW<br><span>KNIGHT</span>',cuphead:'CUPHEAD<br><span>WEB EDITION</span>',portal:'PORTAL<br><span>WEB EDITION</span>',doom3:'DOOM 3<br><span>WEB DEMO</span>',nanolathe:'TOTAL<br><span>ANNIHILATION</span>',warzone:'WARZONE<br><span>2100</span>',redalert:'RED ALERT<br><span>2</span>',minidayz:'MINI<br><span>DAYZ PLUS</span>'})[g.id];$('#heroMark').textContent=g.mark;$('#heroMark').style.color=g.palette[2];$('#heroTag').textContent=g.id==='halflife'?'★ BEST GAME / EDITOR’S PICK':`FEATURED / 0${heroIndex+1}`;$('#heroTech').textContent=g.subtitle.toUpperCase();$('#heroDesc').textContent=g.desc;$('#heroFlags').innerHTML=`<span class="flag green">${g.category.toUpperCase()}</span><span class="flag">${g.type.toUpperCase()}</span><span class="flag">${g.id==='halflife'?'★ EXILE BEST GAME':g.id==='portal'?'EXPERIMENTAL / UNOFFICIAL':g.id==='doom3'?'DEMO / LARGE DOWNLOAD':['fnaf1','fnaf2','fnaf3','fnaf4'].includes(g.id)?'UNOFFICIAL / USER TESTED':'BROWSER PLAY'}</span></span><span class="flag ${isVerified(g)?'green':''}">${verificationStatus(g).label}</span>${gameNote(g)?`<span class="flag">${gameNote(g)}</span>`:''}${loadTime(g)?`<span class="flag green">LOAD: ${loadTime(g)}</span>`:''}`;$('#heroDots').innerHTML=featured.map((v,i)=>`<button type="button" class="dot ${i===heroIndex?'active':''}" data-hero="${i}" aria-label="Feature ${v.name}"></button>`).join('')}
+function draw(){const filtered=games.filter(g=>(!query||[g.name,g.subtitle,g.category,g.search,g.type].join(' ').toLowerCase().includes(query))&&(active==='all'||active==='verified'&&isVerified(g)||active==='favorites'&&favs.has(g.id)||active==='ready'&&g.status==='ready'&&!isBroken(g)||active==='owned'&&g.status==='owned'||active==='project'&&g.status==='project'||g.category===active));
+$('#newRow').innerHTML=['fnaf2','fnaf3','fnaf4','fnaf1','terraria','hollowknight'].map(id=>card(byId.get(id))).join('');$('#spotlightRow').innerHTML=featured.map(card).join('');$('#rtsRow').innerHTML=games.filter(g=>g.category==='RTS').map(card).join('');$('#libraryGrid').innerHTML=filtered.map(card).join('');$('#empty').style.display=filtered.length?'none':'block';$('#resultsCount').textContent=filtered.length+' of '+games.length+' games';$('#totalMini').textContent=games.length;$$('.chip').forEach(el=>el.classList.toggle('active',el.dataset.filter===active));$$('.navbtn[data-route]').forEach(el=>el.classList.toggle('active',el.dataset.route===active||(active==='all'&&el.dataset.route==='home')));$('#libraryHeading').innerHTML=({RTS:'Strategy <span>/ RTS</span>',Action:'Action <span>/ FPS</span>',Horror:'Horror <span>/ Survival</span>',Adventure:'Adventure <span>/ Story</span>',Sandbox:'Sandbox <span>/ Survival</span>',Classic:'Gaming <span>classics</span>',Factory:'Building & factory <span>/ Factory</span>',Strategy:'Turn-based <span>strategy</span>',project:'Developer <span>projects</span>',verified:'EXILE <span>verified</span>',owned:'Requires <span>your game files</span>',ready:'Play <span>in browser</span>',favorites:'Your <span>favorites</span>'})[active]||'The <span>library</span>';const focus=active!=='all'||query;$('#hero').classList.toggle('hide',focus);$('#spotlight').classList.toggle('hide',focus);$('#newports').classList.toggle('hide',focus);$('#rts').classList.toggle('hide',focus);$('.discover').classList.toggle('hide',focus);
+}
+function goFilter(v){
+  $('#sidebar').classList.remove('open');
+  const community=v==='community',special=['profile','updates','admin','game'].includes(v);
+  $('#home').classList.toggle('hide',community||special);
+  $('#communityPage').classList.toggle('hide',!community);
+  for(const [route,id] of [['profile','exileProfilePage'],['updates','exileUpdatesPage'],['game','exileGamePage'],['admin','exileAdminPage']])$('#'+id).classList.toggle('hide',v!==route);
+  $('.top-title').textContent=(community?'COMMUNITY':special?v.toUpperCase():'GAME LIBRARY')+' / EXILE NETWORK';
+  if(community||special){$$('.navbtn[data-route]').forEach(el=>el.classList.toggle('active',el.dataset.route===v));window.scrollTo({top:0,behavior:'instant'});window.dispatchEvent(new CustomEvent('exile:route',{detail:{route:v}}));return}
+  active=v==='home'?'all':v;
+  if(v==='home'){query='';$('#searchInput').value=''}
+  draw();
+  if(v==='home')window.scrollTo({top:0,behavior:'smooth'});
+  else $('#library').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function storeFavs(){try{localStorage.setItem('exile:favs',JSON.stringify([...favs]))}catch(e){}}
+
+ // Launcher preferences and recent launches live locally; EXILE does not read external game saves.
+ const readLocal=(key,fallback)=>{try{const v=JSON.parse(localStorage.getItem(key)||'null');return v===null?fallback:v}catch{return fallback}};
+ let launcherPrefs=readLocal('exile:launcher:prefs',{mode:'embed',preset:'balanced'});
+ if(!launcherPrefs||!['embed','tab'].includes(launcherPrefs.mode)||!['performance','balanced','quality'].includes(launcherPrefs.preset))launcherPrefs={mode:'embed',preset:'balanced'};
+ let launchHistory=readLocal('exile:launcher:history',[]);if(!Array.isArray(launchHistory))launchHistory=[];
+ let loadTimer=null,hubFocus=null;
+ const saveLauncher=()=>{try{localStorage.setItem('exile:launcher:prefs',JSON.stringify(launcherPrefs))}catch{}};
+ const isLocalGame=g=>{try{return new URL(g.url,location.href).origin===location.origin}catch{return false}};
+ const launchStatus=(message,tone='')=>{$('#launcherStatusText').textContent=message;$('#launcherStatusDot').className='launcher-status-dot '+(tone==='ok'?'ready':tone==='warn'?'warning':'');$('#launcherBootState').textContent=message};
+ const launchLog=(message,warn=false)=>{const node=document.createElement('div');node.textContent=message;node.className=warn?'warn':'';$('#launcherLog').append(node);while($('#launcherLog').children.length>6)$('#launcherLog').firstElementChild.remove();$('#launcherLog').scrollTop=$('#launcherLog').scrollHeight};
+ const updateLauncherSettings=()=>{
+  $$('#launcherModes button').forEach(btn=>{let selected=btn.dataset.launchMode===launcherPrefs.mode;btn.classList.toggle('selected',selected);btn.setAttribute('aria-pressed',String(selected))});
+  $$('#launcherPresets button').forEach(btn=>{let selected=btn.dataset.launchPreset===launcherPrefs.preset;btn.classList.toggle('selected',selected);btn.setAttribute('aria-pressed',String(selected))});
+  $('#startFrame').textContent=launcherPrefs.mode==='tab'?'↗ OPEN ORIGINAL HOST':'▶ LAUNCH IN EXILE';$('#startFrameStage').textContent=launcherPrefs.mode==='tab'?'↗ OPEN IN NEW TAB':'▶ LAUNCH GAME';
+  $('#launcherModeNote').textContent=launcherPrefs.mode==='tab'?'Opens the original game host directly. Recommended if the embedded window is blocked or does not capture controls.':'Runs inside EXILE only if the external game host permits embedding. Use a separate tab if the window remains blank.';
+  $('#launcherProfileNote').textContent=current&&isLocalGame(current)?'Preference will be sent to a same-origin game only if its runtime implements EXILE integration. No performance guarantee.':'Preference saved for future EXILE-native ports. It cannot change the graphics settings or FPS of an external website.';
+ };
+ const launchHardware=()=>{
+  const gl=(()=>{try{const canvas=document.createElement('canvas');const ctx=canvas.getContext('webgl2');if(ctx){ctx.getExtension('WEBGL_lose_context')?.loseContext();return true}return false}catch{return false}})();
+  $('#launcherWebGL').textContent=gl?'SUPPORTED':'UNAVAILABLE';
+  $('#launcherCPU').textContent=navigator.hardwareConcurrency?String(navigator.hardwareConcurrency):'NOT EXPOSED';
+  $('#launcherRAM').textContent=navigator.deviceMemory?navigator.deviceMemory+' GB (estimate)':'NOT EXPOSED';
+  $('#launcherStorage').textContent=(()=>{try{const k='exile:launcher:probe';localStorage.setItem(k,'1');localStorage.removeItem(k);return 'LOCAL READY'}catch{return 'UNAVAILABLE'}})();
+ };
+ const recordLaunch=g=>{launchHistory=[g.id,...launchHistory.filter(id=>id!==g.id&&byId.has(id))].slice(0,8);try{localStorage.setItem('exile:launcher:history',JSON.stringify(launchHistory))}catch{}};
+ const launcherButton=(g,n)=>{const btn=document.createElement('button');btn.type='button';btn.className='launcher-hub-game';btn.innerHTML='<span></span><b aria-hidden="true">↗</b>';const main=document.createElement('div');main.textContent=g.name;const sub=btn.querySelector('span');sub.textContent=verificationStatus(g).label+' · '+statusText(g);btn.prepend(main);btn.addEventListener('click',()=>{closeHub();launch(g)});return btn};
+ function openHub(){hubFocus=document.activeElement;$('#launcherHub').classList.add('show');$('#launcherHub').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';const recent=launchHistory.map(id=>byId.get(id)).filter(Boolean);const container=$('#launcherRecent');container.replaceChildren();if(!recent.length){const msg=document.createElement('p');msg.textContent='No launches yet. Choose one of the featured games below.';container.append(msg)}else recent.slice(0,6).forEach(g=>container.append(launcherButton(g)));$('#launcherQuick').replaceChildren(...featured.map(g=>launcherButton(g)));$('#launcherHubClose').focus();}
+ function closeHub(){if(!$('#launcherHub').classList.contains('show'))return;$('#launcherHub').classList.remove('show');$('#launcherHub').setAttribute('aria-hidden','true');document.body.style.overflow=$('#modal').classList.contains('show')?'hidden':'';hubFocus?.focus?.()}
+ function launch(g){if(!g)return;current=g;lastFocus=document.activeElement;$('#modal').classList.add('show');$('#modal').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';$('#modal').dataset.gameId=g.id;$('#modalName').textContent=g.name;$('#modalSub').textContent=g.subtitle+' · '+statusText(g);$('#openExternal').href=g.url;$('#launcherGameName').textContent=g.name;$('#launcherGameType').textContent=g.type;$('#launcherGameIcon').textContent=g.mark;$('#launcherCover').style.setProperty('--coverGlow',g.palette[1]+'88');$('#launcherVerify').className='launcher-badge'+(isVerified(g)?' ok':isBroken(g)||isPartial(g)?' warn':'');$('#launcherVerify').textContent=verificationStatus(g).label;$('#launcherCategory').textContent=g.category.toUpperCase();$('#launcherAccess').textContent=isLocalGame(g)?'EXILE PAGE':'EXTERNAL HOST';$('#launcherAccess').className='launcher-badge '+(isLocalGame(g)?'ok':'warn');$('#launcherLog').replaceChildren();launchLog('EXILE Launcher v1.0 initialized.');launchLog('Selected: '+g.name+'.');if(loadTime(g))launchLog('EXILE tester measured approximately '+loadTime(g)+' to load. Times vary by device, cache and network.');if(gameNote(g))launchLog('TEST REPORT: '+gameNote(g),isBroken(g)||isPartial(g));if(isBroken(g))launchLog('WARNING: This game was reported NOT WORKING by EXILE tester. Launch is retained only for retesting.',true);if(g.status==='owned')launchLog('This port requires original game data you own.',true);if(g.status==='project')launchLog('This is a development project, not a playable build.',true);updateLauncherSettings();resetFrame();launchHardware();$('#closeModal').focus();}
+ function stopLoadTimer(){if(loadTimer!==null){clearTimeout(loadTimer);loadTimer=null}}
+ function resetFrame(){stopLoadTimer();if(frame){frame.src='about:blank';frame.remove();frame=null}$('#frameIntro').classList.remove('hide');$('#frameLoading').style.display='none';$('#frameHeading').textContent=isBroken(current)?'REPORTED NOT WORKING':isPartial(current)?'PARTIALLY WORKING':current.status==='project'?'DEVELOPER PROJECT':current.status==='owned'?'ORIGINAL FILES REQUIRED':'GAME LAUNCH READY';$('#frameText').classList.toggle('bundle-text',current?.id==='duke');$('#frameText').textContent=isBroken(current)?current.name+' did not work in the EXILE tester report. This game is available here only for a possible retest; results may differ across devices.':current.status==='project'?'This link opens a project page. It is not a ready-to-play browser game.':current.status==='owned'?'Import legally obtained game files on the port website to play the complete game.':current.desc+(loadTime(current)?' Reported loading time: '+loadTime(current)+'.':'')+' Actual playability depends on the host and your device.';launchStatus('READY FOR LAUNCH');}
+ function startFrame(){
+  if(!current)return;
+  recordLaunch(current);
+  if(launcherPrefs.mode==='tab'){
+   launchLog('Requested the original game host in a new tab.');launchStatus('EXTERNAL TAB REQUESTED','ok');
+   const popup=window.open(current.url,'_blank','noopener,noreferrer');
+   launchLog('If the browser did not open a new tab, use the NEW TAB link in the header.');
+   return;
+  }
+  stopLoadTimer();if(frame){frame.src='about:blank';frame.remove();frame=null}
+  $('#frameIntro').classList.add('hide');$('#frameLoading').style.display='block';$('#frameStatus').textContent='Opening the game host. No download percentage is available for external sites.';
+  launchStatus('CONNECTING TO HOST');launchLog('Starting embedded web session…');
+  const f=document.createElement('iframe');frame=f;f.title='Game: '+current.name;f.setAttribute('allow','fullscreen; autoplay; gamepad');f.setAttribute('allowfullscreen','');f.referrerPolicy='strict-origin-when-cross-origin';f.src=current.url;
+  f.addEventListener('load',()=>{if(frame!==f||!current)return;stopLoadTimer();launchStatus('HOST PAGE LOADED / GAME START UNCONFIRMED','warn');$('#frameStatus').textContent='Host page loaded. '+(loadTime(current)?'Reported game loading: '+loadTime(current)+'. ':'')+'This does not confirm that the game menu is ready. If blank, use NEW TAB.';launchLog('Host page loaded; actual game state cannot be verified.');if(isLocalGame(current))try{f.contentWindow.postMessage({type:'EXILE_LAUNCH_CONFIG',version:1,preset:launcherPrefs.preset},location.origin)}catch{}});
+  f.addEventListener('error',()=>{if(frame!==f)return;stopLoadTimer();launchStatus('EMBED MAY BE BLOCKED','warn');launchLog('Could not load embedded page; try NEW TAB.',true);$('#frameStatus').textContent='The page could not be embedded. Try NEW TAB.'});
+  $('#gameArea').append(f);
+  loadTimer=setTimeout(()=>{if(frame!==f||!$('#modal').classList.contains('show'))return;launchStatus('STILL WAITING FOR HOST','warn');launchLog('No iframe load event after 12 seconds. Large game pages may still be starting.',true);$('#frameStatus').textContent=(loadTime(current)?'Still loading. EXILE tester reported '+loadTime(current)+' for this game; please allow time.':'Still waiting. Large ports can take time; try NEW TAB if this stays blank.')},12000);
+ }
+ function close(){stopLoadTimer();if(frame){frame.src='about:blank';frame.remove();frame=null}if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});$('#modal').classList.remove('show');$('#modal').setAttribute('aria-hidden','true');document.body.style.overflow='';current=null;lastFocus?.focus?.()}
+ // Future EXILE-owned games may report runtime readiness, FPS and save state.
+ // Never accept messages from unrelated or cross-origin frames.
+ window.addEventListener('message',event=>{
+  if(!frame||!current||!isLocalGame(current)||event.origin!==location.origin||event.source!==frame.contentWindow)return;
+  const m=event.data;if(!m||typeof m!=='object'||typeof m.type!=='string')return;
+  if(m.type==='EXILE_GAME_READY'){stopLoadTimer();launchStatus('GAME READY / NATIVE RUNTIME','ok');$('#frameLoading').style.display='none';launchLog('Native game reported ready.');}
+  else if(m.type==='EXILE_GAME_ERROR'){launchStatus('GAME REPORTED ERROR','warn');launchLog('Native runtime error: '+String(m.message||'Unknown').slice(0,160),true)}
+  else if(m.type==='EXILE_RUNTIME_FPS'&&typeof m.fps==='number'&&Number.isFinite(m.fps)&&m.fps>=0&&m.fps<=1000){$('#launcherSystemLabel').textContent='RUNTIME: '+Math.round(m.fps)+' FPS'}
+  else if(m.type==='EXILE_GAME_SAVE_STATUS'&&['saved','restored','error'].includes(m.status))launchLog('Native game save: '+m.status+'.',m.status==='error');
+ });
+ $$('#launcherModes button').forEach(btn=>btn.addEventListener('click',()=>{launcherPrefs.mode=btn.dataset.launchMode;saveLauncher();updateLauncherSettings()}));
+ $$('#launcherPresets button').forEach(btn=>btn.addEventListener('click',()=>{launcherPrefs.preset=btn.dataset.launchPreset;saveLauncher();updateLauncherSettings();if(frame&&current&&isLocalGame(current))try{frame.contentWindow.postMessage({type:'EXILE_LAUNCH_CONFIG',version:1,preset:launcherPrefs.preset},location.origin)}catch{}}));
+ $('#launcherFullscreen').addEventListener('click',()=>{if(!frame){launchLog('Launch a game first to use fullscreen.',true);return}if(document.fullscreenElement){document.exitFullscreen?.().catch(()=>{})}else if($('#gameArea').requestFullscreen)$('#gameArea').requestFullscreen().catch(()=>launchLog('Fullscreen request was denied by the browser.',true));else launchLog('Fullscreen is unavailable on this device.',true)});
+ $('#launcherGameGuide').addEventListener('click',()=>$('#modalGuide').click());$('#startFrameStage').addEventListener('click',startFrame);
+ $('#launcherTop').addEventListener('click',openHub);$('#launcherNav').addEventListener('click',()=>{$('#sidebar').classList.remove('open');openHub()});
+ $('#launcherHubClose').addEventListener('click',closeHub);$('#launcherHub').addEventListener('click',e=>{if(e.target===$('#launcherHub'))closeHub()});
+document.addEventListener('click',e=>{let t=e.target.closest('[data-open],[data-fav],[data-hero],[data-filter],[data-show],[data-route]');if(!t)return; if(t.dataset.open){launch(byId.get(t.dataset.open));return}if(t.dataset.fav){const id=t.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);storeFavs();draw();return}if(t.dataset.hero!==undefined){heroIndex=Number(t.dataset.hero);fillHero();return}if(t.dataset.filter){goFilter(t.dataset.filter);return}if(t.dataset.show){goFilter(t.dataset.show);return}if(t.dataset.route){goFilter(t.dataset.route);return}});
+$('#heroPlay').addEventListener('click',()=>launch(featured[heroIndex]));$('#heroInfo').addEventListener('click',()=>window.EXILE_UI?.openGamePage(featured[heroIndex].id));$('#searchInput').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();if(!$('#communityPage').classList.contains('hide')){goFilter('all');return}draw();if(query)$('#library').scrollIntoView({block:'start',behavior:'smooth'})});$('#clearSearch').addEventListener('click',()=>{query='';active='all';$('#searchInput').value='';draw()});$('#startFrame').addEventListener('click',startFrame);$('#reloadGame').addEventListener('click',()=>{if(current){resetFrame();startFrame()}});$('#closeModal').addEventListener('click',close);$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))close()});$('#mobmenu').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));$('#brand').addEventListener('click',e=>{e.preventDefault();goFilter('home')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#modal').classList.contains('show')){close();return}if($('#launcherHub').classList.contains('show')){closeHub();return}$('#sidebar').classList.remove('open')}if(e.key==='/'&&!$('#modal').classList.contains('show')&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus()}});fillHero();draw();if(location.hash==='#community'||new URLSearchParams(location.search).get('view')==='community')goFilter('community');
+window.addEventListener('exile:game-overrides',()=>{draw();fillHero()});
+window.EXILE_PORTAL = {games,byId,peekCatalog,launch,goFilter,draw,fillHero,verificationStatus,loadTime,gameNote,favs,storeFavs,featured};
+})();
+</script>
+
+<div class="guide-backdrop" id="guideOverlay" role="dialog" aria-modal="true" aria-labelledby="guideTitle" aria-hidden="true">
+  <div class="guide-shell">
+    <header class="guide-head">
+      <div class="guide-brand"><span class="guide-symbol">✦</span><span>EXILE <b>// PLAYER ACADEMY</b></span></div>
+      <span class="guide-est">QUICK INTERACTIVE TOUR</span>
+      <button id="guideClose" class="guide-close" type="button" aria-label="Close walkthrough">×</button>
+    </header>
+    <div class="guide-track" role="group" aria-label="Tutorial progress" id="guideTrack"></div>
+    <div class="guide-content">
+      <div class="guide-copy" aria-live="polite" aria-atomic="true">
+        <div class="guide-index" id="guideIndex">STEP 01 / 06</div>
+        <h2 id="guideTitle">Pick your game.</h2>
+        <p id="guideDescription">Choose a game from the library.</p>
+        <div class="guide-callout" id="guideCallout"></div>
+        <div class="guide-game-note" id="guideGameNote" hidden></div>
+      </div>
+      <div class="guide-stage" aria-hidden="true" id="guideStage">
+        <div class="guide-ambient"></div>
+        <div class="guide-visual" id="guideVisual"></div>
+        <div class="guide-stage-caption" id="guideStageCaption">A QUICK TOUR OF WEB GAMING</div>
+      </div>
+    </div>
+    <div class="guide-bottom"><div class="guide-footnote">EXILE is a directory — actual games are hosted by their developers.</div><div class="guide-controls"><button class="guide-secondary" id="guideBack" type="button">← BACK</button><button class="guide-primary" id="guideNext" type="button">NEXT STEP →</button></div></div>
+  </div>
+</div>
+
+<script>
+(()=>{
+'use strict';
+const overlay=document.getElementById('guideOverlay');
+const steps=[
+ {title:'Welcome to EXILE.',body:'This is a library of browser ports, demos and community game projects. Pick a game, then check whether it runs immediately or needs game data from a copy you own.',note:'<strong>Good to know:</strong> EXILE does not stream games from a cloud PC and does not provide copyrighted game files.',caption:'01 // EXPLORE THE LIBRARY',art:'catalog'},
+ {title:'Two ways to play.',body:'A green “Browser playable” label means you can try opening the game page without importing original game data. “Game files required” means the port provides an engine, not the copyrighted assets. “Project / setup only” links to source code instead of a playable server.',note:'<strong>Pro tip:</strong> Start with DOOM 3 demo, Portal (experimental), Total Annihilation demo or Mini DAYZ. Availability varies by host and Chromebook policy.',caption:'02 // CHECK THE GAME LABEL',art:'choice'},
+ {title:'Get your own game files.',body:'For games that require files, use a legally obtained copy from a legitimate store, disk or installation you already own. On a PC, locate the installed game folder or the files requested by that specific browser port.',note:'<strong>Never</strong> download random “free game data packs” or cracked archives. Game engines are often free, but original art, music, maps and sound files may not be.',caption:'03 // OWNED GAME DATA',art:'files'},
+ {title:'Move files to Chromebook.',body:'If the game is installed on another computer, copy the required files or prepared ZIP archive to your Chromebook using a USB drive or a trusted cloud storage service. Put them in the Downloads folder.',note:'<strong>Keep the original filenames.</strong> Do not rename a normal folder to .zip or .tar.gz; a port may require a specific archive structure.',caption:'04 // LOCAL FILE TRANSFER',art:'transfer'},
+ {title:'Import into the browser port.',body:'Open the actual developer-hosted port in a new tab. Look for “Upload”, “Choose files”, “Select folder” or “Import game data”, then select the requested files from Downloads. Wait for processing to finish.',note:'<strong>Common examples:</strong> Diablo — DIABDAT.MPQ; Jedi Academy — .pk3; Fallout — original data or a supported ZIP; Vice City — a specifically prepared game.tar.gz. Always follow the current port instructions.',caption:'05 // CHOOSE FILES',art:'upload'},
+ {title:'Launch. Play. Troubleshoot.',body:'Once assets are accepted, follow the port’s Play/Start button. If the EXILE embedded view is blank, use “Open in new tab”. Some sites block iframe embedding, and some school devices restrict game domains or storage.',note:'<strong>A loaded page is not proof of a working game.</strong> Confirm that the menu appears and that keyboard/mouse controls respond. EXILE cannot override a website or device restriction.',caption:'06 // YOU ARE READY',art:'success'}
+];
+const art={
+ catalog:`<div class="v-screen"><div class="v-screen-head"><i></i><i></i><i></i></div><div class="v-game-grid"><span></span><span></span><span></span></div><div class="v-playline"></div><div class="v-cursor"></div></div>`,
+ choice:`<div class="v-choice-wrap"><div class="v-choice"><div class="v-choice-icon">▶</div><span>PLAY ONLINE</span><small>Demo / browser port</small></div><div class="v-choice"><div class="v-choice-icon">▣</div><span>IMPORT DATA</span><small>From your game copy</small></div></div>`,
+ files:`<div class="v-files"><div class="v-box"><b>▣</b><span>YOUR GAME</span></div><div class="v-box"><b>▤</b><span>ASSETS</span></div><div class="v-box"><b>◈</b><span>DATA FILES</span></div></div>`,
+ transfer:`<div class="v-transfer"><div class="v-device"><b>▣</b><span>PC / USB</span></div><div class="v-arrow">→</div><div class="v-moving">▣</div><div class="v-device"><b>▤</b><span>CHROMEBOOK</span></div></div>`,
+ upload:`<div class="v-upload"><div class="v-upload-icon">⇧</div><div class="v-upload-text">SELECT YOUR FILES</div><div class="v-upload-file">▣</div></div>`,
+ success:`<div class="v-success"><span>✓</span></div>`
+};
+const guideGameMap={
+ portal:'<strong>Portal:</strong> This is an experimental third-party browser port. It may download data before starting, and some levels or effects may not work. It is not an official Valve release.',
+ doom3:'<strong>DOOM 3:</strong> The original game demo runs with D3wasm. Expect roughly 400 MB downloaded and around 850 MB RAM. In this browser version, <code>HOME</code> replaces <code>ESC</code> for the game menu. Open the host in a new tab if EXILE\'s iframe cannot display it.',
+ fallout:'<strong>Fallout 1 / 2:</strong> Use the legally owned game files and the import format requested by Rerun Reactor.',
+ vice:'<strong>GTA: Vice City:</strong> This browser build asks for a specially prepared <code>game.tar.gz</code>; read its setup instructions before importing.',
+ diablo:'<strong>Diablo:</strong> Try shareware without files, or use <code>DIABDAT.MPQ</code> from your own game for the full version.',
+ jedi:'<strong>Jedi Academy:</strong> You need the <code>.pk3</code> data files from <code>GameData/base</code> in your copy.',
+ nanolathe:'<strong>Total Annihilation:</strong> Demo missions need no imported assets; the full game may require data from your own copy.',
+ halflife:'<strong>Half-Life:</strong> Select a built-in demo, or import the <code>valve/</code> directory from your legitimate Half-Life installation.',
+ heroes2:'<strong>Heroes II:</strong> Select the folder or ZIP containing <code>DATA/HEROES2.AGG</code>, plus <code>MAPS/</code> from your copy.',
+ caesar3:'<strong>Caesar III:</strong> Augustus requires game data from a legally owned Caesar III installation.',
+ cncweb:'<strong>Command &amp; Conquer:</strong> This link goes to a developer source repository, not a ready-to-play site. It needs separate deployment and original game files.',
+ openttd:'<strong>OpenTTD:</strong> OpenTTD Online is a browser game; no paid game files are needed. You can optionally import your existing saves.',
+ doom:'<strong>DOOM:</strong> This is the original shareware episode. Click Play on the game host.',
+ quake1:'<strong>Quake:</strong> Choose Quake Shareware, then launch its browser player.',
+  duke:'<strong>Classic FPS Bundle — four iconic shooters:</strong><br><strong>DOOM (1993):</strong> Fight demons on Mars.<br><strong>Quake (1996):</strong> Battle monsters in gothic dimensions.<br><strong>Wolfenstein 3D (1992):</strong> Escape enemy-held fortresses.<br><strong>Duke Nukem 3D (1996):</strong> Fight invading aliens on Earth.<br><em>The current launch link goes to the Desktop98 Duke Nukem 3D page. The other games are not verified as playable from it.</em>',
+ freeciv:'<strong>Freeciv:</strong> Choose a single-player or multiplayer game. No owned game files are necessary.'
+};
+let step=0,lastFocus=null,gameId=null;
+const el=id=>document.getElementById(id);
+const track=el('guideTrack');
+for(let n=0;n<steps.length;n++){const p=document.createElement('button');p.type='button';p.setAttribute('aria-label',`Go to step ${n+1}`);p.addEventListener('click',()=>show(n));track.append(p)}
+function show(n){step=Math.min(steps.length-1,Math.max(0,n));const s=steps[step];el('guideIndex').textContent=`STEP ${String(step+1).padStart(2,'0')} / 06`;el('guideTitle').textContent=s.title;el('guideDescription').textContent=s.body;el('guideCallout').innerHTML=s.note;el('guideStageCaption').textContent=s.caption;el('guideVisual').innerHTML=art[s.art];const gn=el('guideGameNote');gn.hidden=!gameId||!guideGameMap[gameId]||step<2;gn.innerHTML=gn.hidden?'':guideGameMap[gameId];[...track.children].forEach((p,i)=>{p.classList.toggle('active',i===step);p.classList.toggle('done',i<step);p.setAttribute('aria-current',i===step?'step':'false')});el('guideBack').disabled=step===0;el('guideNext').textContent=step===steps.length-1?'BROWSE GAMES →':'NEXT STEP →';}
+function open(n=0,id=null){lastFocus=document.activeElement;gameId=id;overlay.classList.add('show');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';show(n);el('guideClose').focus()}
+function close(){overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=el('modal').classList.contains('show')?'hidden':'';lastFocus?.focus?.()}
+const readyBrowse=()=>{close();const gameModal=el('modal');if(gameModal.classList.contains('show'))el('closeModal').click();const ready=document.querySelector('.chip[data-filter="ready"]');ready?.click()};
+for(const btn of document.querySelectorAll('[data-guide]'))btn.addEventListener('click',()=>open(Number(btn.dataset.guide)||0));
+el('topHelp').addEventListener('click',()=>open(0));el('modalGuide').addEventListener('click',()=>{const title=el('modalName').textContent;const id=el('modal').dataset.gameId||null;open(id?2:0,id)});
+el('guideClose').addEventListener('click',close);el('guideBack').addEventListener('click',()=>show(step-1));el('guideNext').addEventListener('click',()=>step===steps.length-1?readyBrowse():show(step+1));overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+document.addEventListener('keydown',e=>{if(!overlay.classList.contains('show'))return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();close()}else if(e.key==='ArrowRight'){e.preventDefault();e.stopImmediatePropagation();show(step+1)}else if(e.key==='ArrowLeft'){e.preventDefault();e.stopImmediatePropagation();show(step-1)}else if(e.key==='Tab'){const focusable=[...overlay.querySelectorAll('button:not(:disabled)')];if(focusable.length){let idx=focusable.indexOf(document.activeElement);if(e.shiftKey&&idx<=0){e.preventDefault();focusable.at(-1).focus()}else if(!e.shiftKey&&idx===focusable.length-1){e.preventDefault();focusable[0].focus()}}}},true);
+})();
+</script>
+
+
+<script>
+/* Put your public Supabase project URL and publishable key here.
+   The publishable/anon key is safe in a public HTML file ONLY with RLS enabled.
+   Never put a service_role or secret key in a website. */
+window.EXILE_CONFIG = {
+  supabaseUrl: 'https://lrtutfcmbvshhjulzoic.supabase.co',
+  supabasePublishableKey: 'sb_publishable_rzlmJnYBM3btW6px9gk0iw_2F8Ch7jX'
+};
+(()=>{'use strict';
+const el=id=>document.getElementById(id);
+const cfg=window.EXILE_CONFIG;
+const ready=Boolean(cfg.supabaseUrl && cfg.supabasePublishableKey && /^https:\/\//i.test(cfg.supabaseUrl));
+let client=null,user=null,profile=null,channel=null,activePoll=null,options=[],myVote=null;
+let lastMessageAt=0;
+const text=(id,value)=>{el(id).textContent=value};
+function notice(id,msg,error=false){const node=el(id);node.textContent=msg;node.classList.toggle('error',error)}
+function updateUI(){
+ el('communityGuest').style.display=user?'none':'block';
+ el('communityUser').style.display=user?'block':'none';
+ if(user){text('communityPrivateMail',user.email||'Email verified');text('communityUserNick',profile?.nickname||'CHOOSE A NICKNAME');text('communityUserAvatar',(profile?.nickname||'?').slice(0,1).toUpperCase());}
+ const canSend=Boolean(user&&profile?.nickname);
+ el('communityChatInput').disabled=!canSend;
+ el('communitySend').disabled=!canSend;
+ el('communityChatInput').placeholder=canSend?'Message the EXILE community (max 500 characters)...':user?'Choose your nickname to chat...':'Sign in and choose a nickname to chat...';
+ text('communityChatLabel',client?'COMMUNITY CHAT':'PREVIEW');
+}
+function preview(msg){el('communityChat').replaceChildren();const e=document.createElement('div');e.className='community-chat-empty';e.textContent=msg;el('communityChat').append(e)}
+async function loadLibrary(){
+ if(window.supabase?.createClient)return;
+ await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';s.onload=resolve;s.onerror=()=>reject(new Error('Authentication library could not load. The CDN may be filtered.'));document.head.append(s)});
+ if(!window.supabase?.createClient)throw new Error('The Supabase client library is unavailable.');
+}
+async function loadProfile(){
+ if(!user){profile=null;updateUI();return}
+ const {data,error}=await client.from('profiles').select('nickname').eq('id',user.id).maybeSingle();
+ if(error){notice('communityNickNote','Cannot load nickname: '+error.message,true);return}
+ profile=data; if(profile?.nickname)el('communityNick').value=profile.nickname;updateUI();window.EXILE_ACCOUNT={client,user,profile};window.dispatchEvent(new CustomEvent('exile:profile'));
+}
+function formatTime(value){try{return new Date(value).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}catch{return ''}}
+function makeMsg(m){
+ const row=document.createElement('div');row.className='community-chat-row';
+ const avatar=document.createElement('div');avatar.className='community-avatar';const nick=m.profiles?.nickname||'User';avatar.textContent=nick[0].toUpperCase();
+ const content=document.createElement('div');content.style.flex='1';const name=document.createElement('span');name.className='community-chat-author';name.textContent=nick;
+ const time=document.createElement('span');time.className='community-chat-time';time.textContent=formatTime(m.created_at);
+ const body=document.createElement('p');body.className='community-chat-body';body.textContent=m.body;
+ content.append(name,time,body);row.append(avatar,content);
+ if(user&&m.user_id!==user.id){const btn=document.createElement('button');btn.type='button';btn.className='report-btn';btn.textContent='Report';btn.title='Report an inappropriate message';btn.addEventListener('click',()=>report(m.id));content.append(btn)}
+ return row;
+}
+async function loadMessages(){
+ if(!client||!user){preview('Sign in to read the community chat.');return}
+ const {data,error}=await client.from('chat_messages').select('id,user_id,body,created_at,profiles!chat_messages_user_id_fkey(nickname)').order('created_at',{ascending:false}).limit(60);
+ if(error){preview('Cannot load messages: '+error.message);return}
+ const panel=el('communityChat');panel.replaceChildren();
+ if(!data.length){preview('No messages yet. Be the first to say hello!');return}
+ for(const item of data.reverse())panel.append(makeMsg(item));
+ panel.scrollTop=panel.scrollHeight;
+}
+async function report(messageId){
+ if(!user)return;
+ const reason=prompt('Report message: spam, harassment, or personal information? Type one reason.');
+ if(!reason)return;
+ const value=reason.trim().slice(0,140);
+ if(value.length<4)return;
+ const {error}=await client.from('message_reports').insert({message_id:messageId,reporter_id:user.id,reason:value});
+ text('communityChatNote',error?'Could not submit report: '+error.message:'Report sent for moderator review. Thank you.');
+}
+async function loadPoll(){
+ if(!client||!user)return;
+ const {data:poll,error}=await client.from('polls').select('id,question').eq('is_active',true).order('created_at',{ascending:false}).limit(1).maybeSingle();
+ if(error){text('communityPollFoot','Unable to fetch poll: '+error.message);return}
+ if(!poll){text('communityPollQuestion','No active poll yet');el('communityPollOptions').replaceChildren();text('communityPollFoot','Admins can publish a new poll using the database.');return}
+ activePoll=poll;text('communityPollQuestion',poll.question);
+ const [o,v]=await Promise.all([client.from('poll_options').select('id,label,vote_count,position').eq('poll_id',poll.id).order('position'),client.from('poll_votes').select('option_id').eq('poll_id',poll.id).eq('user_id',user.id).maybeSingle()]);
+ if(o.error||v.error){text('communityPollFoot','Unable to load poll results.');return}
+ options=o.data||[];myVote=v.data?.option_id||null;renderPoll();
+}
+function renderPoll(){
+ const list=el('communityPollOptions');list.replaceChildren();
+ const total=options.reduce((sum,v)=>sum+(v.vote_count||0),0);
+ options.forEach(opt=>{
+ const btn=document.createElement('button');btn.type='button';btn.className='community-vote-option'+(myVote===opt.id?' picked':'');btn.disabled=!user||Boolean(myVote);
+ const line=document.createElement('div');line.className='community-vote-row';const name=document.createElement('span');name.textContent=opt.label;line.append(name);
+ if(myVote){const pct=document.createElement('span');pct.textContent=(total?Math.round((opt.vote_count||0)/total*100):0)+'%';line.append(pct)}
+ btn.append(line);
+ if(myVote){const bar=document.createElement('div');bar.className='community-vote-bar';const fill=document.createElement('span');fill.className='community-vote-fill';fill.style.width=(total?((opt.vote_count||0)/total*100):0)+'%';bar.append(fill);btn.append(bar)}
+ btn.addEventListener('click',()=>vote(opt.id));list.append(btn);
+ });
+ text('communityPollStatus',myVote?'VOTED':'LIVE');
+ text('communityPollFoot',myVote?`You voted. ${total} total vote${total===1?'':'s'}. One vote per account.`:'Choose one option to vote. Results are shown after voting.');
+}
+async function vote(optionId){
+ if(!client||!user||!activePoll||myVote)return;
+ const {error}=await client.from('poll_votes').insert({poll_id:activePoll.id,option_id:optionId,user_id:user.id});
+ if(error){text('communityPollFoot',error.message);return}
+ myVote=optionId;await loadPoll();
+}
+function startRealtime(){
+ if(!client||!user||channel)return;
+ channel=client.channel('exile-chat-updates').on('postgres_changes',{event:'INSERT',schema:'public',table:'chat_messages'},()=>loadMessages()).on('postgres_changes',{event:'UPDATE',schema:'public',table:'poll_options'},()=>loadPoll()).subscribe();
+}
+async function updateAuth(){
+ const {data,error}=await client.auth.getUser();
+ user=error?null:data.user;
+ if(user){await loadProfile();await Promise.all([loadMessages(),loadPoll()]);startRealtime();}
+ else{profile=null;myVote=null;activePoll=null;if(channel){await client.removeChannel(channel);channel=null;}updateUI();preview('Sign in to read the EXILE global chat.');text('communityPollFoot','Sign in to see current polls.');}
+ window.EXILE_ACCOUNT={client,user,profile};window.dispatchEvent(new CustomEvent('exile:auth'));
+}
+el('communityGoogleButton').addEventListener('click',async()=>{
+ if(!ready||!client){notice('communityEmailNote','Google sign-in is not active: connect the Supabase URL and publishable key first.',true);return}
+ if(location.protocol!=='https:'){notice('communityEmailNote','Open EXILE on the published HTTPS website to use Google sign-in.',true);return}
+ const button=el('communityGoogleButton');button.disabled=true;
+ try{
+  const redirect=location.origin+location.pathname+'?view=community';
+  const {error}=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:redirect}});
+  if(error)throw error;
+ }catch(e){notice('communityEmailNote',e.message||'Unable to begin Google sign-in.',true);button.disabled=false}
+});
+el('communityEmailForm').addEventListener('submit',async e=>{
+ e.preventDefault();const email=el('communityEmail').value.trim();
+ if(!ready){notice('communityEmailNote','Email registration is not active: the owner must configure Supabase first.',true);return}
+ if(location.protocol!=='https:'){notice('communityEmailNote','Open the published HTTPS site to sign in. Local HTML preview cannot complete email verification.',true);return}
+ try{el('communityEmailButton').disabled=true;
+ const redirect=location.origin+location.pathname+'?view=community';
+ const {error}=await client.auth.signInWithOtp({email,options:{emailRedirectTo:redirect,shouldCreateUser:true}});
+ if(error)throw error;
+ notice('communityEmailNote','Check your inbox for an email sign-in link. It may take a moment.');
+ }catch(e){notice('communityEmailNote',e.message||'Unable to send sign-in link.',true)}finally{el('communityEmailButton').disabled=false}
+});
+el('communityNickForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!client||!user)return;
+ const nickname=el('communityNick').value.trim();
+ if(!/^[A-Za-z0-9_]{3,20}$/.test(nickname)){notice('communityNickNote','Use 3–20 letters, numbers, or underscores.',true);return}
+ const {error}=await client.from('profiles').upsert({id:user.id,nickname},{onConflict:'id'});
+ if(error){notice('communityNickNote',error.code==='23505'?'Nickname already taken. Try another one.':error.message,true);return}
+ await loadProfile();notice('communityNickNote','Nickname saved!');
+});
+el('communityLogout').addEventListener('click',async()=>{if(client){await client.auth.signOut();await updateAuth()}});
+el('communityChatForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!client||!user||!profile?.nickname)return;
+ const body=el('communityChatInput').value.trim();if(!body||body.length>500)return;
+ if(Date.now()-lastMessageAt<7000){text('communityChatNote','Slow down: wait a few seconds between messages.');return}
+ el('communitySend').disabled=true;
+ const {error}=await client.from('chat_messages').insert({user_id:user.id,body});
+ el('communitySend').disabled=false;
+ if(error){text('communityChatNote',error.message);return}
+ lastMessageAt=Date.now();el('communityChatInput').value='';text('communityChatNote','Do not share real names, emails, addresses, or other personal details.');await loadMessages();
+});
+async function initialize(){
+ updateUI();if(!ready)return;
+ try{
+ await loadLibrary();
+ client=window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});window.EXILE_ACCOUNT={client,user,profile};window.dispatchEvent(new CustomEvent('exile:client'));
+ el('communityStatus').classList.add('connected');text('communityMode','BACKEND CONFIGURED · ACCOUNT SIGN-IN READY');
+ document.querySelector('.community-preview')?.remove();
+ client.auth.onAuthStateChange(()=>{setTimeout(()=>updateAuth().catch(console.error),0)});
+ await updateAuth();
+ }catch(err){notice('communityEmailNote',err.message||'Unable to initialize account service.',true);text('communityMode','BACKEND CONNECTION FAILED');}
+}
+initialize();
+})();
+</script>
+
+<script>
+/* EXILE Platform V2. Public Supabase key only. All authorization lives in database RLS. */
+(()=>{'use strict';
+const P=window.EXILE_PORTAL;
+if(!P)return;
+const $=id=>document.getElementById(id);
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=String(txt);return e};
+const set=(id,txt)=>{$(id).textContent=txt};
+const msg=(id,txt)=>set(id,txt);
+const auth=()=>window.EXILE_ACCOUNT||{};
+const client=()=>auth().client;
+const me=()=>auth().user;
+let currentProfileId=null,currentGameId='halflife',adminAllowed=false;
+const fmt=raw=>{try{return new Date(raw).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})}catch{return 'UNKNOWN'}};
+const badge=(label,kind='')=>el('span','v2-pill '+kind,label);
+const marker=(label='NEUTRAL',kind='neutral')=>{const e=badge(label,kind);return e};
+const errorMessage=e=>String(e?.message||e||'Unknown error').slice(0,260);
+const onlyImageMime=new Set(['image/png','image/jpeg','image/webp','image/gif']);
+const extForMime={'image/png':'png','image/jpeg':'jpg','image/webp':'webp','image/gif':'gif'};
+const safeImageUrl=u=>{try{const url=new URL(u);return url.protocol==='https:'&&url.origin===new URL(window.EXILE_CONFIG.supabaseUrl).origin&&url.pathname.includes('/storage/v1/object/public/exile-profile-media/')?url.href:null}catch{return null}};
+
+function show(route){P.goFilter(route)}
+function openProfile(id=null){currentProfileId=id||me()?.id||null;show('profile');loadProfileView()}
+function openGamePage(id){if(!P.byId.has(id))return;currentGameId=id;show('game');renderGamePage();history.replaceState(null,'','#game/'+encodeURIComponent(id))}
+window.EXILE_UI={openProfile,openGamePage};
+
+function showCover(url,id,letter){const host=$(id);host.replaceChildren();const good=url&&safeImageUrl(url);if(good){const i=el('img');i.loading='lazy';i.alt='';i.referrerPolicy='no-referrer';i.src=good;if(id==='exileProfileAvatar')host.append(i);else host.append(i)}else if(id==='exileProfileAvatar'){host.textContent=(letter||'E').slice(0,1).toUpperCase()}}
+async function loadProfileView(){
+ const u=me(),c=client(),id=currentProfileId||u?.id;
+ if(!c||!u){msg('exileProfileNotice','Sign in through Community to create or view profiles. The database setup is required to save customizations.');showCover(null,'exileProfileBanner');showCover(null,'exileProfileAvatar','E');set('exileProfileName','EXILE GUEST');set('exileProfileAbout','Sign in to build your public profile.');$('exileProfileBadges').replaceChildren(badge('GUEST','neutral'));$('exileProfileForm').querySelectorAll('input,textarea,button').forEach(b=>b.disabled=true);$('exileGuestbookForm').querySelectorAll('textarea,button').forEach(b=>b.disabled=true);$('exileGuestbookList').replaceChildren(el('p','v2-muted','Sign in to read the guestbook.'));return}
+ $('exileProfileForm').querySelectorAll('input,textarea,button').forEach(b=>b.disabled=false);
+ const owner=!id||id===u.id;
+ $('exileProfileForm').style.display=owner?'block':'none';$('exileMyProfile').style.display=owner?'none':'inline-block';
+ try{
+ const [a,b]=await Promise.all([c.from('profiles').select('id,nickname,created_at,bio,avatar_url,banner_url').eq('id',id).maybeSingle(),c.from('exile_badges').select('badge').eq('user_id',id)]);
+ if(a.error)throw a.error;
+ const pr=a.data;if(!pr){msg('exileProfileNotice','This account has not chosen an EXILE nickname yet. Go to Community first.');return}
+ msg('exileProfileNotice',owner?'This is your EXILE public profile.':'Viewing another member’s EXILE profile.');set('exileProfileName',pr.nickname);set('exileProfileAbout',pr.bio||'No bio yet.');set('exileProfileJoined','JOINED '+fmt(pr.created_at).toUpperCase());
+ showCover(pr.avatar_url,'exileProfileAvatar',pr.nickname[0]);showCover(pr.banner_url,'exileProfileBanner');$('exileProfileBio').value=pr.bio||'';
+ const day=Math.max(0,Math.floor((Date.now()-new Date(pr.created_at))/86400000));const ranks=['NEWCOMER',...(day>=7?['MEMBER']:[]),...(day>=30?['REGULAR']:[]),...(day>=90?['VETERAN']:[])];
+ const display=day>=90?'VETERAN':day>=30?'REGULAR':day>=7?'MEMBER':'NEWCOMER';
+ $('exileProfileBadges').replaceChildren(badge(display),...(b.data||[]).map(v=>badge(v.badge)));
+ currentProfileId=pr.id;await loadGuestbook();
+ }catch(e){msg('exileProfileNotice','Could not load profile. Run EXILE_Profiles_Updates_Admin_Setup.sql in Supabase first. '+errorMessage(e));}
+}
+$('exileMyProfile').addEventListener('click',()=>openProfile(me()?.id));
+$('exileProfileCommunity').addEventListener('click',()=>show('community'));
+async function upload(kind,input,max){
+ const file=input.files?.[0];if(!file)return null;
+ if(!onlyImageMime.has(file.type))throw new Error('Use GIF, PNG, JPEG, or WebP only.');
+ if(file.size>max)throw new Error(kind+' is too large.');
+ const u=me();if(!u)throw new Error('Please sign in first.');
+ const path=u.id+'/'+kind+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.'+extForMime[file.type];
+ const c=client();const {error}=await c.storage.from('exile-profile-media').upload(path,file,{contentType:file.type,upsert:false,cacheControl:'3600'});
+ if(error)throw error;
+ return c.storage.from('exile-profile-media').getPublicUrl(path).data.publicUrl;
+}
+$('exileProfileForm').addEventListener('submit',async e=>{
+ e.preventDefault();const c=client(),u=me();if(!c||!u||currentProfileId!==u.id){msg('exileProfileSaveNote','Sign in to edit your own profile.');return}
+ const btn=$('exileProfileSave');btn.disabled=true;msg('exileProfileSaveNote','Saving profile…');
+ try{
+ const bio=$('exileProfileBio').value.trim();if(bio.length>280)throw new Error('Bio is too long.');
+ const avatar=await upload('avatar',$('exileAvatarFile'),3*1024*1024);
+ const banner=await upload('banner',$('exileBannerFile'),6*1024*1024);
+ const changes={bio};if(avatar)changes.avatar_url=avatar;if(banner)changes.banner_url=banner;
+ const {error}=await c.from('profiles').update(changes).eq('id',u.id);if(error)throw error;
+ $('exileAvatarFile').value='';$('exileBannerFile').value='';msg('exileProfileSaveNote','Profile saved to Supabase. GIFs animate when viewed.');await loadProfileView();
+ }catch(err){msg('exileProfileSaveNote','Save failed: '+errorMessage(err)+'\nCheck the SQL setup and image storage bucket.')}finally{btn.disabled=false}
+});
+
+async function loadGuestbook(){
+ const c=client(),u=me(),id=currentProfileId,feed=$('exileGuestbookList');feed.replaceChildren();
+ if(!c||!u||!id){feed.append(el('p','v2-muted','Sign in to see messages.'));return}
+ const {data,error}=await c.from('exile_guestbook').select('id,body,author_id,profile_id,created_at').eq('profile_id',id).order('created_at',{ascending:false}).limit(25);
+ if(error){feed.append(el('p','v2-muted','Guestbook will activate after Supabase SQL setup.'));return}
+ if(!data?.length){feed.append(el('p','v2-muted','No entries yet. Leave the first message!'));return}
+ const authorIds=[...new Set(data.map(x=>x.author_id))];const authors=await c.from('profiles').select('id,nickname').in('id',authorIds);
+ const nicks=new Map((authors.data||[]).map(x=>[x.id,x.nickname]));
+ for(const item of data){const row=el('div','v2-entry'),head=el('div','v2-entry-head');const nm=el('button','v2-btn',nicks.get(item.author_id)||'EXILE member');nm.style.padding='6px 8px';nm.addEventListener('click',()=>openProfile(item.author_id));head.append(nm,el('small','',fmt(item.created_at)));
+ if(u.id===item.author_id||u.id===item.profile_id||adminAllowed){const del=el('button','v2-btn danger','REMOVE');del.type='button';del.addEventListener('click',async()=>{if(!confirm('Remove this guestbook message?'))return;const r=await c.from('exile_guestbook').delete().eq('id',item.id);msg('exileGuestbookNote',r.error?errorMessage(r.error):'Message removed.');if(!r.error)loadGuestbook()});head.append(del)}
+ row.append(head,el('p','',item.body));feed.append(row)}
+}
+$('exileGuestbookForm').addEventListener('submit',async e=>{e.preventDefault();const c=client(),u=me(),id=currentProfileId,body=$('exileGuestbookMessage').value.trim();if(!c||!u||!id)return;if(body.length<2||body.length>280)return;const {error}=await c.from('exile_guestbook').insert({profile_id:id,author_id:u.id,body});msg('exileGuestbookNote',error?errorMessage(error):'Posted!');if(!error){$('exileGuestbookMessage').value='';loadGuestbook()}});
+
+function renderGamePage(){
+ const g=P.byId.get(currentGameId);if(!g)return;
+ const info=P.peekCatalog[g.id]||{};const ver=P.verificationStatus(g);
+ set('exileGameCrumb',g.name.toUpperCase());set('exileGameTitle',g.name.toUpperCase());
+ const cover=$('exileGameCover');const titleNode=$('exileGameTitle');cover.style.setProperty('--feature-a',g.palette[0]);cover.style.setProperty('--feature-b',g.palette[1]);cover.replaceChildren();
+ if(info.image){const pic=el('img');pic.src=info.image;pic.alt='Artwork for '+g.name;pic.loading='lazy';cover.append(pic)}
+ titleNode.textContent=g.name.toUpperCase();cover.append(titleNode);
+ $('exileGameTags').replaceChildren(badge(g.category),badge(g.type,'neutral'),badge(ver.label,ver.css==='broken'?'warning':''),...(g.id==='halflife'?[badge('★ EXILE TOP PICK')]:[]));
+ set('exileGameStory',info.story||g.desc||'No storyline available for this listing.');
+ set('exileGameReport',(P.gameNote(g)||ver.detail||'Not tested yet on this Chromebook.')+(P.loadTime(g)?'\nReported loading time: '+P.loadTime(g):''));
+ const specs=$('exileGameSpecs');specs.replaceChildren();
+ for(const [key,value] of [['TITLE',g.name],['GENRE',g.category],['PORT TYPE',g.type],['TEST STATUS',ver.label],['REPORTED LOAD',P.loadTime(g)||'NOT RECORDED'],['ACCESS',g.status==='owned'?'OWN GAME DATA REQUIRED':g.status==='project'?'SOURCE / PROJECT':'BROWSER PORT'],['PUBLISHER STATUS','UNOFFICIAL PORT LISTING']]){const row=el('div','v2-kv');row.append(el('span','',key),el('span','',value));specs.append(row)}
+ if(info.video){const label=el('div','v2-eyebrow','ORIGINAL GAMEPLAY TRAILER · NOT BROWSER-PORT FOOTAGE');label.style.marginTop='22px';specs.append(label);const vid=el('video');vid.controls=true;vid.muted=true;vid.loop=true;vid.preload='none';vid.playsInline=true;vid.style.cssText='width:100%;max-height:210px;border-radius:8px;background:#060906';if(info.image)vid.poster=info.image;const src=el('source');src.src=info.video;src.type='video/mp4';vid.append(src);specs.append(vid)}
+ $('exileGameSource').href=g.url;
+ $('exileGameFav').textContent=P.favs.has(g.id)?'♥ IN FAVORITES':'♡ FAVORITE';
+}
+$('exileGameLaunch').addEventListener('click',()=>P.launch(P.byId.get(currentGameId)));
+$('exileGameFav').addEventListener('click',()=>{if(P.favs.has(currentGameId))P.favs.delete(currentGameId);else P.favs.add(currentGameId);P.storeFavs();P.draw();renderGamePage()});
+document.addEventListener('click',event=>{const btn=event.target.closest('[data-game-page]');if(!btn)return;event.preventDefault();openGamePage(btn.dataset.gamePage)});
+
+async function loadUpdates(){
+ const c=client(),host=$('exileUpdatesFeed');host.replaceChildren();
+ if(!c){msg('exileUpdatesNotice','Update Center awaits Supabase connection. The published site will fetch real posts.');host.append(el('p','v2-muted','No fake updates are shown.'));return}
+ const {data,error}=await c.from('exile_updates').select('id,title,body,tag,created_at').order('created_at',{ascending:false}).limit(50);
+ if(error){msg('exileUpdatesNotice','Update Center database is not installed yet. Run EXILE_Profiles_Updates_Admin_Setup.sql.');return}
+ msg('exileUpdatesNotice',data?.length?data.length+' official release note(s) from EXILE.':'No announcements published yet.');
+ for(const item of data||[]){const section=el('article','v2-entry'),head=el('div','v2-entry-head');head.append(badge(item.tag),el('small','',fmt(item.created_at)));const title=el('h2','',item.title);title.style.cssText='color:#e6ffe0;font-size:19px;margin:8px 0 10px';section.append(head,title,el('p','',item.body));host.append(section)}
+}
+async function loadOverrides(){
+ const c=client();if(!c)return;
+ const {data,error}=await c.from('exile_game_overrides').select('id,verification_state,load_time,note');
+ if(error){console.info('EXILE V2 game overrides unavailable until SQL is installed.');return}
+ window.EXILE_GAME_OVERRIDES=Object.fromEntries((data||[]).filter(x=>P.byId.has(x.id)).map(x=>[x.id,x]));
+ window.dispatchEvent(new Event('exile:game-overrides'));
+ if(!$('exileGamePage').classList.contains('hide'))renderGamePage();
+}
+
+async function checkAdmin(){
+ const c=client(),u=me();adminAllowed=false;
+ $('exileAdminNav').classList.add('hide');$('exileAdminTools').classList.add('hide');
+ if(!u||!c){msg('exileAdminGate','Sign in through EXILE Community. Only the owner can use the administrative dashboard.');return}
+ const {data,error}=await c.from('exile_admins').select('user_id').eq('user_id',u.id).maybeSingle();
+ if(error){msg('exileAdminGate','Admin database is not set up. Run EXILE_Profiles_Updates_Admin_Setup.sql and assign your User UID.');return}
+ adminAllowed=Boolean(data);
+ if(adminAllowed){$('exileAdminNav').classList.remove('hide');msg('exileAdminGate','AUTHORIZED · Permissions verified by Supabase. All writes require database RLS.');$('exileAdminTools').classList.remove('hide');renderAdminGames();await Promise.all([loadAdminUpdates(),loadAdminGuestbook()])}
+ else msg('exileAdminGate','ACCESS DENIED · This account is not an EXILE administrator.');
+}
+function renderAdminGames(){if(!adminAllowed)return;const host=$('exileAdminGames');host.replaceChildren();
+ for(const g of P.games){const wrap=el('div','v2-admin-row');const label=el('strong','',g.name);const status=el('select','v2-select');
+ for(const [value,title] of [['verified','VERIFIED'],['partial','PARTIAL'],['broken','NOT WORKING'],['untested','NOT TESTED']]){const op=el('option','',title);op.value=value;status.append(op)}
+ const live=window.EXILE_GAME_OVERRIDES?.[g.id];status.value=live?.verification_state||(P.verificationStatus(g).css==='broken'?'broken':P.verificationStatus(g).css==='partial'?'partial':P.verificationStatus(g).css==='verified'?'verified':'untested');
+ const load=el('input','v2-input');load.placeholder='e.g. 30–60 sec';load.maxLength=65;load.value=live?.load_time||P.loadTime(g)||'';
+ const note=el('input','v2-input');note.placeholder='Tester note';note.maxLength=360;note.value=live?.note||P.gameNote(g)||'';
+ const save=el('button','v2-btn','SAVE');save.type='button';save.addEventListener('click',async()=>{save.disabled=true;save.textContent='SAVING…';try{const {error}=await client().from('exile_game_overrides').upsert({id:g.id,verification_state:status.value,load_time:load.value.trim(),note:note.value.trim(),updated_at:new Date().toISOString()},{onConflict:'id'});if(error)throw error;await loadOverrides();save.textContent='SAVED ✓'}catch(e){save.textContent='ERROR';alert('Save failed: '+errorMessage(e))}finally{save.disabled=false;setTimeout(()=>{save.textContent='SAVE'},1700)}});
+ wrap.append(label,status,load,note,save);host.append(wrap)}
+}
+$('exileAdminPostForm').addEventListener('submit',async e=>{e.preventDefault();if(!adminAllowed||!me())return;const btn=e.target.querySelector('[type=submit]');btn.disabled=true;const values={title:$('exileAdminPostTitle').value.trim(),tag:$('exileAdminPostTag').value,body:$('exileAdminPostBody').value.trim(),author_id:me().id,published:true};try{const {error}=await client().from('exile_updates').insert(values);if(error)throw error;msg('exileAdminPostNote','Published successfully.');e.target.reset();await Promise.all([loadUpdates(),loadAdminUpdates()])}catch(err){msg('exileAdminPostNote','Publishing failed: '+errorMessage(err))}finally{btn.disabled=false}});
+async function loadAdminUpdates(){if(!adminAllowed)return;const list=$('exileAdminRecentPosts');list.replaceChildren();const {data,error}=await client().from('exile_updates').select('id,title,created_at').order('created_at',{ascending:false}).limit(8);if(error)return;
+ for(const x of data||[]){const row=el('div','v2-entry-head');row.style.marginTop='12px';const name=el('span','v2-muted',x.title);const btn=el('button','v2-btn danger','DELETE');btn.addEventListener('click',async()=>{if(!confirm('Permanently delete this release note?'))return;const r=await client().from('exile_updates').delete().eq('id',x.id);if(r.error)alert(errorMessage(r.error));else{loadAdminUpdates();loadUpdates()}});row.append(name,btn);list.append(row)}
+}
+$('exileAdminBadgeForm').addEventListener('submit',async e=>{e.preventDefault();if(!adminAllowed)return;const c=client(),nick=$('exileBadgeNick').value.trim();const found=await c.from('profiles').select('id,nickname').ilike('nickname',nick).limit(2);if(found.error||!found.data||found.data.length!==1||found.data[0].nickname.toLowerCase()!==nick.toLowerCase()){msg('exileAdminBadgeNote','Nickname not found or not unique.');return}
+ const badgeCode=$('exileBadgeCode').value;const result=await c.from('exile_badges').upsert({user_id:found.data[0].id,badge:badgeCode},{onConflict:'user_id,badge',ignoreDuplicates:true});
+ msg('exileAdminBadgeNote',result.error?errorMessage(result.error):badgeCode+' awarded to '+found.data[0].nickname+'.');
+});
+async function loadAdminGuestbook(){if(!adminAllowed)return;const c=client(),host=$('exileAdminGuestbook');host.replaceChildren();const {data,error}=await c.from('exile_guestbook').select('id,body,profile_id,author_id,created_at').order('created_at',{ascending:false}).limit(12);if(error){host.textContent='Guestbook table not installed.';return}if(!data?.length){host.textContent='No entries to moderate.';return}
+ for(const entry of data){const row=el('div','v2-entry');row.append(el('p','',entry.body),el('small','',fmt(entry.created_at)+' · author '+entry.author_id.slice(0,8)));const remove=el('button','v2-btn danger','REMOVE');remove.style.marginTop='8px';remove.addEventListener('click',async()=>{if(!confirm('Remove this guestbook entry?'))return;const r=await c.from('exile_guestbook').delete().eq('id',entry.id);if(r.error)alert(errorMessage(r.error));else loadAdminGuestbook()});row.append(remove);host.append(row)}
+}
+window.addEventListener('exile:route',e=>{const route=e.detail.route;if(route==='profile')loadProfileView();if(route==='updates')loadUpdates();if(route==='admin')checkAdmin();if(route==='game')renderGamePage()});
+let liveChannel=null;
+window.addEventListener('exile:client',()=>{
+ loadOverrides();loadUpdates();checkAdmin();
+ const c=client();if(c&&!liveChannel){
+  liveChannel=c.channel('exile-platform-live')
+    .on('postgres_changes',{event:'*',schema:'public',table:'exile_game_overrides'},()=>loadOverrides())
+    .on('postgres_changes',{event:'*',schema:'public',table:'exile_updates'},()=>loadUpdates())
+    .subscribe();
+ }
+});
+window.addEventListener('exile:auth',()=>{const u=me();if(!currentProfileId)currentProfileId=u?.id||null;checkAdmin();if(!$('exileProfilePage').classList.contains('hide'))loadProfileView()});
+window.addEventListener('exile:profile',()=>{if(!$('exileProfilePage').classList.contains('hide'))loadProfileView()});
+const target=location.hash.match(/^#game\/([a-z0-9]{2,32})$/i);
+if(target&&P.byId.has(target[1]))openGamePage(target[1]);
+window.addEventListener('hashchange',()=>{const next=location.hash.match(/^#game\/([a-z0-9]{2,32})$/i);if(next&&P.byId.has(next[1]))openGamePage(next[1])});
+})();
+
+</script>
+</body>
+</html>
